@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { OtpVerify } from '../../services/vendor/VendorService';
 
-export default function OTPpage({email}) {
+export default function OTPpage({email }) {
     const [otp, setOtp] = useState(new Array(6).fill(''));
     console.log('passed email',email);
     

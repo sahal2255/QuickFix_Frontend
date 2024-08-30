@@ -15,8 +15,9 @@ export const VendorService = async (formData) => {
 };
 export const OtpVerify = async ({ email,otp }) => {
   try {
+    const numericOtp = parseInt(otp, 10);
     console.log('OTP verification request');
-    const response = await Instance.post('/verify-otp', { email,otp });
+    const response = await Instance.post('/vendor/verify-otp', { email,otp:numericOtp });
     console.log('OTP verification response:', response.data);
     return response.data;
   } catch (error) {

@@ -8,7 +8,6 @@ import OTPpage from '../../components/common/OTPpage';  // Import the OTP compon
 export default function VendorRegister() {
   const [isRegistered, setIsRegistered] = useState(false); 
   const [email, setEmail] = useState(''); 
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onFinish = async (values) => {
@@ -157,12 +156,12 @@ export default function VendorRegister() {
       
       <Modal
         title="Enter OTP"
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
       >
-        <OTPpage email={email} />
+        <OTPpage email={email}  />
       </Modal>
     </div>
   );
