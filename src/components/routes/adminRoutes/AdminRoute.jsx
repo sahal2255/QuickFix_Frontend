@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import AdminLogin from '../../../pages/admin/AdminLogin';
 import AdminSidebar from '../../layouts/admin/AdminSidebar';
 import ProtectedRoute from '../../common/admin/ProtectedRoute'; 
+import AdminDashboard from '../../../pages/admin/AdminDashbord';
 
 const AdminRoute = () => {
   return (
@@ -17,7 +18,7 @@ const AdminRoute = () => {
           path="/admin/dashboard"
           element={
             <ProtectedRoute>
-              <AdminSidebar />
+              <AdminDashboard />
             </ProtectedRoute>
           }
         />

@@ -9,7 +9,7 @@ export default function VendorRegister() {
   const [isRegistered, setIsRegistered] = useState(false); 
   const [email, setEmail] = useState(''); 
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [formData, setFormData] = useState({});
   const onFinish = async (values) => {
     try {
       const formData = new FormData();
@@ -33,6 +33,9 @@ export default function VendorRegister() {
       console.log('response', response);
 
       if (response.success) {
+        setFormData(values)
+        console.log('form values',values);
+        
         setEmail(values.email);
         setIsRegistered(true); 
         setIsModalVisible(true);  
@@ -96,7 +99,18 @@ export default function VendorRegister() {
               <Form.Item
                 label={<span className="text-black">Confirm Password</span>}
                 name="confirmPassword"
-                rules={[{ required: true, message: 'Please confirm your password' }]}
+                dependencies={['password']}
+                rules={[
+                  { required: true, message: 'Please confirm your password' },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('password') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                    },
+                  }),
+                ]}
               >
                 <Input.Password placeholder="Confirm your password" className="bg-white text-black" />
               </Form.Item>
@@ -161,7 +175,7 @@ export default function VendorRegister() {
         onCancel={handleCancel}
         footer={null}
       >
-        <OTPpage email={email}  />
+        <OTPpage email={email} formData={formData} />
       </Modal>
     </div>
   );

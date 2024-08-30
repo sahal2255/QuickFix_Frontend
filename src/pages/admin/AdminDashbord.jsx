@@ -1,21 +1,22 @@
 import React from 'react';
 import AdminSidebar from '../../components/layouts/admin/AdminSidebar';
-import TopBar from '../../components/layouts/admin/TopBar';
+import TopBar from '../../components/common/TopBar';
 
 export default function AdminDashboard() {
   return (
-    <div>
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="fixed top-16 left-0 h-full">
+    <div className="flex flex-col h-screen">
+      <TopBar /> 
+
+      <div className="flex flex-1 pt-[8rem]"> 
+        <div className="fixed top-[6rem] left-0 w-[25rem] lg:w-[20rem] z-40">
           <AdminSidebar />
         </div>
-        {/* Main Content */}
-        <div className="ml-64 mt-16 p-4"> {/* Added mt-16 to account for the TopBar height */}
-          <h1>Welcome to the Admin Dashboard</h1>
-        </div>
+
+        <main className="flex-1 ml-[25rem] w-full lg:ml-[20rem] p-6 bg-black text-white rounded-lg overflow-y-auto z-30 relative">
+          <h1>Welcome to Admin Dashboard</h1>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa repudiandae maiores exercitationem, veniam voluptates voluptatem fuga ducimus qui ipsum earum asperiores, cum aut sapiente ex atque officiis labore aliquam! Illo.</p>
+        </main>
       </div>
-      <TopBar />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from 'antd';
 import { AdminService } from "../../services/admin/AdminService";
-
+import { showSuccessToast,showErrorToast } from "../../components/common/Toastify";
 export default function AdminLogin() {
   const navigate = useNavigate();  // Use the hook inside the component
 
@@ -14,10 +14,11 @@ export default function AdminLogin() {
       const response = await AdminService(values);
       console.log('Login successful:', response);
       if (response && response.token) {
-        
+        showSuccessToast('Admin Login Success')
         navigate('/admin/dashboard');
       }
     } catch (error) {
+      showErrorToast('Admin Login Failed')
       console.error('Login failed:', error.response?.data || error.message);
     }
   };

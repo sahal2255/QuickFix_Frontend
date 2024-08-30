@@ -1,9 +1,13 @@
 import React,{useState} from 'react'
 import { OtpVerify } from '../../services/vendor/VendorService';
-
-export default function OTPpage({email }) {
+import { useNavigate } from 'react-router-dom';
+import { showSuccessToast,showErrorToast } from './Toastify';
+export default function OTPpage({email,formData }) {
+    const navigate=useNavigate()
     const [otp, setOtp] = useState(new Array(6).fill(''));
     console.log('passed email',email);
+    console.log('passed form data',formData);
+    
     
     const handleChange = (element, index) => {
       if (isNaN(element.value)) return;
@@ -19,10 +23,14 @@ export default function OTPpage({email }) {
         try {
           const enteredOTP = otp.join('');
           console.log('Entered OTP:', enteredOTP);
-          const response = await OtpVerify({email, otp: enteredOTP });
+          const response = await OtpVerify({email, otp: enteredOTP,formData });
           console.log('OTP verification response:', response);
-    
+          if(response.success===true){
+                showSuccessToast('Registration Success')
+                navigate('/vendor/dashboard')
+            }    
         } catch (error) {
+        showErrorToast('OTP Verification Failed');
           console.log('OTP verification error:', error);
         }
       };

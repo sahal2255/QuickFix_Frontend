@@ -13,11 +13,12 @@ export const VendorService = async (formData) => {
     throw error;  // Rethrow error if you want to handle it in the component
   }
 };
-export const OtpVerify = async ({ email,otp }) => {
+
+export const OtpVerify = async ({ email,otp,formData }) => {
   try {
     const numericOtp = parseInt(otp, 10);
     console.log('OTP verification request');
-    const response = await Instance.post('/vendor/verify-otp', { email,otp:numericOtp });
+    const response = await Instance.post('/vendor/verify-otp', { email,otp:numericOtp ,formData});
     console.log('OTP verification response:', response.data);
     return response.data;
   } catch (error) {
