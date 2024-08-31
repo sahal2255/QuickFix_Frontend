@@ -1,19 +1,15 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import AdminLogin from '../../../pages/admin/AdminLogin';
-import AdminSidebar from '../../layouts/admin/AdminSidebar';
-import ProtectedRoute from '../../common/admin/ProtectedRoute'; 
 import AdminDashboard from '../../../pages/admin/AdminDashbord';
+import ServiceCategory from '../../../pages/admin/ServiceCategory'; 
+import ProtectedRoute from '../../common/admin/ProtectedRoute'; 
 
 const AdminRoute = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/admin/login" element={
-          // <ProtectedRoute>
-            <AdminLogin />
-          // </ProtectedRoute>
-        } />
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/admin/dashboard"
           element={
@@ -21,7 +17,9 @@ const AdminRoute = () => {
               <AdminDashboard />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route path="service-category" element={<ServiceCategory />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

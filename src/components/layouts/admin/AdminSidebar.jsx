@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { handleLogout } from '../../../services/admin/AdminService';
 import {
   Card,
@@ -14,8 +14,8 @@ import {
   UserCircleIcon,
   TagIcon,
   PowerIcon,
-  XMarkIcon, // Icon for closing the sidebar
-  Bars3Icon, // Icon for opening the sidebar
+  XMarkIcon,
+  Bars3Icon,
 } from "@heroicons/react/24/solid";
 import { showSuccessToast } from "../../common/Toastify";
 
@@ -25,8 +25,8 @@ export default function AdminSidebar() {
 
   const onLogout = async () => {
     try {
-      await handleLogout(); // Call the logout function
-      navigate("/admin/login"); // Redirect to the login page
+      await handleLogout();
+      navigate("/admin/login");
       showSuccessToast('Admin Logout success')
     } catch (error) {
       console.error('Logout failed:', error);
@@ -56,31 +56,40 @@ export default function AdminSidebar() {
           </Typography>
         </div>
         <List className="flex-col space-y-2">
-          <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-            <ListItemPrefix>
-              <PresentationChartBarIcon className="h-7 w-7 text-blue-gray-300" />
-            </ListItemPrefix>
-            <Typography className="font-medium text-lg">Dashboard</Typography>
-          </ListItem>
-          <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-            <ListItemPrefix>
-              <BuildingStorefrontIcon className="h-7 w-7 text-blue-gray-300" />
-            </ListItemPrefix>
-            <Typography className="font-medium text-lg">Vendors</Typography>
-          </ListItem>
-          <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-            <ListItemPrefix>
-              <TagIcon className="h-7 w-7 text-blue-gray-300" />
-            </ListItemPrefix>
-            <Typography className="font-medium text-lg">Service Category</Typography>
-          </ListItem>
-          <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-            <ListItemPrefix>
-              <UserCircleIcon className="h-7 w-7 text-blue-gray-300" />
-            </ListItemPrefix>
-            <Typography className="font-medium text-lg">Profile</Typography>
-          </ListItem>
-          <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400"
+          <Link to="/admin/dashboard" className="block">
+            <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+              <ListItemPrefix>
+                <PresentationChartBarIcon className="h-7 w-7 text-blue-gray-300" />
+              </ListItemPrefix>
+              <Typography className="font-medium text-lg">Dashboard</Typography>
+            </ListItem>
+          </Link>
+          <Link to="/admin/vendors" className="block">
+            <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+              <ListItemPrefix>
+                <BuildingStorefrontIcon className="h-7 w-7 text-blue-gray-300" />
+              </ListItemPrefix>
+              <Typography className="font-medium text-lg">Vendors</Typography>
+            </ListItem>
+          </Link>
+          <Link to="/admin/dashboard/service-category" className="block">
+            <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+              <ListItemPrefix>
+                <TagIcon className="h-7 w-7 text-blue-gray-300" />
+              </ListItemPrefix>
+              <Typography className="font-medium text-lg">Service Category</Typography>
+            </ListItem>
+          </Link>
+          <Link to="/admin/profile" className="block">
+            <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+              <ListItemPrefix>
+                <UserCircleIcon className="h-7 w-7 text-blue-gray-300" />
+              </ListItemPrefix>
+              <Typography className="font-medium text-lg">Profile</Typography>
+            </ListItem>
+          </Link>
+          <ListItem
+            className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400"
             onClick={onLogout}
           >
             <ListItemPrefix>

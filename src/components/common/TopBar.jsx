@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../../assets/QuickFixlog.png'; // Path to your logo
 
-export default function TopBar() {
+export default function TopBar({ toggleSidebar }) {
   return (
     <nav className="bg-black p-4 flex items-center justify-between fixed top-0 left-0 right-0 z-30"> {/* Lower z-index for the TopBar */}
       <div className="flex items-center">
