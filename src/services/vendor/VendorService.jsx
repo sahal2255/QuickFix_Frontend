@@ -26,3 +26,31 @@ export const OtpVerify = async ({ email,otp,formData }) => {
     throw error;  // Rethrow error if you want to handle it in the component
   }
 };
+
+export const vendorLogin=async(values)=>{
+  console.log('enter login serveice',values)
+  
+  
+  try{
+    const response=await Instance.post('/vendor/login',values,{
+      withCredentials:true,
+    })
+    console.log('login success',response);
+    return response.data
+  }catch(error){
+    console.error('Error logging in:', error.response?.data || error.message);
+        throw error;
+  }
+}
+
+export const handleLogout = async()=>{
+  try{
+    console.log('enter the logoaut serve');
+    const response = await Instance.post('/vendor/logout')
+    console.log('Logout Success',response);
+    
+  }catch(error){
+    console.error('Error during logout:', error.response?.data || error.message);
+        throw error;
+  }
+}

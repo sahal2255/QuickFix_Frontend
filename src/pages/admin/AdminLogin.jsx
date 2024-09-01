@@ -14,12 +14,13 @@ export default function AdminLogin() {
       const response = await AdminService(values);
       console.log('Login successful:', response);
       if (response && response.token) {
-        showSuccessToast('Admin Login Success')
+        showSuccessToast(response.message)
         navigate('/admin/dashboard');
       }
     } catch (error) {
-      showErrorToast('Admin Login Failed')
-      console.error('Login failed:', error.response?.data || error.message);
+      const errorMessage = error.response?.data?.message || error.message;  // Extract error message
+      showErrorToast(errorMessage);  // Show error message from backend
+      console.error('Login failed:', errorMessage);
     }
   };
 

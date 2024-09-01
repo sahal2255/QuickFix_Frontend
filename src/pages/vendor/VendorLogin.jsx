@@ -1,11 +1,24 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
+import { vendorLogin } from '../../services/vendor/VendorService';
 import 'antd/dist/reset.css'; // Import Ant Design styles
+import { showSuccessToast } from '../../components/common/Toastify';
 
-const VendorLogin = () => {
-  const onFinish = (values) => {
+export default function VendorLogin() {
+  const navigate=useNavigate()
+  const onFinish = async(values) => {
     console.log('Success:', values);
-    // Handle login logic here
+    try{
+      const response=await vendorLogin(values)
+      console.log('login succes ',response);
+      if(response.success){
+        showSuccessToast(response.message)
+        navigate('/vendor/dashboard')
+      }
+    }catch(error){
+
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -56,16 +69,19 @@ const VendorLogin = () => {
               Log In
             </Button>
           </Form.Item>
-          <Form.Item>
-            <div className="flex justify-between text-sm">
-              <a href="#" className="text-indigo-600 hover:text-indigo-700">Forgot Password?</a>
-              <a href="#" className="text-indigo-600 hover:text-indigo-700">Create an Account</a>
-            </div>
-          </Form.Item>
+          
         </Form>
+        <Form.Item>
+          <div className="flex justify-between text-sm">
+            {/* <a href="#" className="text-indigo-600 hover:text-indigo-700">Forgot Password?</a> */}
+            <Link to="/vendor/register" className="text-indigo-600 hover:text-indigo-700">
+              Create an Account
+            </Link>
+          </div>
+        </Form.Item>
       </div>
     </div>
   );
 };
 
-export default VendorLogin;
+ VendorLogin;

@@ -163,7 +163,12 @@ export default function VendorRegister() {
           </Form.Item>
         </Form>
         <div className="text-center mt-4">
-          <p className="text-black">Already have an account? <Link to="/login" className="text-red-500 hover:underline">Login here</Link></p>
+          <p className="text-black">
+            Already have an account?{' '}
+            <Link to="/vendor/login" className="text-red-500 hover:underline">
+              Login here
+            </Link>
+          </p>
         </div>
       </div>
 

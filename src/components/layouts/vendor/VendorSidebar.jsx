@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import  {handleLogout } from '../../../services/vendor/VendorService';
+import { useNavigate } from 'react-router-dom';
+
 import {
     Card,
     Typography,
@@ -16,9 +19,22 @@ import {
     XMarkIcon, // Icon for closing the sidebar
     Bars3Icon, // Icon for opening the sidebar
 } from "@heroicons/react/24/solid";
+import { showSuccessToast } from '../../common/Toastify';
 
 export default function VendorSidebar() {
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
+
+const onLogout = async () => {
+  try {
+    console.log('click logout');
+    await handleLogout();
+    showSuccessToast('Logout Success')
+    navigate('/vendor/register'); // Redirect after successful logout
+  } catch (error) {
+    console.log('logout failed');
+  }
+};
 
     return (
         <>
@@ -71,7 +87,11 @@ export default function VendorSidebar() {
                         </ListItemPrefix>
                         <Typography className="font-medium text-lg">Profile</Typography>
                     </ListItem>
-                    <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+                    
+                    <ListItem
+                        className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400"
+                        onClick={onLogout}
+                    >
                         <ListItemPrefix>
                             <PowerIcon className="h-7 w-7 text-blue-gray-300" />
                         </ListItemPrefix>
