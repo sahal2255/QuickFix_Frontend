@@ -16,6 +16,7 @@ export default function CommonModal({
       onCancel={onCancel}
       onOk={onOk}
       footer={footer}
+      
     >
       {children}
     </Modal>

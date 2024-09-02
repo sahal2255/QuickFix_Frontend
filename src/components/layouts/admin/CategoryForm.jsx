@@ -1,19 +1,34 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
-import { AddCategory } from '../../../services/admin/AdminService';
+import { AddCategory } from '../../../services/admin/adminService';
+import { useNavigate } from 'react-router-dom';
+import { showSuccessToast } from '../../common/Toastify';
 
-export default function CategoryForm() {
+export default function CategoryForm({setCategories,closeModal}) {
+  const navigate=useNavigate()
   const [form] = Form.useForm();
-
+  
   const onFinish = async (values) => {
+    const { categoryName } = values;
+
     const formData = new FormData();
-    formData.append('categoryName', values.categoryName);
-  
+    formData.append('categoryName', categoryName);
+
     console.log('Final FormData:', formData.get('categoryName'));
-  
+
     try {
       const response = await AddCategory(formData);  // Send FormData directly
-      console.log('Form submitted successfully:', response);
+      console.log('category added successfully:', response);
+      if (response) {
+        console.log('Category added successfully:', response);
+        setCategories((prevCategories) => [...prevCategories,response.newCategory])
+        showSuccessToast(response.message)
+        form.resetFields();
+        closeModal()
+        navigate('/admin/dashboard/service-category')
+      } else {
+        console.warn('Failed to add category: response was undefined');
+      }
     } catch (error) {
       console.error('Failed to submit form:', error);
     }
