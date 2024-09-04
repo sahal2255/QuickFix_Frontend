@@ -10,7 +10,7 @@ export const VendorService = async (formData) => {
     return response.data;  
   } catch (error) {
     console.log('error', error);
-    throw error;  // Rethrow error if you want to handle it in the component
+    throw error;  
   }
 };
 

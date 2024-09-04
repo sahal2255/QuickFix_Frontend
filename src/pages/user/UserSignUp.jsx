@@ -4,15 +4,32 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FaPhoneAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Button, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';
-const onFinish = (values) => {
-    console.log('Success:', values);
-};
-const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-};
+import { UserSignup } from '../../services/user/UserSignService';
+import { Link, useNavigate } from 'react-router-dom';
+import { showSuccessToast,showErrorToast } from '../../components/common/Toastify';
+
+
 
 export default function UserSignUp() {
+    const navigate=useNavigate()
+
+
+    const onFinish = async (values) => {
+        console.log('Success:', values);
+        try {
+            const response = await UserSignup(values);
+            console.log(response.message)
+            showSuccessToast(response.message); 
+            navigate('/login')
+            console.log(response);
+        } catch (error) {
+            showErrorToast(error.response.message); 
+            console.log('Signup error:', error);
+        }
+    };
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
     return (
         <div className='bg-black min-h-screen md:bg-white lg:bg-white flex justify-center items-center rounded-lg'>
             <div className='w-full max-w-lg h-full bg-black p-5 rounded-xl shadow-xl content-center min-h-[600px]'>

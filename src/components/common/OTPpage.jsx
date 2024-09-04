@@ -37,7 +37,7 @@ export default function OTPpage({email,formData }) {
     
   
     return (
-      <div className="inset-0  items-center min-h-screen bg-gray-100">
+      <div className="inset-0  items-center h-64 bg-gray-100">
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <h2 className="text-xl font-semibold text-center text-gray-800 mb-4">
             Enter OTP

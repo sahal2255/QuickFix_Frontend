@@ -2,16 +2,28 @@ import React from 'react';
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Button, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';  // Import Link from react-router-dom for navigation
+import { Link } from 'react-router-dom';  
+import {  UserLogingIn } from '../../services/user/UserSignService';
 
-const onFinish = (values) => {
-    console.log('Success:', values);
-};
-const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-};
 
 export default function UserLogin() {
+
+
+
+    const onFinish = async (values) => {
+        console.log('Success:', values);
+        try{
+            const response=await UserLogingIn(values)
+            console.log(response);
+            
+        }catch(error){
+            console.log(error)
+        }
+        
+    };
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
     return (
         <div className="min-h-screen flex justify-center items-center bg-black md:bg-white lg:bg-white">
             <div className="w-full max-w-lg p-8 bg-black rounded-xl shadow-xl">
