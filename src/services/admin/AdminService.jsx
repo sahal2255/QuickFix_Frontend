@@ -4,8 +4,6 @@ export const AdminService = async (values) => {
     try {
         console.log('Axios Request')
         console.log(Instance);
-        
-
         const response = await Instance.post('/admin/login', values, {
             withCredentials: true
         });

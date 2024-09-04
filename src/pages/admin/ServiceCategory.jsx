@@ -2,13 +2,12 @@ import React, { useState,useEffect } from 'react';
 import CategoryForm from '../../components/layouts/admin/CategoryForm'; // Adjust the import path as needed
 import Modal from '../../components/common/CommonModal';
 import { fetchCategories,deleteCategory } from '../../services/admin/adminService';
-
+import { showSuccessToast } from '../../components/common/Toastify';
 export default function ServiceCategory() {
   const [isModalVisible, setIsModalVisible] = useState(false); // State to track modal visibility
   const [categories,setCategories]=useState([])
 
   useEffect(() => {
-    // Fetch categories when the component mounts
     const loadCategories = async () => {
       try {
         const fetchedCategories = await fetchCategories();

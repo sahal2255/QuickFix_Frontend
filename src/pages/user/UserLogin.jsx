@@ -2,6 +2,7 @@ import React from 'react';
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Button, Form, Input } from 'antd';
+import { Link } from 'react-router-dom';  // Import Link from react-router-dom for navigation
 
 const onFinish = (values) => {
     console.log('Success:', values);
@@ -14,7 +15,7 @@ export default function UserLogin() {
     return (
         <div className="min-h-screen flex justify-center items-center bg-black md:bg-white lg:bg-white">
             <div className="w-full max-w-lg p-8 bg-black rounded-xl shadow-xl">
-                <h2 className="text-2xl font-bold text-white text-center mb-10">Login</h2>
+                <h2 className="text-2xl font-bold text-white text-center mb-10">User Login</h2>
 
                 <Form
                     name="basic"
@@ -49,7 +50,6 @@ export default function UserLogin() {
 
                     <Form.Item
                         name="password"
-
                         rules={[
                             {
                                 required: true,
@@ -68,7 +68,6 @@ export default function UserLogin() {
                         wrapperCol={{
                             offset: 0,
                             span: 24,
-
                         }}
                         className='flex justify-center'
                     >
@@ -80,7 +79,15 @@ export default function UserLogin() {
                             Login
                         </Button> 
                     </Form.Item>
+
+                    {/* Add Sign Up Link */}
                 </Form>
+                    <div className="text-center mt-4 text-gray-400">
+                        <span>Don't have an account? </span>
+                        <Link to="/signup" className="text-red-500 hover:underline">
+                            Sign up
+                        </Link>
+                    </div>
             </div>
         </div>
     );

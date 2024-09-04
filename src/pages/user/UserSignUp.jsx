@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaPhoneAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Button, Form, Input } from 'antd';
-
+import { Link } from 'react-router-dom';
 const onFinish = (values) => {
     console.log('Success:', values);
 };
@@ -12,24 +12,17 @@ const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
 };
 
-
-
 export default function UserSignUp() {
-  return (
-<div className='bg-black min-h-screen md:bg-white lg:bg-white flex justify-center items-center rounded-lg'>
+    return (
+        <div className='bg-black min-h-screen md:bg-white lg:bg-white flex justify-center items-center rounded-lg'>
             <div className='w-full max-w-lg h-full bg-black p-5 rounded-xl shadow-xl content-center min-h-[600px]'>
                 <h2 className='text-2xl font-bold text-white text-center mb-10'>User SignUp</h2>
+                
                 <Form
                     name="basic"
-                    labelCol={{
-                        span: 8,
-                    }}
-                    wrapperCol={{
-                        span: 24,
-                    }}
-                    initialValues={{
-                        remember: true,
-                    }}
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 24 }}
+                    initialValues={{ remember: true }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
@@ -37,10 +30,7 @@ export default function UserSignUp() {
                     <Form.Item
                         name="username"
                         rules={[
-                            {
-                                required: true,
-                                message: 'Please enter your Name!',
-                            },
+                            { required: true, message: 'Please enter your Name!' },
                         ]}
                         className='px-10'
                     >
@@ -50,13 +40,11 @@ export default function UserSignUp() {
                             className="p-3 rounded-lg"
                         />
                     </Form.Item>
+                    
                     <Form.Item
                         name="useremail"
                         rules={[
-                            {
-                                required: true,
-                                message: 'Please enter your Email',
-                            },
+                            { required: true, message: 'Please enter your Email' },
                         ]}
                         className='px-10'
                     >
@@ -66,31 +54,25 @@ export default function UserSignUp() {
                             className="p-3 rounded-lg"
                         />
                     </Form.Item>
+                    
                     <Form.Item
                         name="phonenumber"
-
                         rules={[
-                            {
-                                required: true,
-                                message: 'Please enter your phone Number',
-                            },
+                            { required: true, message: 'Please enter your phone Number' },
                         ]}
                         className='px-10'
                     >
-                        <Input.Password 
+                        <Input 
                             prefix={<FaPhoneAlt className="text-gray-500 mr-2" />} 
                             placeholder="Phone Number" 
                             className="p-3 rounded-lg"
                         />
                     </Form.Item>
+                    
                     <Form.Item
                         name="password"
-
                         rules={[
-                            {
-                                required: true,
-                                message: 'Please enter your password!',
-                            },
+                            { required: true, message: 'Please enter your password!' },
                         ]}
                         className='px-10'
                     >
@@ -100,15 +82,13 @@ export default function UserSignUp() {
                             className="p-3 rounded-lg"
                         />
                     </Form.Item>
+                    
                     <Form.Item
                         name="confirmPassword"
                         dependencies={['password']}
                         hasFeedback
                         rules={[
-                            {
-                                required: true,
-                                message: 'Please confirm your Password!',
-                            },
+                            { required: true, message: 'Please confirm your Password!' },
                             ({ getFieldValue }) => ({
                                 validator(_, value) {
                                     if (!value || getFieldValue('password') === value) {
@@ -128,23 +108,25 @@ export default function UserSignUp() {
                     </Form.Item>
 
                     <Form.Item
-                        wrapperCol={{
-                            offset: 0,
-                            span: 24,
-
-                        }}
+                        wrapperCol={{ offset: 0, span: 24 }}
                         className='flex justify-center'
                     >
                         <Button 
                             type="primary" 
                             htmlType="submit" 
-                            className="w-full p-3 mx-auto rounded-lg bg-red-500 text-white font-semibold hover:bg-none"
+                            className="w-full p-3 mx-auto rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600"
                         >
                             Sign Up
                         </Button> 
                     </Form.Item>
                 </Form>
-      </div>
-    </div>
-  )
+                <div className="text-center mt-4 text-gray-400">
+                        <span>You have an account? </span>
+                        <Link to="/login" className="text-red-500 hover:underline">
+                            Login
+                        </Link>
+                    </div>
+            </div>
+        </div>
+    );
 }
