@@ -48,7 +48,6 @@ export const AddCategory = async (formData) => {
       console.warn('Received undefined response from server');
       return null;
     }
-    console.log('Category added successfully', response);
   } catch (error) {
     console.error('Error adding category', error.response || error);
   }

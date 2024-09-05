@@ -23,3 +23,15 @@ export const UserLogingIn = async (value)=>{
     }
     
 }
+
+export const UserLogout = async () => {
+    console.log('Entering logout service');
+    try {
+        const response = await Instance.post('/logout', {}, { withCredentials: true });
+        console.log('Logout success:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error during logout:', error);
+        throw error;  // Rethrow the error so it can be handled in `onLogout`
+    }
+};

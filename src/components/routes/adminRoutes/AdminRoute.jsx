@@ -2,8 +2,9 @@ import React from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import AdminLogin from '../../../pages/admin/AdminLogin';
 import AdminDashboard from '../../../pages/admin/AdminDashbord';
-import ServiceCategory from '../../../pages/admin/ServiceCategory'; 
+import ServiceCategory from '../../layouts/admin/ServiceCategory'; 
 import ProtectedRoute from '../../common/admin/ProtectedRoute'; 
+import VendorList from '../../layouts/admin/VendorList';
 
 const AdminRoute = () => {
   return (
@@ -19,6 +20,7 @@ const AdminRoute = () => {
           }
         >
           <Route path="service-category" element={<ServiceCategory />} />
+          <Route path='vendors' element={<VendorList />} />
         </Route>
       </Routes>
     </BrowserRouter>

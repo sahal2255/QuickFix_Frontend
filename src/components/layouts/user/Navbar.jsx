@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { FaBars, FaUser, FaTimes } from 'react-icons/fa';
 import Logo from '../../../assets/QuickFixlog.png'
+import { UserLogout } from '../../../services/user/UserSignService';
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const onLogout = async () => {
+    try {
+        const response = await UserLogout();
+        console.log('Logout successful:', response);
+        
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
+};
 
   return (
     <nav className="bg-gradient-to-r bg-white shadow-lg fixed w-full z-50">
@@ -33,6 +44,11 @@ export default function Navbar() {
           <a href="#contact" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Contact
           </a>
+          <button className='bg-red-500'
+          onClick={onLogout}
+          >
+            logout
+          </button>
         </div>
 
         <div className="text-2xl text-black">

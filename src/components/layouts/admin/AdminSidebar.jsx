@@ -64,7 +64,7 @@ export default function AdminSidebar() {
               <Typography className="font-medium text-lg">Dashboard</Typography>
             </ListItem>
           </Link>
-          <Link to="/admin/vendors" className="block">
+          <Link to="/admin/dashboard/vendors" className="block">
             <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
               <ListItemPrefix>
                 <BuildingStorefrontIcon className="h-7 w-7 text-blue-gray-300" />

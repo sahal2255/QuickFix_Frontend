@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from 'react';
-import CategoryForm from '../../components/layouts/admin/CategoryForm'; // Adjust the import path as needed
-import Modal from '../../components/common/CommonModal';
-import { fetchCategories,deleteCategory } from '../../services/admin/adminService';
-import { showSuccessToast } from '../../components/common/Toastify';
+import CategoryForm from './CategoryForm'; // Adjust the import path as needed
+import Modal from '../../common/CommonModal';
+import { fetchCategories,deleteCategory } from '../../../services/admin/adminService';
+import { showSuccessToast } from '../../common/Toastify';
 export default function ServiceCategory() {
   const [isModalVisible, setIsModalVisible] = useState(false); // State to track modal visibility
   const [categories,setCategories]=useState([])

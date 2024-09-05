@@ -2,22 +2,27 @@ import React from 'react';
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Button, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';  
+import { Link, useNavigate } from 'react-router-dom';  
 import {  UserLogingIn } from '../../services/user/UserSignService';
+import { showErrorToast, showSuccessToast } from '../../components/common/Toastify';
 
 
 export default function UserLogin() {
-
+    const navigate=useNavigate()
 
 
     const onFinish = async (values) => {
         console.log('Success:', values);
         try{
             const response=await UserLogingIn(values)
+            showSuccessToast(response.message)
+            navigate('/')
             console.log(response);
             
         }catch(error){
+            showErrorToast(error.response.message)
             console.log(error)
+
         }
         
     };
