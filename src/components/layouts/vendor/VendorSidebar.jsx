@@ -1,40 +1,33 @@
 import React, { useState } from 'react';
-import  {handleLogout } from '../../../services/vendor/VendorService';
 import { useNavigate } from 'react-router-dom';
-
-import {
-    Card,
-    Typography,
-    List,
-    ListItem,
-    ListItemPrefix,
-} from "@material-tailwind/react";
-import {
-    PresentationChartBarIcon,
-    BriefcaseIcon,
-    Cog6ToothIcon,
-    UserGroupIcon,
-    UserCircleIcon,
-    PowerIcon,
+import { Card, Typography, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
+import { 
+    PresentationChartBarIcon, 
+    BriefcaseIcon, 
+    Cog6ToothIcon, 
+    UserGroupIcon, 
+    UserCircleIcon, 
+    PowerIcon, 
     XMarkIcon, // Icon for closing the sidebar
-    Bars3Icon, // Icon for opening the sidebar
+    Bars3Icon // Icon for opening the sidebar
 } from "@heroicons/react/24/solid";
 import { showSuccessToast } from '../../common/Toastify';
+import { Link } from 'react-router-dom'; // Import Link
 
 export default function VendorSidebar() {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
-const onLogout = async () => {
-  try {
-    console.log('click logout');
-    await handleLogout();
-    showSuccessToast('Logout Success')
-    navigate('/vendor/register'); // Redirect after successful logout
-  } catch (error) {
-    console.log('logout failed');
-  }
-};
+    const onLogout = async () => {
+        try {
+            console.log('click logout');
+            await handleLogout();
+            showSuccessToast('Logout Success');
+            navigate('/vendor/register'); // Redirect after successful logout
+        } catch (error) {
+            console.log('logout failed');
+        }
+    };
 
     return (
         <>
@@ -59,35 +52,51 @@ const onLogout = async () => {
                     </Typography>
                 </div>
                 <List className="flex-col space-y-2 overflow-y-auto h-[calc(100vh-4rem)]"> {/* Adjust height as needed */}
-                    <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-                        <ListItemPrefix>
-                            <PresentationChartBarIcon className="h-7 w-7 text-blue-gray-300" />
-                        </ListItemPrefix>
-                        <Typography className="font-medium text-lg">Dashboard</Typography>
-                    </ListItem>
-                    <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-                        <ListItemPrefix>
-                            <Cog6ToothIcon className="h-7 w-7 text-blue-gray-300" />
-                        </ListItemPrefix>
-                        <Typography className="font-medium text-lg">Add Service</Typography>
-                    </ListItem>
-                    <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-                        <BriefcaseIcon className="h-7 w-7 text-blue-gray-300" />
-                        <Typography className="font-medium text-lg">Services</Typography>
-                    </ListItem>
-                    <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-                        <ListItemPrefix>
-                            <UserGroupIcon className="h-7 w-7 text-blue-gray-300" />
-                        </ListItemPrefix>
-                        <Typography className="font-medium text-lg">Booked Services</Typography>
-                    </ListItem>
-                    <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-                        <ListItemPrefix>
-                            <UserCircleIcon className="h-7 w-7 text-blue-gray-300" />
-                        </ListItemPrefix>
-                        <Typography className="font-medium text-lg">Profile</Typography>
-                    </ListItem>
-                    
+                    <Link to="/vendor/dashboard">
+                        <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+                            <ListItemPrefix>
+                                <PresentationChartBarIcon className="h-7 w-7 text-blue-gray-300" />
+                            </ListItemPrefix>
+                            <Typography className="font-medium text-lg">Dashboard</Typography>
+                        </ListItem>
+                    </Link>
+
+                    <Link to="/vendor/dashboard/add-service">
+                        <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+                            <ListItemPrefix>
+                                <Cog6ToothIcon className="h-7 w-7 text-blue-gray-300" />
+                            </ListItemPrefix>
+                            <Typography className="font-medium text-lg">Add Service</Typography>
+                        </ListItem>
+                    </Link>
+
+                    <Link to="/vendor/services">
+                        <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+                            <ListItemPrefix>
+                                <BriefcaseIcon className="h-7 w-7 text-blue-gray-300" />
+                            </ListItemPrefix>
+                            <Typography className="font-medium text-lg">Services</Typography>
+                        </ListItem>
+                    </Link>
+
+                    <Link to="/vendor/booked-services">
+                        <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+                            <ListItemPrefix>
+                                <UserGroupIcon className="h-7 w-7 text-blue-gray-300" />
+                            </ListItemPrefix>
+                            <Typography className="font-medium text-lg">Booked Services</Typography>
+                        </ListItem>
+                    </Link>
+
+                    <Link to="/vendor/profile">
+                        <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+                            <ListItemPrefix>
+                                <UserCircleIcon className="h-7 w-7 text-blue-gray-300" />
+                            </ListItemPrefix>
+                            <Typography className="font-medium text-lg">Profile</Typography>
+                        </ListItem>
+                    </Link>
+
                     <ListItem
                         className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400"
                         onClick={onLogout}

@@ -54,3 +54,14 @@ export const handleLogout = async()=>{
         throw error;
   }
 }
+
+
+export const handleAddService = async (values) =>{
+  console.log('found the add service in service section')
+  try{
+    const response=await Instance.post('/')
+  }catch(error){
+    console.log('add service error in service section');
+    
+  }
+}

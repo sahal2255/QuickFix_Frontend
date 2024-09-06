@@ -9,3 +9,22 @@ const instance = axios.create({
 });
 
 export default instance;
+
+
+// axios.interceptors.response.use(
+//   response => response,
+//   async error => {
+//     const originalRequest = error.config;
+    
+//     // If token has expired and it is not a retry request
+//     if (error.response.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
+//       await refreshAccessToken();  // Attempt to refresh token
+//       const newAccessToken = Cookies.get('accessToken'); // Get new access token
+//       originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+//       return axios(originalRequest);  // Retry the original request with new token
+//     }
+
+//     return Promise.reject(error);
+//   }
+// );

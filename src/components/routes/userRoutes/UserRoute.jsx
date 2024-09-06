@@ -17,8 +17,7 @@ export default function UserRoute() {
           
           <Route element={<UserProtec />}>
             <Route path='/service' element={<Service />} />
-
-          </Route>
+          </Route> 
         </Routes>
       </BrowserRouter>
     </div>

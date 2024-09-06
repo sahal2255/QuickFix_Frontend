@@ -7,8 +7,24 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";  
 
-export default function CommonTable({ columns = [], rows = [] }) {  // Add default values
+// Custom styles using styled API
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    fontWeight: "bold",
+    fontSize: "1rem",
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme, isOdd }) => ({
+    backgroundColor: isOdd ? theme.palette.action.hover : "#fff",
+    "&:hover": {
+        backgroundColor: theme.palette.action.selected,
+    },
+}));
+
+export default function CommonTable({ columns = [], rows = [] }) {
     const [pg, setPg] = useState(0);
     const [rpg, setRpg] = useState(5);
 
@@ -22,27 +38,27 @@ export default function CommonTable({ columns = [], rows = [] }) {  // Add defau
     }
 
     return (
-        <Paper>
+        <Paper sx={{ boxShadow: 3, borderRadius: 2, overflow: "hidden" }}>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{ minWidth: 650 }} aria-label="styled table">
                     <TableHead>
                         <TableRow>
                             {columns.map((column) => (
-                                <TableCell key={column.id} align={column.align || "left"}>
+                                <StyledTableCell key={column.id} align={column.align || "left"}>
                                     {column.label}
-                                </TableCell>
+                                </StyledTableCell>
                             ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-                            <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                            <StyledTableRow key={index} isOdd={index % 2 === 0}>
                                 {columns.map((column) => (
                                     <TableCell key={column.id} align={column.align || "left"}>
-                                        {row?.[column.id] || 'N/A'}  {/* Safe access */}
+                                        {row?.[column.id] || 'N/A'}
                                     </TableCell>
                                 ))}
-                            </TableRow>
+                            </StyledTableRow>
                         ))}
                     </TableBody>
                 </Table>
@@ -55,6 +71,7 @@ export default function CommonTable({ columns = [], rows = [] }) {  // Add defau
                 page={pg}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+                sx={{ backgroundColor: "#f5f5f5", borderTop: "1px solid #e0e0e0" }}  // Custom pagination style
             />
         </Paper>
     );

@@ -1,35 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import { RefreshToken } from '../../../services/user/TokenService';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import axios from 'axios';  // Make sure axios is imported
 
-const UserProtec = ({ children }) => {
-    const [authenticated, setAuthenticated] = useState(null);
+const UserProtec = () => {
+    const [authenticated, setAuthenticated] = useState(null);  // Start as null to indicate loading state
     const navigate = useNavigate();
 
     useEffect(() => {
         const checkAuthentication = async () => {
-            const accessToken = Cookies.get('accessToken');  // Get access token from cookies
-            console.log('the access token in frontend',accessToken);
-            
-            if (accessToken) {
-                setAuthenticated(true);  // User has access token
-            } else {
-                try {
-                    // Attempt to refresh token if access token is missing/expired
-                    const response = await RefreshToken();
-                    if (response?.status === 200) {
-                        // Refresh successful, set new access token
-                        setAuthenticated(true);
-                    } else {
-                        setAuthenticated(false);  // Failed to refresh
-                        navigate('/login');  // Redirect to login
-                    }
-                } catch (error) {
-                    console.error('Error refreshing token:', error);
-                    setAuthenticated(false);  // Error in refreshing token
-                    navigate('/login');  // Redirect to login
+            try {
+                const response = await axios.get('/CheckAuth');
+                if (response.status === 200) {
+                    setAuthenticated(true);  // User is authenticated
+                } else {
+                    setAuthenticated(false);  // Failed authentication
                 }
+            } catch (error) {
+                console.error('Error during authentication check:', error);
+                setAuthenticated(false);  // If an error occurs, treat it as unauthenticated
+                navigate('/login');  // Redirect to login page if not authenticated
             }
         };
 
@@ -37,14 +26,14 @@ const UserProtec = ({ children }) => {
     }, [navigate]);
 
     if (authenticated === null) {
-        return <div>Loading...</div>;  // Show loading state while authentication is checked
+        return <div>Loading...</div>;  // Show loading state while authentication is being checked
     }
 
-    if (authenticated === false) {
+    if (!authenticated) {
         return <Navigate to="/login" />;  // Redirect to login if not authenticated
     }
 
-    return children;  // Render children (protected components) if authenticated
+    return <Outlet />;  // Render protected routes (children) here
 };
 
 export default UserProtec;

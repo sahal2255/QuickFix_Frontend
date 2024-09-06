@@ -38,7 +38,7 @@ export default function Navbar() {
           <a href="#about" className="text-black hover:text-indigo-200 transition-colors duration-300">
             About
           </a>
-          <a href="#services" className="text-black hover:text-indigo-200 transition-colors duration-300">
+          <a href="/service" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Services
           </a>
           <a href="#contact" className="text-black hover:text-indigo-200 transition-colors duration-300">
@@ -72,7 +72,7 @@ export default function Navbar() {
           <a href="#about" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
             About
           </a>
-          <a href="#services" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
+          <a href="/service" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
             Services
           </a>
           <a href="#contact" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
