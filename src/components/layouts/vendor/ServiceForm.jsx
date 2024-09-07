@@ -5,6 +5,7 @@ import { handleAddService } from '../../../services/vendor/VendorService';
 
 export default function ServiceForm() {
   const [categories,setCategories]=useState([])
+  const [formData,setFormData]=useState({})
 
   useEffect(()=>{
     const fetchedCategories=async()=>{
@@ -53,19 +54,35 @@ export default function ServiceForm() {
     {
       name: 'image',
       label: 'Upload Image',
-      type: 'upload',
+      type: 'file', // Change type to 'file'
       rules: [{ required: true, message: 'Please upload an image' }],
     },
   ];
 
-  const handleSubmit = async(formData) => {
-    console.log('Form Data:', formData);
-    try{
-      const response=await handleAddService()
-      console.log('response of add data',response);
-      
-    }catch(error){
+  const handleSubmit = async (formData) => {
+    const data = new FormData();
+    data.append('categoryType', formData.categoryType);
+    data.append('serviceName', formData.serviceName);
+    data.append('price', formData.price);
+    data.append('duration', formData.duration);
 
+    if (formData.image) {
+      // console.log('enter the condition',formData.image.name);
+      
+      data.append('file', formData.image); // Assuming file is an object
+    }  else {
+      console.error('No image file found');
+    }
+    setFormData(data)
+
+    for (const pair of data.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    }
+    try {
+      const response = await handleAddService(formData);  // Passing FormData to service
+      console.log('Response after submitting service:', response);
+    } catch (error) {
+      console.log('Error submitting service:', error);
     }
   };
 

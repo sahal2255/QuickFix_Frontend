@@ -10,20 +10,14 @@ export default function CommonForm({
   onSubmit,
 }) {
   const [form] = Form.useForm();
-  const [fileList, setFileList] = useState([]);
+  const [file, setFile] = useState([]);
 
-  const handleImageChange = (info) => {
-    // Update fileList when files are uploaded or removed
-    let newFileList = [...info.fileList];
-    // Only show the last uploaded file
-    if (newFileList.length > 1) {
-      newFileList = newFileList.slice(-1);
-    }
-    setFileList(newFileList);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
   };
-
   const handleSubmit = (values) => {
-    const formData = { ...values, image: fileList[0]?.originFileObj };
+    const formData = { ...values, image: file };
     onSubmit(formData);
   };
 
@@ -57,15 +51,12 @@ export default function CommonForm({
               <Input placeholder={field.placeholder} />
             ) : field.type === 'number' ? (
               <InputNumber min={1} placeholder={field.placeholder} className="w-full" />
-            ) : field.type === 'upload' ? (
-              <Upload
-                listType="picture"
-                fileList={fileList} // Managed file list
-                beforeUpload={() => false} // Disable automatic upload
-                onChange={handleImageChange}
-              >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
+            ) : field.type === 'file' ? (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
             ) : null}
           </Form.Item>
         ))}

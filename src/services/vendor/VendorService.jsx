@@ -2,7 +2,7 @@ import Instance from "../../utils/Axios";
 
 export const VendorService = async (formData) => {
   try {
-    console.log('axios request');
+    console.log('axios request',formData);
     const response = await Instance.post('/vendor/register', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
@@ -14,18 +14,39 @@ export const VendorService = async (formData) => {
   }
 };
 
-export const OtpVerify = async ({ email,otp,formData }) => {
+export const OtpVerify = async ({ email, otp, formData }) => {
   try {
-    const numericOtp = parseInt(otp, 10);
-    console.log('OTP verification request');
-    const response = await Instance.post('/vendor/verify-otp', { email,otp:numericOtp ,formData});
+    // Add email and OTP to FormData
+    const data = new FormData();
+    data.append('email', email);
+    data.append('otp', otp);
+
+    // Append formData fields except the file
+    for (const key in formData) {
+      if (key !== 'image') {
+        data.append(key, formData[key]);
+      }
+    }
+
+    // Append the file
+    if (formData.image) {
+      data.append('image', formData.image);
+    }
+
+    // Make the request with proper content type
+    const response = await Instance.post('/vendor/verify-otp', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     console.log('OTP verification response:', response.data);
     return response.data;
   } catch (error) {
     console.log('OTP verification error:', error);
-    throw error;  // Rethrow error if you want to handle it in the component
+    throw error;
   }
 };
+
 
 export const vendorLogin=async(values)=>{
   console.log('enter login serveice',values)
@@ -56,12 +77,20 @@ export const handleLogout = async()=>{
 }
 
 
-export const handleAddService = async (values) =>{
-  console.log('found the add service in service section')
-  try{
-    const response=await Instance.post('/')
-  }catch(error){
-    console.log('add service error in service section');
-    
+export const handleAddService = async (data) => {
+  console.log('Found the add service in service section', data);
+
+  try {
+    const response = await Instance.post('/vendor/addService', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      withCredentials: true
+    });
+    console.log('Response of the service section:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Add service error in service section:', error);
+    throw error; // Optionally rethrow the error to handle it in the caller
   }
 }

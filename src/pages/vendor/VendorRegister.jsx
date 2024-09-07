@@ -3,54 +3,62 @@ import { Form, Input, Button, Row, Col, Upload, Modal } from 'antd';
 import { VendorService } from '../../services/vendor/VendorService';
 import { UploadOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import OTPpage from '../../components/common/OTPpage';  // Import the OTP component
+import OTPpage from '../../components/common/OTPpage';
 
 export default function VendorRegister() {
-  const [isRegistered, setIsRegistered] = useState(false); 
-  const [email, setEmail] = useState(''); 
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [email, setEmail] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [formData, setFormData] = useState({});
+
   const onFinish = async (values) => {
     try {
-      const formData = new FormData();
+      const formData = new FormData(); // FormData object
       console.log('Form data before adding values:', formData);
-
+  
+      // Loop over form values except the image field
       for (const key in values) {
         if (key !== 'image') {
-          formData.append(key, values[key]);
+          formData.append(key, values[key]); // Append each key-value pair
         }
       }
-
-      if (values.image && values.image.length > 0) {
-        formData.append('image', values.image[0].originFileObj);
+      console.log('frontend form data');
+      
+  
+      // Handling the file input for 'image'
+      if (values.image) {
+        formData.append('image', values.image); // Appending the file directly
       } else {
         console.log('No image file found');
       }
-
+  
+      // Logging to check the final formData contents
       console.log('Final FormData:', formData.get('image'));
-
-      const response = await VendorService(formData);
+  
+      const response = await VendorService(formData); // Submit the formData
       console.log('response', response);
-
+  
+      // Check if the response is successful
       if (response.success) {
-        setFormData(values)
-        console.log('form values',values);
-        
+        setFormData(values);
+        console.log('form values', values);
+  
         setEmail(values.email);
-        setIsRegistered(true); 
-        setIsModalVisible(true);  
+        setIsRegistered(true);
+        setIsModalVisible(true);
       }
     } catch (error) {
-      console.log('error', error);
+      console.log('error', error); // Handle any error
     }
   };
+  
 
   const handleOk = () => {
-    setIsModalVisible(false);  
+    setIsModalVisible(false);
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);  
+    setIsModalVisible(false);
   };
 
   return (
@@ -63,7 +71,10 @@ export default function VendorRegister() {
               <Form.Item
                 label={<span className="text-black">Name</span>}
                 name="name"
-                rules={[{ required: true, message: 'Please enter your name' }]}
+                rules={[
+                  { required: true, message: 'Please enter your name' },
+                  { pattern: /^[A-Za-z\s]+$/, message: 'Name must contain only letters' }
+                ]}
               >
                 <Input placeholder="Enter your name" className="bg-white text-black" />
               </Form.Item>
@@ -72,7 +83,11 @@ export default function VendorRegister() {
               <Form.Item
                 label={<span className="text-black">Email</span>}
                 name="email"
-                rules={[{ required: true, message: 'Please enter your email' }]}
+                rules={[
+                  { required: true, message: 'Please enter your email' },
+                  { type: 'email', message: 'Please enter a valid email' },
+                  { pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/, message: 'Email must end with @gmail.com' }
+                ]}
               >
                 <Input placeholder="Enter your email" className="bg-white text-black" />
               </Form.Item>
@@ -81,7 +96,10 @@ export default function VendorRegister() {
               <Form.Item
                 label={<span className="text-black">Phone Number</span>}
                 name="phoneNumber"
-                rules={[{ required: true, message: 'Please enter your phone number' }]}
+                rules={[
+                  { required: true, message: 'Please enter your phone number' },
+                  { pattern: /^[0-9]{10}$/, message: 'Phone number must be exactly 10 digits' }
+                ]} 
               >
                 <Input placeholder="Enter your phone number" className="bg-white text-black" />
               </Form.Item>
@@ -134,20 +152,14 @@ export default function VendorRegister() {
               </Form.Item>
             </Col>
             <Col xs={24} md={12}>
-              <Form.Item
+            <Form.Item
                 label={<span className="text-black">Image of the Center</span>}
                 name="image"
-                valuePropName="fileList"
-                getValueFromEvent={(e) => e.fileList}
+                valuePropName="file"
+                getValueFromEvent={(e) => e.target.files[0]}
                 rules={[{ required: true, message: 'Please upload an image of the center' }]}
               >
-                <Upload 
-                  name="image" 
-                  beforeUpload={() => false} // Prevent automatic upload
-                  listType="picture"
-                >
-                  <Button icon={<UploadOutlined />}>Upload Image</Button>
-                </Upload>
+                <Input type="file" accept=".jpg,.jpeg,.png" />
               </Form.Item>
             </Col>
           </Row>
@@ -172,7 +184,6 @@ export default function VendorRegister() {
         </div>
       </div>
 
-      
       <Modal
         title="Enter OTP"
         open={isModalVisible}
