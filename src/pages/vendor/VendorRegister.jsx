@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Row, Col, Upload, Modal } from 'antd';
+import { Form, Input, Button, Row, Col, Upload, Modal,Checkbox, Radio  } from 'antd';
 import { VendorService } from '../../services/vendor/VendorService';
 import { UploadOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import OTPpage from '../../components/common/OTPpage';
-
+const amenitiesOptions = [
+  { label: 'Wi-Fi', value: 'wifi' },
+  { label: 'Cafe', value: 'cafe' },
+  { label: 'Washroom', value: 'washroom' },
+  { label: 'Restroom', value: 'restroom' },
+];
 export default function VendorRegister() {
   const [isRegistered, setIsRegistered] = useState(false);
   const [email, setEmail] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [formData, setFormData] = useState({});
-
+  const [showAmenities, setShowAmenities] = useState(false);
   const onFinish = async (values) => {
     try {
       const formData = new FormData(); // FormData object
@@ -60,7 +65,9 @@ export default function VendorRegister() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
+  const handleAmenitiesChange = (e) => {
+    setShowAmenities(e.target.value === 'yes'); // Show amenities if they select "yes"
+  };
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-300">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
@@ -151,6 +158,7 @@ export default function VendorRegister() {
                 <Input placeholder="Enter your location" className="bg-white text-black" />
               </Form.Item>
             </Col>
+            
             <Col xs={24} md={12}>
             <Form.Item
                 label={<span className="text-black">Image of the Center</span>}
@@ -162,6 +170,30 @@ export default function VendorRegister() {
                 <Input type="file" accept=".jpg,.jpeg,.png" />
               </Form.Item>
             </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                label={<span className="text-black">Do you offer any amenities?</span>}
+                name="addAmenities"
+                rules={[{ required: true, message: 'Please select an option' }]}
+              >
+                <Radio.Group onChange={handleAmenitiesChange}>
+                  <Radio value="yes">Yes</Radio>
+                  <Radio value="no">No</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Col>
+
+            {/* Conditionally render amenities options based on vendor's choice */}
+            {showAmenities && (
+              <Col xs={24} md={12}>
+                <Form.Item
+                  label={<span className="text-black">Select Amenities</span>}
+                  name="amenities"
+                >
+                  <Checkbox.Group options={amenitiesOptions} />
+                </Form.Item>
+              </Col>
+            )}
           </Row>
 
           <Form.Item wrapperCol={{ span: 24 }} className="flex justify-center mt-6">

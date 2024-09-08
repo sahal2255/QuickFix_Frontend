@@ -41,6 +41,16 @@ export default function ServiceCategory() {
     }
   };
 
+  const handleEdit=async(categoryId)=>{
+    try{
+      console.log('categoryid',categoryId);
+      
+    }catch(error){
+      console.log('edit error',error);
+      
+    }
+  }
+
   return (
     <div className="p-6 bg-black text-white min-h-screen">
       <div className="container mx-auto">
@@ -74,7 +84,9 @@ export default function ServiceCategory() {
                 <div key={category._id} className="bg-gray-700 p-4 rounded-md">
                   <h3 className="text-xl font-medium">{category.categoryName}</h3>
                   <div className="mt-2 flex justify-end">
-                    <button className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 mr-2">
+                    <button className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 mr-2"
+                    onClick={()=>handleEdit(category._id)}
+                    >
                       Edit
                     </button>
                     <button className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"

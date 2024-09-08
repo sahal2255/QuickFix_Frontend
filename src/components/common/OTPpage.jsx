@@ -27,7 +27,7 @@ export default function OTPpage({email,formData }) {
           console.log('OTP verification response:', response);
           if(response.success===true){
                 showSuccessToast('Registration Success')
-                navigate('/vendor/dashboard')
+                navigate('/vendor/login')
             }    
         } catch (error) {
         showErrorToast('OTP Verification Failed');
