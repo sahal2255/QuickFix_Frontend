@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { handleLogout } from '../../../services/admin/AdminService';
+import PeopleIcon from '@mui/icons-material/People'
 import {
   Card,
   Typography,
@@ -83,7 +84,7 @@ export default function AdminSidebar() {
           <Link to="/admin/dashboard/users" className="block">
             <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
               <ListItemPrefix>
-                <UserCircleIcon className="h-7 w-7 text-blue-gray-300" />
+                <PeopleIcon className="h-7 w-7 text-blue-gray-300" />
               </ListItemPrefix>
               <Typography className="font-medium text-lg">Users</Typography>
             </ListItem>
