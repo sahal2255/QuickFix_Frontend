@@ -63,7 +63,7 @@ export default function CommonTable({ columns = [], rows = [], onAllowClick }) {
                                             color={row.isEnabled ? "secondary" : "primary"}  // Change button color
                                             onClick={() => onAllowClick(row)}  // Pass vendor data on click
                                         >
-                                            {row.isEnabled ? "Enabled" : "Allow"}  {/* Change button text */}
+                                            {row.isEnabled ? "Block" : "Allow"}  {/* Change button text */}
                                         </Button>
                                     ) : (
                                         row[column.id] || 'N/A'

@@ -27,7 +27,7 @@ export const handleLogout = async () => {
 
 
 export const AddCategory = async (formData) => {
-  console.log('Service section: Logging formData entries:');
+  console.log('Service section: Logging formData entries:',formData);
   
   // Log each entry in the FormData
   for (let [key, value] of formData.entries()) {
@@ -75,6 +75,24 @@ export const deleteCategory = async (categoryId) => {
     return response.data;
   } catch (error) {
     console.error('Error deleting category:', error.response || error);
+    throw error;
+  }
+};
+
+export const UpdateCategory = async (dataObject) => {
+  try {
+    console.log('in the ser',dataObject);
+    
+    const response = await Instance.put('/admin/updatecategory', dataObject, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json', // Set to JSON
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error updating category:', error);
     throw error;
   }
 };

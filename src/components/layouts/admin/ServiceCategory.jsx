@@ -1,11 +1,15 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import CategoryForm from './CategoryForm'; // Adjust the import path as needed
 import Modal from '../../common/CommonModal';
-import { fetchCategories,deleteCategory } from '../../../services/admin/adminService';
+import { fetchCategories, deleteCategory } from '../../../services/admin/adminService';
+import CategoryEditForm from '../../layouts/admin/CategoryEditForm';
 import { showSuccessToast } from '../../common/Toastify';
+
 export default function ServiceCategory() {
-  const [isModalVisible, setIsModalVisible] = useState(false); // State to track modal visibility
-  const [categories,setCategories]=useState([])
+  const [isModalVisible, setIsModalVisible] = useState(false); // State to track modal visibility for adding a new category
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false); // State for edit modal
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null); // For selected category to edit
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -19,37 +23,39 @@ export default function ServiceCategory() {
 
     loadCategories();
   }, []);
+
   const handleAddCategory = () => {
-    setIsModalVisible(true); // Show the modal when the button is clicked
+    setIsModalVisible(true); // Show the modal for adding a category
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false); // Hide the modal
+    setIsModalVisible(false); // Hide the add category modal
   };
 
+  const handleEditCancel = () => {
+    setIsEditModalVisible(false); // Hide the edit category modal
+    setSelectedCategory(null); // Reset selected category
+  };
 
   const handleDelete = async (categoryId) => {
     try {
-      console.log('category id',categoryId);
-      
       const response = await deleteCategory(categoryId);
       showSuccessToast(response.message);
-      // Update the categories list after deletion
-      setCategories(categories.filter(category => category._id !== categoryId));
+      setCategories(categories.filter(category => category._id !== categoryId)); // Update category list after deletion
     } catch (error) {
       console.error('Error deleting category:', error);
     }
   };
 
-  const handleEdit=async(categoryId)=>{
-    try{
-      console.log('categoryid',categoryId);
-      
-    }catch(error){
-      console.log('edit error',error);
-      
-    }
-  }
+  const handleEdit = (category) => {
+    console.log('Handling edit for category:', category); // Log the category being edited
+    setSelectedCategory(category); // Set the selected category to be edited
+    setIsEditModalVisible(true); // Show the edit modal
+  };
+
+  // useEffect(() => {
+  //   console.log('Selected category updated:', selectedCategory);
+  // }, [selectedCategory]);
 
   return (
     <div className="p-6 bg-black text-white min-h-screen">
@@ -59,21 +65,20 @@ export default function ServiceCategory() {
             <h2 className="text-2xl font-semibold">Service Categories</h2>
             <button
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-              onClick={handleAddCategory} // Trigger modal visibility
+              onClick={handleAddCategory}
             >
               Add Category
             </button>
           </div>
 
-          {/* Modal to show the CategoryForm */}
+          {/* Modal to show the CategoryForm for adding */}
           <Modal
             title="Add New Category"
             open={isModalVisible}
             onCancel={handleCancel}
-            footer={null} // Hide default footer buttons
-            
+            footer={null}
           >
-            <CategoryForm setCategories={setCategories} closeModal={handleCancel}/>
+            <CategoryForm setCategories={setCategories} closeModal={handleCancel} />
           </Modal>
 
           <div className="space-y-4">
@@ -84,13 +89,15 @@ export default function ServiceCategory() {
                 <div key={category._id} className="bg-gray-700 p-4 rounded-md">
                   <h3 className="text-xl font-medium">{category.categoryName}</h3>
                   <div className="mt-2 flex justify-end">
-                    <button className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 mr-2"
-                    onClick={()=>handleEdit(category._id)}
+                    <button
+                      className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 mr-2"
+                      onClick={() => handleEdit(category)}
                     >
                       Edit
                     </button>
-                    <button className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-                    onClick={() => handleDelete(category._id)}
+                    <button
+                      className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                      onClick={() => handleDelete(category._id)}
                     >
                       Delete
                     </button>
@@ -98,9 +105,19 @@ export default function ServiceCategory() {
                 </div>
               ))
             )}
+          </div>
+
+          {/* Modal to show the Edit Category Form */}
+          {selectedCategory && (
+            <CategoryEditForm
+              open={isEditModalVisible}
+              onClose={handleEditCancel}
+              category={selectedCategory}
+              setCategories={setCategories}
+            />
+          )}
         </div>
       </div>
-    </div>
     </div>
   );
 }

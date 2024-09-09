@@ -20,7 +20,9 @@ export default function VendorRegister() {
     try {
       const formData = new FormData(); // FormData object
       console.log('Form data before adding values:', formData);
-  
+      if (values.addAmenities === 'no') {
+        values.amenities = []; // Ensure amenities is an empty array
+      }
       // Loop over form values except the image field
       for (const key in values) {
         if (key !== 'image') {

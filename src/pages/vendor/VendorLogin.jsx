@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import { vendorLogin } from '../../services/vendor/VendorService';
 import 'antd/dist/reset.css'; // Import Ant Design styles
-import { showSuccessToast } from '../../components/common/Toastify';
+import { showErrorToast, showSuccessToast } from '../../components/common/Toastify';
 
 export default function VendorLogin() {
   const navigate=useNavigate()
@@ -16,8 +16,13 @@ export default function VendorLogin() {
         showSuccessToast(response.message)
         navigate('/vendor/dashboard')
       }
-    }catch(error){
-
+      
+    }catch (error) {
+      if (error.response && error.response.status === 403) {
+        showErrorToast(error.response.data.message); // Show the under verification message
+      } else {
+        showErrorToast(error.response?.data?.message || 'Login failed. Please try again.');
+      }
     }
   };
 
