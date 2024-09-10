@@ -4,12 +4,15 @@ import Modal from '../../common/CommonModal';
 import { fetchCategories, deleteCategory } from '../../../services/admin/adminService';
 import CategoryEditForm from '../../layouts/admin/CategoryEditForm';
 import { showSuccessToast } from '../../common/Toastify';
-
+import ConfirmationModal from '../../common/ConfirmationModal';
 export default function ServiceCategory() {
   const [isModalVisible, setIsModalVisible] = useState(false); // State to track modal visibility for adding a new category
   const [isEditModalVisible, setIsEditModalVisible] = useState(false); // State for edit modal
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null); // For selected category to edit
+  const [isConfirmationVisible,setIsConfirmationVisible]=useState(false)
+  const [categoryIdToDelete,setCategoryIdToDelete]=useState(null)
+
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -37,15 +40,23 @@ export default function ServiceCategory() {
     setSelectedCategory(null); // Reset selected category
   };
 
-  const handleDelete = async (categoryId) => {
+  const handleDeleteConfirmation = (categoryId) => {
+    setCategoryIdToDelete(categoryId); // Store the category ID to be deleted
+    setIsConfirmationVisible(true); // Show the confirmation modal
+  };
+
+  const handleConfirmDelete = async () => {
     try {
-      const response = await deleteCategory(categoryId);
+      const response = await deleteCategory(categoryIdToDelete);
       showSuccessToast(response.message);
-      setCategories(categories.filter(category => category._id !== categoryId)); // Update category list after deletion
+      setCategories(categories.filter(category => category._id !== categoryIdToDelete));
     } catch (error) {
       console.error('Error deleting category:', error);
+    } finally {
+      setIsConfirmationVisible(false); // Hide the confirmation modal
+      setCategoryIdToDelete(null); // Reset the category ID
     }
-  };
+  }
 
   const handleEdit = (category) => {
     console.log('Handling edit for category:', category); // Log the category being edited
@@ -97,7 +108,7 @@ export default function ServiceCategory() {
                     </button>
                     <button
                       className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-                      onClick={() => handleDelete(category._id)}
+                      onClick={() => handleDeleteConfirmation(category._id)}
                     >
                       Delete
                     </button>
@@ -116,6 +127,12 @@ export default function ServiceCategory() {
               setCategories={setCategories}
             />
           )}
+          <ConfirmationModal
+            isVisible={isConfirmationVisible}
+            onConfirm={handleConfirmDelete}
+            onCancel={() => setIsConfirmationVisible(false)}
+            message="Are you sure you want to delete this category?"
+          />
         </div>
       </div>
     </div>
