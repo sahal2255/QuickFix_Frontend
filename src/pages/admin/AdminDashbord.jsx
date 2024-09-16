@@ -9,8 +9,7 @@ export default function AdminDashboard() {
       <TopBar /> 
 
       <div className="flex flex-1">
-        {/* Sidebar */}
-        <div className="md:block fixed top-[6rem] left-0 w-[25rem] lg:w-[20rem] z-40">
+        <div className="fixed top-[6rem] left-0 w-[25rem] lg:w-[20rem] z-40">
           <AdminSidebar />
         </div>
 

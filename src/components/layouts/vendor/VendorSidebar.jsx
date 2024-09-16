@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Typography, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
+import { handleLogout } from '../../../services/vendor/VendorService';
 import { 
     PresentationChartBarIcon, 
     BriefcaseIcon, 

@@ -35,3 +35,16 @@ export const UserLogout = async () => {
         throw error;  // Rethrow the error so it can be handled in `onLogout`
     }
 };
+
+
+export const UserProfile=async()=>{
+    console.log('user profile service');
+    try{
+        const response=await Instance.get('/profile')
+        console.log('response data',response.data)
+        return response.data
+    }catch(error){
+        console.log('error',error)
+        throw error;
+    }
+}

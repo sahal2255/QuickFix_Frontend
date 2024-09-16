@@ -16,6 +16,7 @@ export const AdminService = async (values) => {
 };
 export const handleLogout = async () => {
     try {
+      
         const response = await Instance.post('/admin/logout'); // Use the Axios instance for logout
         console.log('Logout successful:', response);
     } catch (error) {

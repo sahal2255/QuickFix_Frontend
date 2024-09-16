@@ -1,23 +1,14 @@
 import React, { useState } from 'react';
 import { FaBars, FaUser, FaTimes } from 'react-icons/fa';
-import Logo from '../../../assets/QuickFixlog.png'
-import { UserLogout } from '../../../services/user/UserSignService';
+import { Link } from 'react-router-dom'; // Import Link from React Router
+import Logo from '../../../assets/QuickFixlog.png';
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
-  const onLogout = async () => {
-    try {
-        const response = await UserLogout();
-        console.log('Logout successful:', response);
-        
-    } catch (error) {
-        console.error('Logout error:', error);
-    }
-};
 
   return (
     <nav className="bg-gradient-to-r bg-white shadow-lg fixed w-full z-50">
@@ -44,18 +35,20 @@ export default function Navbar() {
           <a href="#contact" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Contact
           </a>
-          <button className='bg-red-500'
-          onClick={onLogout}
-          >
-            logout
-          </button>
+          {/* Add Profile Link */}
+          <Link to="/profile" className="text-black hover:text-indigo-200 transition-colors duration-300">
+            Profile
+          </Link>
         </div>
 
         <div className="text-2xl text-black">
-          <FaUser className="hover:text-indigo-200 cursor-pointer transition-colors duration-300" />
+          <Link to="/profile">
+            <FaUser className="hover:text-indigo-200 cursor-pointer transition-colors duration-300" />
+          </Link>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
@@ -78,6 +71,10 @@ export default function Navbar() {
           <a href="#contact" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
             Contact
           </a>
+          {/* Add Profile Link in Mobile Menu */}
+          <Link to="/profile" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
+            Profile
+          </Link>
         </div>
       </div>
 

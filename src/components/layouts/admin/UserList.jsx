@@ -20,7 +20,7 @@ export default function UserList(){
     },[])
 
     const userColumns=[
-        {id:'name',label:'User Name'},
+        {id:'userName',label:'User Name'},
         {id:'email',label:'Email'},
         {id:'phoneNumber',label:'Phone Number'},
         {id:'action',label:'Actions',align:'center'},
