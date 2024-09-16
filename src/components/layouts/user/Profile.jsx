@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { UserProfile } from '../../../services/user/UserSignService';
+import { UserProfile,UserLogout } from '../../../services/user/UserSignService';
 import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
@@ -20,12 +20,16 @@ export default function Profile() {
   }, []);
 
   // Logout function
-  const handleLogout = () => {
-    document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Clear the token
-
-
-    navigate('/login');
-  };
+  const handleLogout = async () => {
+    try {
+      await UserLogout();
+      
+      // Redirect to login page after successful logout
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  }
 
   if (!userData) {
     return (
