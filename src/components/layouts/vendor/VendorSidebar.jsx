@@ -24,7 +24,7 @@ export default function VendorSidebar() {
             console.log('click logout');
             await handleLogout();
             showSuccessToast('Logout Success');
-            navigate('/vendor/register'); // Redirect after successful logout
+            navigate('/vendor/login'); // Redirect after successful logout
         } catch (error) {
             console.log('logout failed');
         }

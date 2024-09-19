@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Row, Col, Upload, Modal,Checkbox, Radio  } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Button, Row, Col, Upload, Modal,Checkbox, Radio,Select  } from 'antd';
 import { VendorService } from '../../services/vendor/VendorService';
+import {CategoryGet} from '../../services/vendor/VendorGet'
 import { UploadOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import OTPpage from '../../components/common/OTPpage';
@@ -15,37 +16,52 @@ export default function VendorRegister() {
   const [email, setEmail] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [formData, setFormData] = useState({});
+  const [categories,setCategories]=useState([])
   const [showAmenities, setShowAmenities] = useState(false);
+
+
+useEffect(()=>{
+  const fetchCategories=async()=>{
+    try{
+      const response=await CategoryGet()
+      console.log('fetching category',response)
+      setCategories(response)
+    }catch(error){
+      console.log('fetching category error',error);
+      
+    }
+  }
+  fetchCategories()
+},[])
+
+
+
   const onFinish = async (values) => {
     try {
-      const formData = new FormData(); // FormData object
+      const formData = new FormData(); 
       console.log('Form data before adding values:', formData);
       if (values.addAmenities === 'no') {
-        values.amenities = []; // Ensure amenities is an empty array
+        values.amenities = []; 
       }
-      // Loop over form values except the image field
       for (const key in values) {
         if (key !== 'image') {
-          formData.append(key, values[key]); // Append each key-value pair
+          formData.append(key, values[key]); 
         }
       }
       console.log('frontend form data');
       
   
-      // Handling the file input for 'image'
       if (values.image) {
-        formData.append('image', values.image); // Appending the file directly
+        formData.append('image', values.image); 
       } else {
         console.log('No image file found');
       }
   
-      // Logging to check the final formData contents
       console.log('Final FormData:', formData.get('image'));
   
       const response = await VendorService(formData); // Submit the formData
       console.log('response', response);
   
-      // Check if the response is successful
       if (response.success) {
         setFormData(values);
         console.log('form values', values);
@@ -55,7 +71,7 @@ export default function VendorRegister() {
         setIsModalVisible(true);
       }
     } catch (error) {
-      console.log('error', error); // Handle any error
+      console.log('error', error); 
     }
   };
   
@@ -111,6 +127,21 @@ export default function VendorRegister() {
                 ]} 
               >
                 <Input placeholder="Enter your phone number" className="bg-white text-black" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                label={<span className="text-black">Category</span>}
+                name="category"
+                rules={[{ required: true, message: 'Please select a category' }]}
+              >
+                <Select placeholder="Select a category">
+                  {categories.map((category) => (
+                    <Select.Option key={category._id} value={category.categoryName}>
+                      {category.name}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
             <Col xs={24} md={12}>
