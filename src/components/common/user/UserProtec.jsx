@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import instance from '../../../utils/Axios'
-// import axios from 'axios';
 
 const UserProtec = () => {
     const [authenticated, setAuthenticated] = useState(null);
@@ -17,7 +16,6 @@ const UserProtec = () => {
               setAuthenticated(false);
             }
           } catch (error) {
-            console.error('Authentication error:', error);
             setAuthenticated(false);
             navigate('/login');
           }
@@ -27,14 +25,14 @@ const UserProtec = () => {
       }, [navigate]);
 
     if (authenticated === null) {
-        return <div>Loading...</div>;  // Loading state while authentication is being checked
+        return <div>Loading...</div>;  
     }
 
-    if (!authenticated) {
-        return <Navigate to="/login" />;  // Redirect to login if not authenticated
+    if (!authenticated) { 
+        return <Navigate to="/login" />;  
     }
 
-    return <Outlet />;  // Render protected routes (children)
-};
+    return <Outlet />;  
+} 
 
 export default UserProtec;

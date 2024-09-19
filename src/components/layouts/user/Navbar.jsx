@@ -23,9 +23,9 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex space-x-8 text-lg font-semibold">
-          <a href="#home" className="text-black hover:text-indigo-200 transition-colors duration-300">
+        <Link to="/" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Home
-          </a>
+          </Link>
           <a href="#about" className="text-black hover:text-indigo-200 transition-colors duration-300">
             About
           </a>
