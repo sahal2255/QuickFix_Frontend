@@ -1,32 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import ActionAreaCard from '../../components/common/CommonCard'; // Updated to ActionAreaCard
+import CommonCard from '../../components/common/CommonCard';
 import Navbar from '../../components/layouts/user/Navbar';
 import ServiceSidebar from '../../components/layouts/user/SideBar';
 import { FilterOutlined } from '@ant-design/icons';
-import { Drawer } from 'antd';
+import { Drawer, Pagination } from 'antd'; // Import Pagination from Ant Design
 import { ServiceGet } from '../../services/user/ServiceSection';
 
 export default function Service() {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [services, setServices] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 1; // Number of items to display per page
 
   const toggleDrawer = () => {
     setDrawerVisible(!drawerVisible);
   };
 
-  // Fetch services
   useEffect(() => {
     const fetchService = async () => {
       try {
         const response = await ServiceGet();
-        console.log('Fetched services:', response);
-        setServices(response); // Store the fetched services
+        console.log('Fetched services', response);
+        setServices(response); // Assuming response is an array of services
       } catch (error) {
-        console.log('Error fetching services:', error);
+        console.log('Error fetching services', error);
       }
     };
     fetchService();
   }, []);
+
+  // Calculate the current items to display based on the current page
+  const indexOfLastService = currentPage * itemsPerPage;
+  const indexOfFirstService = indexOfLastService - itemsPerPage;
+  const currentServices = services.slice(indexOfFirstService, indexOfLastService);
+
+  const totalPages = Math.ceil(services.length / itemsPerPage);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -59,17 +67,23 @@ export default function Service() {
         </Drawer>
 
         {/* Main content */}
-        <main className="flex-grow p-6">
+        <main className="flex-grow pt-24 p-6">
           <div className="w-full max-w-4xl">
+            {/* Grid layout for cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Map through the services and pass each to ActionAreaCard */}
-              {services.length > 0 ? (
-                services.map((service) => (
-                  <ActionAreaCard key={service._id} service={service} />
-                ))
-              ) : (
-                <p className="text-white">No services available</p>
-              )}
+              {currentServices.map((service) => (
+                <CommonCard key={service._id} service={service} />
+              ))}
+            </div>
+            {/* Pagination controls */}
+            <div className="flex justify-center mt-4">
+              <Pagination
+                current={currentPage}
+                pageSize={itemsPerPage}
+                total={services.length}
+                onChange={(page) => setCurrentPage(page)}
+                showSizeChanger={false}
+              />
             </div>
           </div>
         </main>

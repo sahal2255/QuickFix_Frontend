@@ -33,6 +33,11 @@ export default function ActionAreaCard({ service }) {
             {service.location}
           </Typography>
 
+          {/* Display the service category */}
+          <Typography variant="body2" sx={{ color: '#777', marginTop: 1 }}>
+            Category: {service.category || 'N/A'}
+          </Typography>
+
           {/* Display other details like amenities */}
           <Typography variant="body2" sx={{ color: '#777', marginTop: 1 }}>
             Amenities: {service.amenities ? service.amenities.join(', ') : 'N/A'}
