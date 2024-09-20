@@ -17,6 +17,7 @@ export default function UserRoute() {
           <Route path='/signup' element={<UserSignUP />} />
           
           <Route element={<UserProtec />}>
+            
             <Route path='/service' element={<Service />} />
             <Route path='/profile' element={<Profile />}/>
           </Route> 

@@ -13,19 +13,22 @@ export default function UserLogin() {
 
     const onFinish = async (values) => {
         console.log('Success:', values);
-        try{
-            const response=await UserLogingIn(values)
-            showSuccessToast(response.message)
-            navigate('/')
+        try {
+            const response = await UserLogingIn(values);  // Ensure values contain {email, password}
+            showSuccessToast(response.message);
+            navigate('/');
             console.log(response);
-            
-        }catch(error){
-            showErrorToast(error.response.message)
-            console.log(error)
-
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                console.log('Error details:', error.response.data);
+                showErrorToast(error.response.data.message);
+            } else {
+                console.log('Unexpected error:', error);
+                showErrorToast('Login failed. Please try again later.');
+            }
         }
-        
     };
+    ;
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };

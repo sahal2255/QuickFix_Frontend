@@ -22,8 +22,8 @@ function ServiceSidebar() {
   return (
     <Sider
       width={240}
-      className="bg-gray-50 shadow-lg mt-20 border-r border-gray-200 flex flex-col justify-center"
-      style={{ height: '50vh', position: 'fixed', top: '12vh' }} // Adjusted height and vertical centering
+      className="bg-gray-50 shadow-lg  border-r border-gray-200 flex flex-col justify-center"
+      style={{ height: '50vh', position: 'fixed' }} // Adjusted height and vertical centering
     >
       <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">Service Categories</h3>
       <Checkbox.Group

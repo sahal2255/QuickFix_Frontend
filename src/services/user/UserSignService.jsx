@@ -20,6 +20,7 @@ export const UserLogingIn = async (value)=>{
         return response.data
     }catch(error){
         console.log('login service error',error)
+        throw error
     }
     
 }
