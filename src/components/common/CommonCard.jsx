@@ -4,10 +4,19 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import { useNavigate } from 'react-router-dom';
 
 export default function ActionAreaCard({ service }) {
+  const navigate=useNavigate()
+  
+  const handleCardClick=()=>{
+    navigate(`/service/${service._id}`)
+  }
   return (
-    <Card sx={{ maxWidth: 345, borderRadius: 2, boxShadow: 3, overflow: 'hidden' }}>
+    <Card sx={{ maxWidth: 345, borderRadius: 2, boxShadow: 3, overflow: 'hidden' }}
+    onClick={handleCardClick}
+
+    >
       <CardActionArea>
         {/* Dynamically setting the image with fixed width and height */}
         <CardMedia

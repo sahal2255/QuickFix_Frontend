@@ -6,6 +6,7 @@ import HomePage from '../../../pages/user/HomePage';
 import UserProtec from '../../common/user/UserProtec'; // For protected routes
 import Service from '../../../pages/user/Service'; // Protected page
 import Profile from '../../layouts/user/Profile';
+import ServiceDetails from '../../layouts/user/ServiceDetails';
 
 export default function UserRoute() {
   return (
@@ -20,6 +21,8 @@ export default function UserRoute() {
             
             <Route path='/service' element={<Service />} />
             <Route path='/profile' element={<Profile />}/>
+            <Route path="/service/:serviceId" element={<ServiceDetails />} />
+
           </Route> 
         </Routes>
       </BrowserRouter>

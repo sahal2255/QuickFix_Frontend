@@ -1,50 +1,49 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';  // Ensure you have this or use an appropriate cookie handling library
+import Cookies from 'js-cookie';  // For handling cookies in the frontend
 
 const url = import.meta.env.VITE_BASE_URL || 'http://localhost:3002';
-console.log('Backend URL:', url);
 
 const instance = axios.create({
   baseURL: url,
-  withCredentials: true,
+  withCredentials: true, // Allows cookies to be sent along with requests
 });
 
 const refreshAccessToken = async () => {
   try {
     console.log('Attempting to refresh access token...');
-    // Call your refresh token endpoint
-    const response = await instance.get('/refresh-token');
-    console.log('Access token refreshed successfully:', response);
+    const response = await instance.get('/refresh-token'); // Call to refresh access token
+    console.log('Access token refreshed successfully:', response.data);
+    return response.data; // Assuming the new access token comes in response
   } catch (error) {
     console.error('Error refreshing access token:', error);
     throw error;
   }
 };
 
+// Axios response interceptor to handle 401 status and retry after refreshing token
 instance.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;
-    
-    // If token has expired and it is not a retry request
+
+    // Check if access token is expired and it is not already retried
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
-      console.log('Access token expired, attempting to refresh...');
-      originalRequest._retry = true;
+      originalRequest._retry = true; // Mark the request as retried
+
       try {
-        await refreshAccessToken();  // Attempt to refresh token
-        const newAccessToken = Cookies.get('accessToken'); // Get new access token from cookies
-        console.log('New access token retrieved from cookies:', newAccessToken);
-        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-        console.log('Retrying original request with new access token...');
-        return instance(originalRequest);  // Retry the original request with new token
+        const { accessToken } = await refreshAccessToken(); // Refresh the access token
+
+        // Update the original request's Authorization header with the new token
+        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+        Cookies.set('accessToken', accessToken); // Update the access token in cookies
+
+        return instance(originalRequest); // Retry the original request with the new access token
       } catch (err) {
         console.error('Error refreshing token:', err);
-        // Handle error (e.g., redirect to login)
         return Promise.reject(err);
       }
     }
 
-    console.error('Request failed:', error);
     return Promise.reject(error);
   }
 );

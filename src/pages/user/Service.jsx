@@ -10,7 +10,7 @@ export default function Service() {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [services, setServices] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 1; // Number of items to display per page
+  const itemsPerPage = 9; // Number of items to display per page
 
   const toggleDrawer = () => {
     setDrawerVisible(!drawerVisible);
@@ -38,15 +38,19 @@ export default function Service() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Navbar */}
       <header className="fixed top-0 left-0 right-0 z-10 bg-white shadow-lg">
         <Navbar />
       </header>
 
+      {/* Main content area */}
       <div className="flex-grow flex mt-24 bg-gray-700">
+        {/* Sidebar (visible on larger screens) */}
         <aside className="hidden md:flex w-1/4 flex justify-center items-center m-20">
           <ServiceSidebar />
         </aside>
 
+        {/* Mobile filter button */}
         <button
           className="md:hidden fixed top-28 right-4 z-20 bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300"
           onClick={toggleDrawer}
@@ -54,6 +58,7 @@ export default function Service() {
           <FilterOutlined style={{ fontSize: '24px', color: '#4A5568' }} />
         </button>
 
+        {/* Drawer for mobile view */}
         <Drawer
           title="Service Categories"
           placement="left"
@@ -66,8 +71,8 @@ export default function Service() {
           <ServiceSidebar />
         </Drawer>
 
-        {/* Main content */}
-        <main className="flex-grow pt-24 p-6">
+        {/* Main content area with cards and pagination */}
+        <main className="flex-grow flex flex-col justify-between pt-24 p-6">
           <div className="w-full max-w-4xl">
             {/* Grid layout for cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -75,16 +80,17 @@ export default function Service() {
                 <CommonCard key={service._id} service={service} />
               ))}
             </div>
-            {/* Pagination controls */}
-            <div className="flex justify-center mt-4">
-              <Pagination
-                current={currentPage}
-                pageSize={itemsPerPage}
-                total={services.length}
-                onChange={(page) => setCurrentPage(page)}
-                showSizeChanger={false}
-              />
-            </div>
+          </div>
+
+          {/* Pagination controls (stick to bottom) */}
+          <div className="flex justify-center mt-4">
+            <Pagination
+              current={currentPage}
+              pageSize={itemsPerPage}
+              total={services.length}
+              onChange={(page) => setCurrentPage(page)}
+              showSizeChanger={false}
+            />
           </div>
         </main>
       </div>

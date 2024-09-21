@@ -17,7 +17,7 @@ export default function UserLogin() {
             const response = await UserLogingIn(values);  // Ensure values contain {email, password}
             showSuccessToast(response.message);
             navigate('/');
-            console.log(response);
+            // console.log(response);
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
                 console.log('Error details:', error.response.data);
