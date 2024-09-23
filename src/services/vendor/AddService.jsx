@@ -17,3 +17,13 @@ export const handleAddService = async (data) => {
       throw error; // Optionally rethrow the error to handle it in the caller
     }
   }
+
+  export const handleGetServices=async()=>{
+    console.log('found the frontend get service router')
+    try{
+      const response=await instance.get('/vendor/serviceget')
+      return response.data
+    }catch(error){
+      console.log('frontend router error')
+    }
+  }

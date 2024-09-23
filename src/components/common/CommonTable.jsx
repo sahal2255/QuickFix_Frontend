@@ -18,8 +18,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: "1rem",
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme, isodd }) => ({
-    backgroundColor: isodd ? theme.palette.action.hover : "#fff",
+const StyledTableRow = styled(TableRow)(({ theme, odd }) => ({
+    backgroundColor: odd ? theme.palette.action.hover : "#fff",
     "&:hover": {
         backgroundColor: theme.palette.action.selected,
     },
@@ -53,22 +53,21 @@ export default function CommonTable({ columns = [], rows = [], onAllowClick }) {
                     </TableHead>
                     <TableBody>
                         {rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-                            <StyledTableRow key={index} isodd={index % 2 === 0}>
+                            <StyledTableRow key={index} style={{ backgroundColor: index % 2 === 0 ? 'inherit' : theme => theme.palette.action.hover }}>
                                 {columns.map((column) => (
                                     <TableCell key={column.id} align={column.align || "left"}>
-                                    {/* If it's the action column, show the button */}
-                                    {column.id === "action" ? (
-                                        <Button
-                                            variant="contained"
-                                            color={row.isEnabled ? "secondary" : "primary"}  // Change button color
-                                            onClick={() => onAllowClick(row)}  // Pass vendor data on click
-                                        >
-                                            {row.isEnabled ? "Block" : "Allow"}  {/* Change button text */}
-                                        </Button>
-                                    ) : (
-                                        row[column.id] || 'N/A'
-                                    )}
-                                </TableCell>
+                                        {column.id === "action" ? (
+                                            <Button
+                                                variant="contained"
+                                                color={row.isEnabled ? "secondary" : "primary"}
+                                                onClick={() => onAllowClick(row)}
+                                            >
+                                                {row.isEnabled ? "Block" : "Allow"}
+                                            </Button>
+                                        ) : (
+                                            row[column.id] || 'N/A'
+                                        )}
+                                    </TableCell>
                                 ))}
                             </StyledTableRow>
                         ))}

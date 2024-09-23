@@ -62,16 +62,16 @@ export default function VendorSidebar() {
                         </ListItem>
                     </Link>
 
-                    <Link to="/vendor/dashboard/add-service">
+                    {/* <Link to="/vendor/dashboard/add-service">
                         <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
                             <ListItemPrefix>
                                 <Cog6ToothIcon className="h-7 w-7 text-blue-gray-300" />
                             </ListItemPrefix>
                             <Typography className="font-medium text-lg">Add Service</Typography>
                         </ListItem>
-                    </Link>
+                    </Link> */}
 
-                    <Link to="/vendor/services">
+                    <Link to="/vendor/dashboard/services">
                         <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
                             <ListItemPrefix>
                                 <BriefcaseIcon className="h-7 w-7 text-blue-gray-300" />
