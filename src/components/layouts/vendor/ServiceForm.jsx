@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CommonForm from '../../common/CommonForm';
 import { CategoryGet } from '../../../services/vendor/VendorGet';
-import { handleAddService } from '../../../services/vendor/VendorService';
+import { handleAddService } from '../../../services/vendor/AddService';
 
 export default function ServiceForm() {
   const [categories,setCategories]=useState([])
@@ -78,6 +78,7 @@ export default function ServiceForm() {
     for (const pair of data.entries()) {
       console.log(`${pair[0]}, ${pair[1]}`);
     }
+    
     try {
       const response = await handleAddService(formData);  // Passing FormData to service
       console.log('Response after submitting service:', response);

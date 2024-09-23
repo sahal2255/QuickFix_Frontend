@@ -11,9 +11,9 @@ const instance = axios.create({
 const refreshAccessToken = async () => {
   try {
     console.log('Attempting to refresh access token...');
-    const response = await instance.get('/refresh-token'); // Call to refresh access token
+    const response = await instance.get('/refresh-token');  // Call refresh token endpoint
     console.log('Access token refreshed successfully:', response.data);
-    return response.data; // Assuming the new access token comes in response
+    return response.data;  // Assuming the new access token comes in response
   } catch (error) {
     console.error('Error refreshing access token:', error);
     throw error;
@@ -40,11 +40,11 @@ instance.interceptors.response.use(
         return instance(originalRequest); // Retry the original request with the new access token
       } catch (err) {
         console.error('Error refreshing token:', err);
-        return Promise.reject(err);
+        return Promise.reject(err);  // Reject the request if refresh fails
       }
     }
 
-    return Promise.reject(error);
+    return Promise.reject(error);  // Reject other errors
   }
 );
 
