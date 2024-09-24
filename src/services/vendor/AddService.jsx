@@ -27,3 +27,7 @@ export const handleAddService = async (data) => {
       console.log('frontend router error')
     }
   }
+
+  export const updateService=async()=>{
+    console.log('hel')
+  }

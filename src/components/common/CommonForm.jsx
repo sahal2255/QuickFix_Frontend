@@ -23,7 +23,6 @@ export default function CommonForm({
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-lg font-semibold mb-4">Create New Service</h2>
       <Form
         form={form}
         layout="vertical"
