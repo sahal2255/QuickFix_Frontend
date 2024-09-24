@@ -6,6 +6,7 @@ import VendorLogin from '../../../pages/vendor/VendorLogin';
 import ServiceForm from '../../layouts/vendor/ServiceForm';
 import VenderProtect from '../../common/vender/VenderProtect';
 import FullService from '../../layouts/vendor/FullServices';
+import VendorProfile from '../../layouts/vendor/VendorProfile';
 
 const VendorRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const VendorRoutes = () => {
         >
           <Route path='add-service' element={<ServiceForm />} />
           <Route path='services' element={<FullService />} />
+          <Route path='profile' element={<VendorProfile />}/>
         </Route>
       </Routes>
     </BrowserRouter>

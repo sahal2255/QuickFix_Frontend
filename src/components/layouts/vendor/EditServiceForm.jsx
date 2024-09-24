@@ -7,8 +7,8 @@ import { showSuccessToast } from '../../common/Toastify';
 export default function EditServiceForm({ initialData, onClose, onUpdateService }) {
     const [categories, setCategories] = useState([]);
     const [formData, setFormData] = useState(initialData);
-    console.log('selected edit data',formData)
 
+    // Fetch categories on component mount
     useEffect(() => {
         const fetchedCategories = async () => {
             try {
@@ -21,11 +21,19 @@ export default function EditServiceForm({ initialData, onClose, onUpdateService 
         fetchedCategories();
     }, []);
 
-    // Update formData when initialData changes
     useEffect(() => {
-        setFormData(initialData);
+        if (initialData) {
+            setFormData(initialData);
+        }
     }, [initialData]);
-
+    console.log('category',formData.categoryType)
+    console.log('name',formData.serviceName);
+    console.log('price',formData.price);
+    console.log('duration',formData.duration);
+    console.log('image',formData.serviceImage)
+    
+    
+    
     const formFields = [
         {
             name: 'categoryType',
@@ -89,7 +97,7 @@ export default function EditServiceForm({ initialData, onClose, onUpdateService 
 
     return (
         <div>
-            <CommonForm formFields={formFields} onSubmit={handleSubmit} />
+            <CommonForm formFields={formFields} initialValues={formData} onSubmit={handleSubmit} />
         </div>
     );
 }
