@@ -4,7 +4,7 @@ import { CategoryGet } from '../../../services/vendor/VendorGet';
 import { handleAddService } from '../../../services/vendor/AddService';
 import { showSuccessToast } from '../../common/Toastify';
 
-export default function ServiceForm({onClose,onAddService}) {
+export default function ServiceForm({onCancel,onAddService}) {
   const [categories,setCategories]=useState([])
   const [formData,setFormData]=useState({})
 
@@ -88,7 +88,7 @@ export default function ServiceForm({onClose,onAddService}) {
       if (response && response.success) {
         console.log('Newly added service:', response.newService);
         onAddService(response.newService);
-        onClose(); // Trigger the onClose function to close the modal
+        onCancel(); // Trigger the onClose function to close the modal
         showSuccessToast(response.message)
       }
     } catch (error) {

@@ -90,7 +90,7 @@ const FullService = () => {
   };
 
   // Format the service data for the table rows
-  const rows = services
+  const rows = services 
     .filter(service => service && service._id) // Ensure each service is valid
     .map((service) => ({
       id: service._id,
@@ -124,8 +124,8 @@ const FullService = () => {
       {/* Render the CommonTable with the formatted columns and rows */}
       <CommonTable columns={columns} rows={rows} />
 
-      <CommonModal open={showForm} onClose={closeFormModal}>
-        <ServiceForm onClose={closeFormModal} onAddService={addService} />
+      <CommonModal open={showForm} onCancel={closeFormModal}>
+        <ServiceForm onCancel={closeFormModal} onAddService={addService} />
       </CommonModal>
 
       <CommonModal open={viewModal} onCancel={closeViewModal}>

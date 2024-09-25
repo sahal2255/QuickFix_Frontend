@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { VendorProfileGet } from '../../../services/vendor/ProfileService'
+import { useNavigate } from 'react-router-dom';
+import CommonModal from '../../common/CommonModal';
+import EditProfileForm from './EditProfileForm';
 
 export default function VendorProfile() {
   const [vendorData, setVendorData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [viewModal,setViewModal]=useState(false)
+  const navigate=useNavigate()
+
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -20,14 +26,21 @@ export default function VendorProfile() {
   }, []);
 
   const handleEditProfile = () => {
-    // Logic for editing the profile (redirect or show modal)
     console.log('Edit Profile clicked');
+    setViewModal(true)
+  };
+  const closeEditModal=()=>{
+    setViewModal(false)
+  }
+  const handleLogout = async() => {
+   console.log('heloo world');
+   
   };
 
-  const handleLogout = () => {
-    // Logic for logging out (redirect or API call)
-    console.log('Logout clicked');
-  };
+  const handleUpdatedProfile=(updatedData)=>{
+    setVendorData(updatedData)
+    closeEditModal()
+  }
 
   if (loading) {
     return (
@@ -50,7 +63,6 @@ export default function VendorProfile() {
       <div className="max-w-4xl w-full bg-white shadow-lg rounded-2xl overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2">
           
-          {/* Vendor Image Section */}
           <div className="bg-gray-800 flex items-center justify-center">
             <div className="text-center p-8">
               <img
@@ -63,7 +75,6 @@ export default function VendorProfile() {
             </div>
           </div>
 
-          {/* Vendor Information Section */}
           <div className="p-8">
             <div className="space-y-3">
               <div className="flex justify-between">
@@ -92,7 +103,6 @@ export default function VendorProfile() {
               </div>
             </div>
 
-            {/* Amenities */}
             <div className="mt-6">
               <h3 className="text-lg font-semibold text-gray-700">Amenities:</h3>
               <ul className="flex space-x-3 mt-2">
@@ -107,7 +117,6 @@ export default function VendorProfile() {
               </ul>
             </div>
 
-            {/* Buttons for Edit and Logout */}
             <div className="mt-8 flex justify-between">
               <button
                 onClick={handleEditProfile}
@@ -125,6 +134,9 @@ export default function VendorProfile() {
           </div>
         </div>
       </div>
+      <CommonModal open={viewModal} onCancel={closeEditModal}>
+            <EditProfileForm onCancel={closeEditModal} initialData={vendorData} onUpdateSuccess={handleUpdatedProfile}/>
+      </CommonModal>
     </div>
   );
 }
