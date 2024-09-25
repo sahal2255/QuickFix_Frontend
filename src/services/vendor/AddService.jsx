@@ -19,7 +19,6 @@ export const handleAddService = async (data) => {
   }
 
   export const handleGetServices=async()=>{
-    console.log('found the frontend get service router')
     try{
       const response=await instance.get('/vendor/serviceget')
       return response.data
@@ -28,6 +27,16 @@ export const handleAddService = async (data) => {
     }
   }
 
-  export const updateService=async()=>{
-    console.log('hel')
+  export const updateService=async(serviceId,data)=>{
+    console.log('hel',serviceId)
+    try{
+      const response=await instance.put(`/vendor/updateservice/${serviceId}`,data,{
+        headers:{
+          'Content-Type': 'multipart/form-data',
+        }
+      })      
+      return response.data
+    }catch(error){
+      console.log('error for updating service in the frontend servie',error)
+    }
   }

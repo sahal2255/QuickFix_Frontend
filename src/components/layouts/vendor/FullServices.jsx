@@ -73,21 +73,16 @@ const FullService = () => {
     );
   };
 
-  const handleUpdateService = async (updatedService) => {
-    try {
-      const response = await updateService(updatedService); // Assuming the backend call for updating service
-      if (response.success) {
-        setServices((prevServices) =>
-          prevServices.map((service) =>
+  const handleUpdateService = (updatedService) => {
+    setServices((prevServices) =>
+        prevServices.map((service) =>
             service._id === updatedService._id ? updatedService : service
-          )
-        );
-        closeViewModal(); // Close modal after successful update
-      }
-    } catch (error) {
-      console.error('Error updating service:', error);
-    }
-  };
+        )
+    );
+    closeViewModal(); // Close the modal after updating the service
+};
+
+
 
   // Format the service data for the table rows
   const rows = services 

@@ -10,7 +10,7 @@ export default function EditServiceForm({ initialData, onClose, onUpdateService 
 
     // Fetch categories on component mount
     useEffect(() => {
-        const fetchedCategories = async () => {
+        const fetchCategories = async () => {
             try {
                 const fetchedServiceCategory = await CategoryGet();
                 setCategories(fetchedServiceCategory);
@@ -18,7 +18,7 @@ export default function EditServiceForm({ initialData, onClose, onUpdateService 
                 console.log('Failed to fetch categories', error);
             }
         };
-        fetchedCategories();
+        fetchCategories();
     }, []);
 
     useEffect(() => {
@@ -26,14 +26,7 @@ export default function EditServiceForm({ initialData, onClose, onUpdateService 
             setFormData(initialData);
         }
     }, [initialData]);
-    console.log('category',formData.categoryType)
-    console.log('name',formData.serviceName);
-    console.log('price',formData.price);
-    console.log('duration',formData.duration);
-    console.log('image',formData.serviceImage)
-    
-    
-    
+
     const formFields = [
         {
             name: 'categoryType',
@@ -41,33 +34,33 @@ export default function EditServiceForm({ initialData, onClose, onUpdateService 
             type: 'select',
             options: categories,
             rules: [{ required: true, message: 'Please select a category' }],
-            initialValue: formData.categoryType || '', // Pre-fill categoryType
+            initialValue: formData.categoryType || '',
         },
         {
             name: 'serviceName',
             label: 'Service Name',
             type: 'input',
             rules: [{ required: true, message: 'Please enter the service name' }],
-            initialValue: formData.serviceName || '', // Pre-fill serviceName
+            initialValue: formData.serviceName || '',
         },
         {
             name: 'price',
             label: 'Price',
             type: 'number',
             rules: [{ required: true, message: 'Please enter the price' }],
-            initialValue: formData.price || '', // Pre-fill price
+            initialValue: formData.price || '',
         },
         {
             name: 'duration',
             label: 'Duration (Day)',
             type: 'number',
             rules: [{ required: true, message: 'Please enter the duration' }],
-            initialValue: formData.duration || '', // Pre-fill duration
+            initialValue: formData.duration || '',
         },
         {
             name: 'image',
             label: 'Upload Image',
-            type: 'file', // Change type to 'file'
+            type: 'file',
             rules: [{ required: false }],
         },
     ];
@@ -78,22 +71,31 @@ export default function EditServiceForm({ initialData, onClose, onUpdateService 
         data.append('serviceName', updatedFormData.serviceName);
         data.append('price', updatedFormData.price);
         data.append('duration', updatedFormData.duration);
-
+        
         if (updatedFormData.image) {
-            data.append('file', updatedFormData.image); // If a new image is uploaded
+            data.append('image', updatedFormData.image); // The key should match what your backend expects
+        } else {
+            console.error('No image file found');
         }
-
+    
+        // Log FormData contents
+        for (let pair of data.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
+        }
+    
         try {
-            const response = await updateService(formData._id, data); // Assuming updateService accepts the service ID and new data
+            const response = await updateService(formData._id, data);
             if (response && response.success) {
-                onUpdateService(response.updatedService); // Call the parent function to update the service in the list
-                onClose(); // Close the modal
+                onUpdateService(response.updatedService);
+                onClose();
                 showSuccessToast('Service updated successfully');
             }
         } catch (error) {
             console.log('Error updating service:', error);
         }
-    };
+    }
+    
+    
 
     return (
         <div>

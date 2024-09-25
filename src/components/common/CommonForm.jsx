@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Select, Button, Upload, InputNumber } from 'antd';
+import { Form, Input, Select, Button, InputNumber } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -10,14 +10,16 @@ export default function CommonForm({
   onSubmit,
 }) {
   const [form] = Form.useForm();
-  const [file, setFile] = useState([]);
-
+  const [file, setFile] = useState(null); // Change from array to single file
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
   };
+
   const handleSubmit = (values) => {
-    const formData = { ...values, image: file };
+    const formData = { ...values, image: file }; // Pass the file as 'image'
     onSubmit(formData);
   };
 
@@ -33,7 +35,7 @@ export default function CommonForm({
         {/* Dynamically map through formFields and render the fields */}
         {formFields.map((field) => (
           <Form.Item
-            key={field.name} // Use field.name for a unique key
+            key={field.name}
             name={field.name}
             label={field.label}
             rules={field.rules}
