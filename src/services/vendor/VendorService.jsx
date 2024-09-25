@@ -64,17 +64,21 @@ export const vendorLogin=async(values)=>{
   }
 }
 
-export const handleLogout = async()=>{
-  try{
-    console.log('enter the logoaut serve');
-    const response = await Instance.post('/vendor/logout')
-    console.log('Logout Success',response);
-    
-  }catch(error){
-    console.error('Error during logout:', error.response?.data || error.message);
-        throw error;
+export const handleLogout = async () => {
+  try {
+      console.log('Entering the logout service');
+      
+      const response = await Instance.post('/vendor/logout', {}, {
+          withCredentials: true, // Ensure cookies are sent in the request
+      });
+
+      console.log('Logout success', response.data);
+      return response.data
+  } catch (error) {
+      console.error('Error during logout:', error.response?.data || error.message);
+      throw error;
   }
-}
+};
 
 
 

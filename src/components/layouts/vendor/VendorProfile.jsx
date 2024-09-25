@@ -3,7 +3,8 @@ import { VendorProfileGet } from '../../../services/vendor/ProfileService'
 import { useNavigate } from 'react-router-dom';
 import CommonModal from '../../common/CommonModal';
 import EditProfileForm from './EditProfileForm';
-
+import { handleLogout } from '../../../services/vendor/VendorService';
+import { showSuccessToast,showErrorToast } from '../../common/Toastify';
 export default function VendorProfile() {
   const [vendorData, setVendorData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,10 +33,26 @@ export default function VendorProfile() {
   const closeEditModal=()=>{
     setViewModal(false)
   }
-  const handleLogout = async() => {
-   console.log('heloo world');
-   
-  };
+  const onLogout = async () => {
+    try {
+        console.log('click logout');
+        const response = await handleLogout();
+        console.log('Logout Response:', response);
+        
+        showSuccessToast(response.message);
+        navigate('/vendor/login'); // Redirect after successful logout
+    } catch (error) {
+        console.error('Logout failed, error details:', error);
+        if (error.response) {
+            console.error('Server responded with error:', error.response.data);
+        } else if (error.request) {
+            console.error('No response from the server:', error.request);
+        } else {
+            console.error('Error during logout:', error.message);
+        }
+    }
+};
+
 
   const handleUpdatedProfile=(updatedData)=>{
     setVendorData(updatedData)
@@ -125,7 +142,7 @@ export default function VendorProfile() {
                 Edit Profile
               </button>
               <button
-                onClick={handleLogout}
+                onClick={onLogout}
                 className="bg-red-500 text-white py-2 px-6 rounded-lg shadow hover:bg-red-600 transition duration-200"
               >
                 Logout
