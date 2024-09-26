@@ -44,7 +44,7 @@ export default function Service() {
       </header>
 
       {/* Main content area */}
-      <div className="flex-grow flex mt-24 bg-gray-700">
+      <div className="flex-grow flex mt-24 ">
         {/* Sidebar (visible on larger screens) */}
         <aside className="hidden md:flex w-1/4 flex justify-center items-center m-20">
           <ServiceSidebar />

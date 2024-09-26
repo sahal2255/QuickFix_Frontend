@@ -43,12 +43,6 @@ export default function Profile() {
     <div className="max-w-lg mx-auto mt-12 bg-white p-10 rounded-2xl shadow-2xl border border-gray-300 overflow-hidden">
       {/* Profile Header */}
       <div className="relative flex flex-col items-center mb-8">
-        {/* Avatar */}
-        <img
-          src={userData.avatar || "https://via.placeholder.com/120"}
-          alt="Profile Avatar"
-          className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-xl"
-        />
         
         <h2 className="text-5xl font-extrabold text-gray-800 mt-6 mb-2">{userData.userName || 'No Name'}</h2>
         <p className="text-gray-600 text-xl">{userData.email || 'No Email'}</p>

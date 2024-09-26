@@ -7,52 +7,74 @@ import CardActionArea from '@mui/material/CardActionArea';
 import { useNavigate } from 'react-router-dom';
 
 export default function ActionAreaCard({ service }) {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   
-  const handleCardClick=()=>{
-    navigate(`/service/${service._id}`)
-  }
-  return (
-    <Card sx={{ maxWidth: 345, borderRadius: 2, boxShadow: 3, overflow: 'hidden' }}
-    onClick={handleCardClick}
+  const handleCardClick = () => {
+    navigate(`/service/${service._id}`);
+  };
 
+  return (
+    <Card
+      sx={{
+        maxWidth: 345,
+        borderRadius: 3,
+        boxShadow: 5,
+        overflow: 'hidden',
+        transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+        '&:hover': {
+          transform: 'translateY(-8px)',
+          boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+        },
+        '&:hover .MuiTypography-h5': {
+          background: 'linear-gradient(45deg, #f3ec78, #af4261)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        },
+      }}
+      onClick={handleCardClick}
     >
       <CardActionArea>
-        {/* Dynamically setting the image with fixed width and height */}
         <CardMedia
           component="img"
           sx={{
-            width: '100%', // Set the width to 100% of the card
-            height: 200, // Set a fixed height
-            objectFit: 'cover', // Cover the area while maintaining aspect ratio
-            borderTopLeftRadius: 2,
-            borderTopRightRadius: 2,
+            width: '100%', 
+            height: 200, 
+            objectFit: 'cover', 
           }}
-          image={service.image || "/static/images/cards/default-image.jpg"} // Use default if no image
+          image={service.image || "/static/images/cards/default-image.jpg"} 
           alt={service.name}
         />
-        <CardContent>
-          {/* Display the service name */}
-          <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', color: '#333' }}>
+        <CardContent sx={{ padding: '16px' }}>
+          {/* Service name with a gradient hover effect */}
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            sx={{
+              fontWeight: 'bold',
+              color: '#333',
+              transition: 'background 0.3s ease',
+            }}
+          >
             {service.name}
           </Typography>
 
-          {/* Display the location */}
+          {/* Location */}
           <Typography variant="body2" sx={{ color: '#555', fontStyle: 'italic' }}>
             {service.location}
           </Typography>
 
-          {/* Display the service category */}
+          {/* Category */}
           <Typography variant="body2" sx={{ color: '#777', marginTop: 1 }}>
             Category: {service.category || 'N/A'}
           </Typography>
 
-          {/* Display other details like amenities */}
+          {/* Amenities */}
           <Typography variant="body2" sx={{ color: '#777', marginTop: 1 }}>
             Amenities: {service.amenities ? service.amenities.join(', ') : 'N/A'}
           </Typography>
 
-          {/* Optionally display email or other fields */}
+          {/* Contact */}
           <Typography variant="body2" sx={{ color: '#777', marginTop: 1 }}>
             Contact: {service.email}
           </Typography>

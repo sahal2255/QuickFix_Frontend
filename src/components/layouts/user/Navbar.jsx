@@ -11,7 +11,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-gradient-to-r bg-white shadow-lg fixed w-full z-50">
+    <nav className="bg-white shadow-lg fixed w-full z-50">
       <div className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center">
           <img 
@@ -22,16 +22,17 @@ export default function Navbar() {
           <FaBars onClick={toggleMenu} className="cursor-pointer md:hidden text-black" />
         </div>
 
+        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 text-lg font-semibold">
-        <Link to="/" className="text-black hover:text-indigo-200 transition-colors duration-300">
+          <Link to="/" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Home
           </Link>
           <a href="#about" className="text-black hover:text-indigo-200 transition-colors duration-300">
             About
           </a>
-          <a href="/service" className="text-black hover:text-indigo-200 transition-colors duration-300">
+          <Link to="/service" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Services
-          </a>
+          </Link>
           <a href="#contact" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Contact
           </a>
@@ -41,7 +42,8 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="text-2xl text-black">
+        {/* Profile Icon for Desktop */}
+        <div className="text-2xl text-black md:hidden">
           <Link to="/profile">
             <FaUser className="hover:text-indigo-200 cursor-pointer transition-colors duration-300" />
           </Link>
@@ -59,20 +61,20 @@ export default function Navbar() {
           <FaTimes onClick={toggleMenu} className="text-gray-800 cursor-pointer" />
         </div>
         <div className="p-4 space-y-4">
-          <a href="#home" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
+          <Link to="/" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Home
-          </a>
-          <a href="#about" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
+          </Link>
+          <a href="#about" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             About
           </a>
-          <a href="/service" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
+          <Link to="/service" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Services
-          </a>
-          <a href="#contact" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
+          </Link>
+          <a href="#contact" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Contact
           </a>
           {/* Add Profile Link in Mobile Menu */}
-          <Link to="/profile" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300">
+          <Link to="/profile" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Profile
           </Link>
         </div>

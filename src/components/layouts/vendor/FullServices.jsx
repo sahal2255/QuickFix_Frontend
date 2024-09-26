@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import CommonModal from '../../common/CommonModal';
 import ServiceForm from './ServiceForm';
 import EditServiceForm from './EditServiceForm';
-import { handleGetServices } from '../../../services/vendor/AddService'; // Assuming updateService is defined
+import { handleGetServices } from '../../../services/vendor/AddService';
 
 // Define table columns
 const columns = [
@@ -75,14 +75,12 @@ const FullService = () => {
 
   const handleUpdateService = (updatedService) => {
     setServices((prevServices) =>
-        prevServices.map((service) =>
-            service._id === updatedService._id ? updatedService : service
-        )
+      prevServices.map((service) =>
+        service._id === updatedService._id ? updatedService : service
+      )
     );
     closeViewModal(); // Close the modal after updating the service
-};
-
-
+  };
 
   // Format the service data for the table rows
   const rows = services 
@@ -116,8 +114,14 @@ const FullService = () => {
         </Button>
       </div>
 
-      {/* Render the CommonTable with the formatted columns and rows */}
-      <CommonTable columns={columns} rows={rows} />
+      {services.length === 0 ? ( // Check if there are no services
+        <div className="text-center text-lg text-gray-600">
+          No services available.
+        </div>
+      ) : (
+        // Render the CommonTable with the formatted columns and rows
+        <CommonTable columns={columns} rows={rows} />
+      )}
 
       <CommonModal open={showForm} onCancel={closeFormModal}>
         <ServiceForm onCancel={closeFormModal} onAddService={addService} />

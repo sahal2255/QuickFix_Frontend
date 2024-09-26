@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Checkbox } from 'antd';
-import { Layout } from 'antd';
-import { CheckOutlined } from '@ant-design/icons'; // Optional for checkbox icon styling
+import { Layout, Divider } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
+// import 'antd/dist/antd.css'; // Import Ant Design CSS
 
 const { Sider } = Layout;
 
@@ -21,17 +22,64 @@ function ServiceSidebar() {
 
   return (
     <Sider
-      width={240}
-      className="bg-gray-50 shadow-lg  border-r border-gray-200 flex flex-col justify-center"
-      style={{ height: '50vh', position: 'fixed' }} // Adjusted height and vertical centering
+      width={260}
+      className="shadow-lg"
+      style={{
+        padding: '20px',
+        backgroundColor: '#f9f9f9',
+        height: 'auto',
+        position: 'fixed',
+        borderRadius: '12px',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+        border: '1px solid #ddd',
+      }}
     >
-      <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">Service Categories</h3>
+      <h3
+        style={{
+          fontSize: '1.5rem',
+          fontWeight: 'bold',
+          color: '#333',
+          textAlign: 'center',
+          marginBottom: '20px',
+        }}
+      >
+        Service Categories
+      </h3>
+      
+      <Divider style={{ margin: '12px 0' }} />
+
+      {/* Checkbox Group with Animated Hover and Custom Styles */}
       <Checkbox.Group
-        options={serviceCategories}
         value={selectedServices}
         onChange={handleChange}
-        className="flex flex-col gap-4 px-4"
-      />
+        style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+      >
+        {serviceCategories.map((category, index) => (
+          <Checkbox
+            key={index}
+            value={category}
+            style={{
+              fontSize: '1rem',
+              fontWeight: '500',
+              color: '#555',
+              padding: '8px 10px',
+              borderRadius: '6px',
+              transition: 'all 0.2s ease',
+              cursor: 'pointer',
+              backgroundColor: selectedServices.includes(category) ? '#f0f0f0' : 'transparent',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+            className="hover:bg-blue-50 hover:shadow-md hover:text-blue-500"
+          >
+            {category}
+            {selectedServices.includes(category) && (
+              <CheckOutlined style={{ color: '#1890ff' }} />
+            )}
+          </Checkbox>
+        ))}
+      </Checkbox.Group>
     </Sider>
   );
 }

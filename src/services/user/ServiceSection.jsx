@@ -20,3 +20,7 @@ export const ServiceGetById=async(serviceId)=>{
         console.log('error for the single service',error)
     }
 }
+
+// export const ServiceTypeGet=async(serviceId)=>{
+//     const response
+// }

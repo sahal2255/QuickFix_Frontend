@@ -21,6 +21,7 @@ export const handleAddService = async (data) => {
   export const handleGetServices=async()=>{
     try{
       const response=await instance.get('/vendor/serviceget')
+      console.log('service',response.data)
       return response.data
     }catch(error){
       console.log('frontend router error')
