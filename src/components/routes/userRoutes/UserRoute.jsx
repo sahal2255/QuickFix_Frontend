@@ -7,6 +7,7 @@ import UserProtec from '../../common/user/UserProtec'; // For protected routes
 import Service from '../../../pages/user/Service'; // Protected page
 import Profile from '../../layouts/user/Profile';
 import ServiceDetails from '../../layouts/user/ServiceDetails';
+import ProfilePage from '../../../pages/user/ProfilePage'
 
 export default function UserRoute() {
   return (
@@ -20,7 +21,7 @@ export default function UserRoute() {
           <Route element={<UserProtec />}>
             
             <Route path='/service' element={<Service />} />
-            <Route path='/profile' element={<Profile />}/>
+            <Route path='/profile' element={<ProfilePage />}/>
             <Route path="/service/:serviceId" element={<ServiceDetails />} />
 
           </Route> 
