@@ -5,11 +5,13 @@ import ServiceSidebar from '../../components/layouts/user/SideBar';
 import { FilterOutlined } from '@ant-design/icons';
 import { Drawer, Pagination } from 'antd'; // Import Pagination from Ant Design
 import { ServiceGet } from '../../services/user/ServiceSection';
+import SearchBar from '../../components/common/SearchBar'; 
 
 export default function Service() {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [services, setServices] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
   const itemsPerPage = 9; // Number of items to display per page
 
   const toggleDrawer = () => {
@@ -18,16 +20,16 @@ export default function Service() {
 
   useEffect(() => {
     const fetchService = async () => {
+      console.log('search location',searchQuery)
       try {
-        const response = await ServiceGet();
-        console.log('Fetched services', response);
+        const response = await ServiceGet(searchQuery); // Pass the search query to the API
         setServices(response); // Assuming response is an array of services
       } catch (error) {
         console.log('Error fetching services', error);
       }
     };
     fetchService();
-  }, []);
+  }, [searchQuery]);
 
   // Calculate the current items to display based on the current page
   const indexOfLastService = currentPage * itemsPerPage;
@@ -71,18 +73,28 @@ export default function Service() {
           <ServiceSidebar />
         </Drawer>
 
+
         {/* Main content area with cards and pagination */}
-        <main className="flex-grow flex flex-col justify-between pt-24 p-6">
-          <div className="w-full max-w-4xl">
+         <main className="flex-grow flex flex-col justify-between pt-24 p-6">
+          <div className="w-full max-w-4xl mx-auto">
+            {/* Search Bar */}
+            <SearchBar onSearch={(query) => setSearchQuery(query)} /> {/* Add search functionality */}
+
             {/* Grid layout for cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {currentServices.map((service) => (
-                <CommonCard key={service._id} service={service} />
-              ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+              {currentServices.length > 0 ? (
+                currentServices.map((service) => (
+                  <CommonCard key={service._id} service={service} />
+                ))
+              ) : (
+                <div className="col-span-full text-center text-gray-500">
+                  No services found.
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Pagination controls (stick to bottom) */}
+          {/* Pagination controls */}
           <div className="flex justify-center mt-4">
             <Pagination
               current={currentPage}
@@ -93,6 +105,7 @@ export default function Service() {
             />
           </div>
         </main>
+
       </div>
     </div>
   );

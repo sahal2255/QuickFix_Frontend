@@ -27,16 +27,15 @@ export default function Navbar() {
           <Link to="/" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Home
           </Link>
-          <a href="#about" className="text-black hover:text-indigo-200 transition-colors duration-300">
+          <Link to="#about" className="text-black hover:text-indigo-200 transition-colors duration-300">
             About
-          </a>
+          </Link>
           <Link to="/service" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Services
           </Link>
-          <a href="#contact" className="text-black hover:text-indigo-200 transition-colors duration-300">
+          <Link to="#contact" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Contact
-          </a>
-          {/* Add Profile Link */}
+          </Link>
           <Link to="/profile" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Profile
           </Link>
@@ -64,16 +63,15 @@ export default function Navbar() {
           <Link to="/" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Home
           </Link>
-          <a href="#about" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
+          <Link to="#about" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             About
-          </a>
+          </Link>
           <Link to="/service" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Services
           </Link>
-          <a href="#contact" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
+          <Link to="#contact" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Contact
-          </a>
-          {/* Add Profile Link in Mobile Menu */}
+          </Link>
           <Link to="/profile" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Profile
           </Link>

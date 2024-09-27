@@ -56,7 +56,7 @@ export default function ServiceDetails() {
         />
 
         {/* Flex container for sidebar and details */}
-        <div className="flex flex-col md:flex-row md:space-x-6 max-w-7xl mx-auto space-y-6 md:space-y-0">
+        <div className="flex flex-col pt-4 md:flex-row md:space-x-6 max-w-7xl mx-auto space-y-6 md:space-y-0">
           {/* Sidebar (Full width on mobile, 1/3 width on md and larger) */}
           <div className="w-full md:w-1/3">
             <ServiceSidebar 
@@ -72,9 +72,9 @@ export default function ServiceDetails() {
             {selectedService ? (
               <>
                 {/* Service Image */}
-                {selectedService.image && (
+                {selectedService.serviceImage && (
                   <img 
-                    src={selectedService.imageUrl} 
+                    src={selectedService.serviceImage} 
                     alt={selectedService.serviceName} 
                     className="w-full h-64 object-cover rounded-lg mb-6" 
                   />
