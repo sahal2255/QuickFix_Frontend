@@ -8,12 +8,12 @@ import store from './Redux/Store/store';
 function App() {
   return (
     <>
-    <Provider store={store}>
+    {/* <Provider store={store}> */}
       <Toastify />
       <AdminRoute />
       <VendorRoutes />
       <UserRoute />
-    </Provider>
+    {/* </Provider> */}
       
     </>
   );

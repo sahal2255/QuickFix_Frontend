@@ -3,7 +3,6 @@ import Sidebar from '../../components/layouts/user/ProfileMenu';
 import ProfileDetails from '../../components/layouts/user/Profile';
 import BookingHistory from '../../components/layouts/user/BookingHistory';
 import Navbar from '../../components/layouts/user/Navbar'; // Assuming Navbar is correctly placed in components/layouts/user/
-
 export default function ProfilePage() {
   const [selectedSection, setSelectedSection] = useState('profile'); // Default section
 

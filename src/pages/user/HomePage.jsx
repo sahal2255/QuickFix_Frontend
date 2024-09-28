@@ -3,8 +3,10 @@ import Navbar from '../../components/layouts/user/Navbar';
 import Banner from '../../components/layouts/user/Banner';
 import Info from '../../components/layouts/user/Info';
 import OurService from '../../components/layouts/user/OurService';
-
+import { useSelector } from 'react-redux';
 export default function HomePage() {
+  const user = useSelector((state) => state.user);
+  console.log('user in redux ',user)
   return (
     <div className="min-h-screen flex flex-col">
       <header className="bg-white shadow-lg">
