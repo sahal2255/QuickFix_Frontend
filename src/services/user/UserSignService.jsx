@@ -49,3 +49,22 @@ export const UserProfile=async()=>{
         throw error;
     }
 }
+
+// src/services/user/UserProfileService.js
+
+export const EditProfile = async (formData) => {
+    console.log('Sending profile update request with data:', formData);
+    
+    try {
+      const response = await Instance.put('/editprofile', formData, {
+        withCredentials: true, // Include credentials like cookies in the request
+      });
+      
+      console.log('updation success response ',response.data)
+      return response
+    } catch (error) {
+      console.error('Profile update error:', error);
+      throw error; 
+    }
+  };
+  

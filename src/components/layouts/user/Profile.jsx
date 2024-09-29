@@ -3,11 +3,11 @@ import { UserProfile, UserLogout } from '../../../services/user/UserSignService'
 import { FaUser, FaEnvelope, FaPhone } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import CommonModal from '../../common/CommonModal'; 
-import CommonForm from '../../common/CommonForm';
-import { useDispatch,useSelector } from 'react-redux';
-import { clearUser,setUser } from '../../../Redux/Slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import UserEditProfile from './UserEditProfile';
+import { clearUser, setUser } from '../../../Redux/Slices/userSlice';
+
 export default function ProfileDetails() {
-  const [userData, setUserData] = useState(null);
   const [editModal, setEditModal] = useState(false); // Modal state
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,22 +49,11 @@ export default function ProfileDetails() {
     setEditModal(false); // Close the modal when user cancels
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  const UpdateSuccess = () => {
+    setEditModal(false); 
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // You can add logic to update the user profile here.
-    console.log('Updated user data:', user);
-    closeEditProfile(); // Close modal after saving changes
-  };
-
-  if (!user) {
+  if (!user || !user.userName) {
     return <div className="text-center text-gray-600">Loading profile details...</div>;
   }
 
@@ -130,15 +119,7 @@ export default function ProfileDetails() {
 
       {/* Edit Profile Modal */}
       <CommonModal open={editModal} onCancel={closeEditProfile}>
-        <div>
-          <h2 className="text-2xl font-bold">Edit Profile</h2>
-          <CommonForm
-            formData={userData}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            onCancel={closeEditProfile}
-          />
-        </div>
+        <UserEditProfile onCancel={closeEditProfile} onOk={UpdateSuccess} />
       </CommonModal>
     </div>
   );
