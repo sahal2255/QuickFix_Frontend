@@ -18,11 +18,18 @@ export const ServiceGet = async (searchQuery = '') => {
 export const ServiceGetById=async(serviceId)=>{
     try{
         const response=await instance.get(`/service/${serviceId}`)
-        console.log(response.data)
         return response.data
     }catch(error){
         console.log('error for the single service',error)
     }
 }
-
-// export const SearchServie=async(se)
+export const CategoryGet=async()=>{
+  try{
+    const response=await instance.get('/getcategory')
+    console.log('data jin teh ',response.data)
+    return response.data
+  }catch(error){
+    console.log('category service erro',error);
+    
+  }
+}

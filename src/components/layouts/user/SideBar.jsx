@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
-import { Checkbox } from 'antd';
-import { Layout, Divider } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Checkbox, Layout, Divider } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
-// import 'antd/dist/antd.css'; // Import Ant Design CSS
+import { CategoryGet } from '../../../services/user/ServiceSection'; // Adjust the import path if needed
 
 const { Sider } = Layout;
 
-const serviceCategories = [
-  'Car Service',
-  'Bike Service',
-  'Bus Service',
-  'Truck Service',
-];
-
 function ServiceSidebar() {
   const [selectedServices, setSelectedServices] = useState([]);
+  const [serviceCategories, setServiceCategories] = useState([]);
+
+  // Fetch service categories on component mount
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const category = await CategoryGet(); // Call the API to get categories
+        console.log('Fetched categories:', category);
+        setServiceCategories(category); // Store categories in state
+      } catch (error) {
+        console.error('Category fetching error:', error); // Corrected error logging
+      }
+    };
+    fetchCategory();
+  }, []);
 
   const handleChange = (checkedValues) => {
-    setSelectedServices(checkedValues);
+    setSelectedServices(checkedValues); // Update the selected checkboxes
   };
 
   return (
@@ -45,7 +52,7 @@ function ServiceSidebar() {
       >
         Service Categories
       </h3>
-      
+
       <Divider style={{ margin: '12px 0' }} />
 
       {/* Checkbox Group with Animated Hover and Custom Styles */}
@@ -54,31 +61,35 @@ function ServiceSidebar() {
         onChange={handleChange}
         style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
       >
-        {serviceCategories.map((category, index) => (
-          <Checkbox
-            key={index}
-            value={category}
-            style={{
-              fontSize: '1rem',
-              fontWeight: '500',
-              color: '#555',
-              padding: '8px 10px',
-              borderRadius: '6px',
-              transition: 'all 0.2s ease',
-              cursor: 'pointer',
-              backgroundColor: selectedServices.includes(category) ? '#f0f0f0' : 'transparent',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-            className="hover:bg-blue-50 hover:shadow-md hover:text-blue-500"
-          >
-            {category}
-            {selectedServices.includes(category) && (
-              <CheckOutlined style={{ color: '#1890ff' }} />
-            )}
-          </Checkbox>
-        ))}
+        {serviceCategories.length > 0 ? (
+          serviceCategories.map((category) => (
+            <Checkbox
+              key={category._id} // Use a unique key (assuming category._id exists)
+              value={category.categoryName} // Ensure correct category field is used for value
+              style={{
+                fontSize: '1rem',
+                fontWeight: '500',
+                color: '#555',
+                padding: '8px 10px',
+                borderRadius: '6px',
+                transition: 'all 0.2s ease',
+                cursor: 'pointer',
+                backgroundColor: selectedServices.includes(category.categoryName) ? '#f0f0f0' : 'transparent',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              className="hover:bg-blue-50 hover:shadow-md hover:text-blue-500"
+            >
+              {category.categoryName} {/* Ensure the correct field for displaying the name */}
+              {selectedServices.includes(category.categoryName) && (
+                <CheckOutlined style={{ color: '#1890ff' }} />
+              )}
+            </Checkbox>
+          ))
+        ) : (
+          <p>No categories available</p> // Render a message if no categories are fetched
+        )}
       </Checkbox.Group>
     </Sider>
   );

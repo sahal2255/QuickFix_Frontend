@@ -59,7 +59,6 @@ export default function ProfileDetails() {
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto">
-      {/* Profile Header */}
       <div className="text-center mb-8">
         <div className="inline-block bg-blue-500 text-white rounded-full w-20 h-20 flex items-center justify-center text-4xl font-bold">
           {user.userName ? user.userName.charAt(0).toUpperCase() : 'U'}
