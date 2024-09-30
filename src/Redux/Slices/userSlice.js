@@ -4,6 +4,7 @@ const initialState = {
   userName: "",
   email: "",
   phoneNumber: "",
+  selectedCategories: [], 
 };
 
 const userSlice = createSlice({
@@ -20,9 +21,26 @@ const userSlice = createSlice({
       state.userName = "";
       state.email = "";
       state.phoneNumber = "";
+      state.selectedCategories = []
     },
+    addCategory: (state, action) => {
+      console.log('State before adding category:', state.selectedCategories);
+      if (!state.selectedCategories) {
+        console.error('selectedCategories is undefined');
+      }
+      
+      state.selectedCategories.push(action.payload);
+      console.log('newly added :',action.payload)
+      console.log('State after adding category:', Array.from(state.selectedCategories));
+    },
+    removeCategory: (state, action) => {
+      state.selectedCategories = state.selectedCategories.filter((category) => category !== action.payload); 
+    },
+    resetCategory:(state)=>{
+      state.selectedCategories = [];
+    }
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, addCategory, removeCategory,resetCategory } = userSlice.actions;
 export default userSlice.reducer;

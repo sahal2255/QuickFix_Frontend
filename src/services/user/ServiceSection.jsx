@@ -1,19 +1,23 @@
 import instance from "../../utils/Axios";
 
 
-export const ServiceGet = async (searchQuery = '') => {
-    console.log('serch qurery ',searchQuery)
-    try {
+export const ServiceGet = async ({ searchQuery = '', selectedCategories = [] }) => {
+  console.log('Search query:', searchQuery);
+  console.log('Selected categories:', selectedCategories);
+
+  try {
       const response = await instance.get('/services', {
-        params: {
-          search: searchQuery, // Send search query to the backend
-        },
+          params: {
+              search: searchQuery || undefined, // Pass search query only if it's defined
+              categories: selectedCategories.length ? selectedCategories.join(',') : undefined, // Pass selected categories as a comma-separated string if available
+          },
       });
       return response.data; // Return the response data (array of services)
-    } catch (error) {
+  } catch (error) {
       console.log('Error fetching services', error);
-    }
-  };
+  }
+};
+
 
 export const ServiceGetById=async(serviceId)=>{
     try{

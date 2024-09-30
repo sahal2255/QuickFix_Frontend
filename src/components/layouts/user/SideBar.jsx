@@ -1,31 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox, Layout, Divider } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
-import { CategoryGet } from '../../../services/user/ServiceSection'; // Adjust the import path if needed
+import { CategoryGet } from '../../../services/user/ServiceSection';
+import { useDispatch, useSelector } from 'react-redux'; // Import hooks from redux
+import { addCategory, removeCategory } from '../../../Redux/Slices/userSlice'; // Import Redux actions
 
 const { Sider } = Layout;
 
 function ServiceSidebar() {
-  const [selectedServices, setSelectedServices] = useState([]);
+  const dispatch = useDispatch();
+  const selectedCategories = useSelector((state) => state.user.selectedCategories || []); // Read selected categories from Redux
   const [serviceCategories, setServiceCategories] = useState([]);
 
   // Fetch service categories on component mount
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const category = await CategoryGet(); // Call the API to get categories
-        console.log('Fetched categories:', category);
-        setServiceCategories(category); // Store categories in state
+        const category = await CategoryGet();
+        setServiceCategories(category);
       } catch (error) {
-        console.error('Category fetching error:', error); // Corrected error logging
+        console.error('Category fetching error:', error);
       }
     };
     fetchCategory();
   }, []);
 
   const handleChange = (checkedValues) => {
-    setSelectedServices(checkedValues); // Update the selected checkboxes
+    const lastSelected = checkedValues.find((val) => !selectedCategories.includes(val)); // New selection
+    const lastDeselected = selectedCategories.find((val) => !checkedValues.includes(val)); // Deselection
+  
+    console.log('Before dispatch:', selectedCategories);
+  
+    if (lastSelected) {
+      dispatch(addCategory(lastSelected));
+    }
+  
+    if (lastDeselected) {
+      dispatch(removeCategory(lastDeselected));
+    }
   };
+  
 
   return (
     <Sider
@@ -57,15 +71,15 @@ function ServiceSidebar() {
 
       {/* Checkbox Group with Animated Hover and Custom Styles */}
       <Checkbox.Group
-        value={selectedServices}
+        value={selectedCategories} // Use Redux state for selected categories
         onChange={handleChange}
         style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
       >
         {serviceCategories.length > 0 ? (
           serviceCategories.map((category) => (
             <Checkbox
-              key={category._id} // Use a unique key (assuming category._id exists)
-              value={category.categoryName} // Ensure correct category field is used for value
+              key={category._id} // Assuming category._id exists
+              value={category.categoryName} // Assuming categoryName is the correct field
               style={{
                 fontSize: '1rem',
                 fontWeight: '500',
@@ -74,21 +88,21 @@ function ServiceSidebar() {
                 borderRadius: '6px',
                 transition: 'all 0.2s ease',
                 cursor: 'pointer',
-                backgroundColor: selectedServices.includes(category.categoryName) ? '#f0f0f0' : 'transparent',
+                backgroundColor: selectedCategories.includes(category.categoryName) ? '#f0f0f0' : 'transparent',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}
               className="hover:bg-blue-50 hover:shadow-md hover:text-blue-500"
             >
-              {category.categoryName} {/* Ensure the correct field for displaying the name */}
-              {selectedServices.includes(category.categoryName) && (
+              {category.categoryName}
+              {selectedCategories.includes(category.categoryName) && (
                 <CheckOutlined style={{ color: '#1890ff' }} />
               )}
             </Checkbox>
           ))
         ) : (
-          <p>No categories available</p> // Render a message if no categories are fetched
+          <p>No categories available</p> // Fallback if no categories are fetched
         )}
       </Checkbox.Group>
     </Sider>
