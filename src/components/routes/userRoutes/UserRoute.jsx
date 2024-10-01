@@ -8,6 +8,7 @@ import Service from '../../../pages/user/Service'; // Protected page
 import Profile from '../../layouts/user/Profile';
 import ServiceDetails from '../../layouts/user/ServiceDetails';
 import ProfilePage from '../../../pages/user/ProfilePage'
+import ConfirmBooking from '../../layouts/user/ConfirmBooking';
 
 export default function UserRoute() {
   return (
@@ -23,7 +24,7 @@ export default function UserRoute() {
             <Route path='/service' element={<Service />} />
             <Route path='/profile' element={<ProfilePage />}/>
             <Route path="/service/:serviceId" element={<ServiceDetails />} />
-
+            <Route path='/confirm-booking/:serviceId' element={<ConfirmBooking />} />
           </Route> 
         </Routes>
       </BrowserRouter>

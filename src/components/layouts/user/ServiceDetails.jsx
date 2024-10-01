@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import { ServiceGetById } from '../../../services/user/ServiceSection';
-import CenterBanner from './CenterBanner';
 import ServiceSidebar from './ServiceSideBar'; // Import the new sidebar component
 
 export default function ServiceDetails() {
@@ -10,6 +9,7 @@ export default function ServiceDetails() {
   const [service, setService] = useState(null);
   const [serviceType, setServiceType] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch the full details of the service by its ID
@@ -39,25 +39,19 @@ export default function ServiceDetails() {
     setSelectedService(service);
   };
 
+  const handleBookNow = (serviceId) => {
+    console.log('booking service id', serviceId);
+    navigate(`/confirm-booking/${serviceId}`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
       <header className="fixed top-0 left-0 right-0 z-10 bg-white shadow-lg">
         <Navbar />
       </header>
 
       <div className="mt-24 p-4 md:p-10">
-        {/* Center Banner */}
-        <CenterBanner 
-          imageUrl={service.image} 
-          altText={service.name} 
-          aspectRatio="1 / 0.4" 
-          className="rounded-lg shadow-md" 
-        />
-
-        {/* Flex container for sidebar and details */}
         <div className="flex flex-col pt-4 md:flex-row md:space-x-6 max-w-7xl mx-auto space-y-6 md:space-y-0">
-          {/* Sidebar (Full width on mobile, 1/3 width on md and larger) */}
           <div className="w-full md:w-1/3">
             <ServiceSidebar 
               services={serviceType || []} 
@@ -67,7 +61,7 @@ export default function ServiceDetails() {
             />
           </div>
 
-          {/* Service Details (Full width on mobile, 2/3 width on md and larger) */}
+          {/* Service Details */}
           <div className="w-full md:w-2/3 p-6 bg-white shadow-lg rounded-lg transition-transform duration-300 hover:scale-105">
             {selectedService ? (
               <>
@@ -76,32 +70,38 @@ export default function ServiceDetails() {
                   <img 
                     src={selectedService.serviceImage} 
                     alt={selectedService.serviceName} 
-                    className="w-full h-64 object-cover rounded-lg mb-6" 
+                    className="w-full h-64 object-cover rounded-lg mb-6 border-2 border-gray-200 shadow-md" 
                   />
                 )}
 
-                <h1 className="text-3xl font-bold mb-4 text-blue-600">{selectedService.serviceName}</h1>
+                <h1 className="text-4xl font-bold mb-4 text-blue-600">{selectedService.serviceName}</h1>
                 <p className="text-lg mb-4 text-gray-700">
-                  <strong>Category:</strong> {selectedService.categoryType}
+                  <strong className="font-semibold">Category:</strong> {selectedService.categoryType}
                 </p>
                 <p className="text-lg mb-4 text-gray-700">
-                  <strong>Price:</strong> <span className="text-green-600">${selectedService.price}</span>
+                  <strong className="font-semibold">Price:</strong> <span className="text-green-600">₹{selectedService.price}</span>
                 </p>
                 <p className="text-lg mb-4 text-gray-700">
-                  <strong>Duration:</strong> {selectedService.duration} minutes
+                  <strong className="font-semibold">Duration:</strong> {selectedService.duration} hr
                 </p>
                 <p className="text-lg mb-6 text-gray-700">
-                  <strong>Description:</strong> {selectedService.description || 'No description available'}
+                  <strong className="font-semibold">Description:</strong> {selectedService.description || 'No description available'}
                 </p>
-
-                <button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-6 rounded-lg font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 transform">
-                  Book Now
-                </button>
               </>
             ) : (
               <div className="text-center text-lg text-gray-500">Select a service to see the details</div>
             )}
           </div>
+        </div>
+
+        {/* Book Now Button - Positioned below the service details */}
+        <div className="flex justify-center mt-8">
+          <button 
+            className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-10 rounded-lg font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            onClick={() => handleBookNow(serviceId)}
+          >
+            Book Now
+          </button>
         </div>
       </div>
     </div>

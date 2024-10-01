@@ -5,6 +5,7 @@ const initialState = {
   email: "",
   phoneNumber: "",
   selectedCategories: [], 
+  selectedServiceTypes: [],
 };
 
 const userSlice = createSlice({
@@ -38,9 +39,18 @@ const userSlice = createSlice({
     },
     resetCategory:(state)=>{
       state.selectedCategories = [];
-    }
+    },
+    setSelectedServiceTypes: (state, action) => {
+      state.selectedServiceTypes = action.payload; 
+    },
   },
 });
 
-export const { setUser, clearUser, addCategory, removeCategory,resetCategory } = userSlice.actions;
+export const { setUser, 
+              clearUser, 
+              addCategory,
+              removeCategory,
+              resetCategory,
+              setSelectedServiceTypes
+            } = userSlice.actions;
 export default userSlice.reducer;
