@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { setSelectedServiceTypes, clearSelectedServiceTypes } from '../../../Redux/Slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-const ServiceTypeSidebar = ({ serviceId, serviceList, onServiceTypeChange }) => {
-//   console.log('Service ID in the sidebar:', serviceId);
-//   console.log('Service list in the sidebar:', serviceList);
+const ServiceTypeSidebar = ({ serviceId, serviceList }) => {
+  const dispatch = useDispatch();
   
-  const [selectedServiceTypes, setSelectedServiceTypes] = useState([]);
+  const selectedServiceTypes = useSelector((state) => state.user.selectedServiceTypes); // Accessing the Redux state
 
-  const handleCheckboxChange = (serviceType) => {
-    setSelectedServiceTypes((prevSelected) => {
-      const updatedSelected = prevSelected.includes(serviceType)
-        ? prevSelected.filter((type) => type !== serviceType)
-        : [...prevSelected, serviceType];
+  const handleCheckboxChange = (serviceTypeId) => {
+    const updatedSelected = selectedServiceTypes.includes(serviceTypeId)
+      ? selectedServiceTypes.filter((id) => id !== serviceTypeId)
+      : [...selectedServiceTypes, serviceTypeId];
 
-      onServiceTypeChange(updatedSelected);
-      return updatedSelected;
-    });
+    dispatch(setSelectedServiceTypes(updatedSelected));
+  };
+
+  const handleClearAll = () => {
+    dispatch(clearSelectedServiceTypes()); // Dispatch the action to clear all selected service types
   };
 
   return (
-    <aside className="p-10 w-full bg-black shadow-lg rounded-md border border-gray-200">
+    <aside className="p-10 w-full bg-white shadow-lg rounded-md border border-gray-200">
       <h2 className="text-2xl font-semibold mb-6 text-gray-700">Select Service Types</h2>
       <ul className="space-y-4">
         {serviceList && serviceList.length > 0 ? (
@@ -27,8 +29,8 @@ const ServiceTypeSidebar = ({ serviceId, serviceList, onServiceTypeChange }) => 
               <input
                 type="checkbox"
                 id={`service-type-${service._id}`}
-                checked={selectedServiceTypes.includes(service.serviceName)}
-                onChange={() => handleCheckboxChange(service.serviceName)}
+                checked={selectedServiceTypes.includes(service._id)} // Check against the ID
+                onChange={() => handleCheckboxChange(service._id)} // Pass ID
                 className="w-6 h-6 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2 rounded"
               />
               <label
@@ -43,6 +45,13 @@ const ServiceTypeSidebar = ({ serviceId, serviceList, onServiceTypeChange }) => 
           <p className="text-gray-600">No service types available for this service.</p>
         )}
       </ul>
+
+      <button 
+        onClick={handleClearAll}
+        className="mt-6 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+      >
+        Clear All
+      </button>
     </aside>
   );
 };

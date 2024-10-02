@@ -22,7 +22,8 @@ const userSlice = createSlice({
       state.userName = "";
       state.email = "";
       state.phoneNumber = "";
-      state.selectedCategories = []
+      state.selectedCategories = [];
+      state.selectedServiceTypes = []
     },
     addCategory: (state, action) => {
       console.log('State before adding category:', state.selectedCategories);
@@ -42,6 +43,10 @@ const userSlice = createSlice({
     },
     setSelectedServiceTypes: (state, action) => {
       state.selectedServiceTypes = action.payload; 
+      console.log('new selected ',action.payload)
+    },
+    clearSelectedServiceTypes: (state) => {
+      state.selectedServiceTypes = []; 
     },
   },
 });
@@ -51,6 +56,7 @@ export const { setUser,
               addCategory,
               removeCategory,
               resetCategory,
-              setSelectedServiceTypes
-            } = userSlice.actions;
+              setSelectedServiceTypes,
+              clearSelectedServiceTypes
+                } = userSlice.actions;
 export default userSlice.reducer;
