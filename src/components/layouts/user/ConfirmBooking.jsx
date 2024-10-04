@@ -45,7 +45,7 @@ export default function ConfirmBooking() {
     
       setOpenModalForm(true); 
  
-      console.log('booking confirmation error', error);
+      // console.log('booking confirmation error', error);
     
   };
 
@@ -139,7 +139,7 @@ export default function ConfirmBooking() {
         paymentAmount={paymentAmount} 
         selectedServiceTypesDetails={selectedServiceTypesDetails}
         totalPrice={totalPrice}
-        paymentOption={paymentOption}
+        paymentMethod={paymentOption}
         />
       </CommonModal>
     </div>

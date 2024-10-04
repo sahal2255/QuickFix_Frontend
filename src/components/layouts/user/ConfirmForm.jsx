@@ -1,31 +1,82 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ConfirmationOfBooking } from '../../../services/user/BookingService';
+import { ConfirmationOfBooking, AmountSend } from '../../../services/user/BookingService';
+import OtpInput from 'react-otp-input'; // Correct import for react-otp-input
+import {useRazorpay} from 'react-razorpay';
 
-export default function ConfirmForm({centerId,totalPrice,
-    paymentAmount,selectedServiceTypesDetails,paymentOption}) {
-    const [formData,setFormData]=useState()
+export default function ConfirmForm({
+  centerId,
+  totalPrice,
+  paymentAmount,
+  selectedServiceTypesDetails,
+  paymentMethod,
+}) {
+  const [formData, setFormData] = useState();
+  const {error,isLoading,Razorpay}=useRazorpay()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const onSubmit = async(data) => {
+  
+  const onSubmit = async (data) => {
     console.log('Form Data:', data);
-    setFormData(data)
-    console.log('centerid',centerId);
-    console.log('servicetype',selectedServiceTypesDetails)
-    console.log('totalprice',totalPrice)
-    console.log('payment ',paymentAmount)
-    console.log('paymentoption',paymentOption)
-    try{
-        const confirmation=await ConfirmationOfBooking({centerId,totalPrice,paymentAmount,selectedServiceTypesDetails,paymentOption,formData})
-    }catch(error){
-        console.log('error for confirmation details')
+    setFormData(data);
+
+    try {
+      console.log('Submitting booking confirmation');
+
+      // Send the payment amount to the backend to create a Razorpay order
+      const sendPayment = await AmountSend({ paymentAmount });
+      console.log('send payment', sendPayment);
+      console.log('payment method in form',paymentMethod)
+
+      // Assuming sendPayment contains the 'order' object
+      const { order } = sendPayment; // Destructure the order from the response
+
+      // Initialize Razorpay options
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Fetch key from environment variables
+        amount: order.amount, // Amount in paise
+        currency: order.currency, // Currency type
+        name: 'Your Service Name',
+        description: 'Payment for services',
+        order_id: order.id, // Razorpay order ID
+        handler: async function (response) {
+          console.log('Payment Success:', response);
+          // Confirm the booking after payment success
+          const bookingResponse = await ConfirmationOfBooking({
+            centerId,
+            selectedServiceTypesDetails,
+            totalPrice,
+            paymentMethod,
+            paymentAmount,
+            OrderAmount:order.amount,
+            paymentOption: 'Razorpay',
+            formData: {
+                ...data,
+                paymentId: response.razorpay_payment_id, // Include payment ID in formData
+                orderId: response.razorpay_order_id, // Include order ID if needed
+                paymentSignature: response.razorpay_signature // Include signature if needed
+            }
+        });
+          console.log('Booking confirmation response:', bookingResponse);
+        },
+        prefill: {
+          name: data.ownerName,
+          email: data.email,
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      // Open Razorpay checkout modal
+      const rzp =new Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error('Error with booking confirmation or payment:', error);
     }
-    
-    
   };
 
   return (
@@ -33,9 +84,7 @@ export default function ConfirmForm({centerId,totalPrice,
       <h2 className="text-2xl font-bold mb-4">Confirm Booking Form</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Owner Name
-          </label>
+          <label className="block text-sm font-medium text-gray-700">Owner Name</label>
           <input
             type="text"
             className={`mt-1 block w-full border rounded-md p-2 ${
@@ -57,14 +106,15 @@ export default function ConfirmForm({centerId,totalPrice,
             className={`mt-1 block w-full border rounded-md p-2 ${
               errors.vehicleReg ? 'border-red-500' : 'border-gray-300'
             }`}
-            {...register('vehicleReg', { required: 'Vehicle registration number is required' })}
+            {...register('vehicleReg', {
+              required: 'Vehicle registration number is required',
+            })}
           />
           {errors.vehicleReg && (
             <p className="text-red-500 text-xs mt-1">{errors.vehicleReg.message}</p>
           )}
         </div>
 
-        {/* Phone Number */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">Phone Number</label>
           <input
@@ -85,12 +135,11 @@ export default function ConfirmForm({centerId,totalPrice,
           )}
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md"
         >
-          Confirm
+          Confirm and Pay
         </button>
       </form>
     </div>
