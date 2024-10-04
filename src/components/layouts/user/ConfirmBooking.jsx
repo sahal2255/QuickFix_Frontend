@@ -42,11 +42,7 @@ export default function ConfirmBooking() {
   const paymentAmount = paymentOption === 'advance' ? totalPrice * 0.5 : totalPrice;
 
   const handleSubmit = async () => {
-    
-      setOpenModalForm(true); 
- 
-      // console.log('booking confirmation error', error);
-    
+      setOpenModalForm(true);  
   };
 
   const closeConfirmForm = () => {

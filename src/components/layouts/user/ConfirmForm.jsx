@@ -18,7 +18,7 @@ export default function ConfirmForm({
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
+
   const onSubmit = async (data) => {
     console.log('Form Data:', data);
     setFormData(data);
@@ -39,7 +39,7 @@ export default function ConfirmForm({
         key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Fetch key from environment variables
         amount: order.amount, // Amount in paise
         currency: order.currency, // Currency type
-        name: 'Your Service Name',
+        name: 'Quick Fix',
         description: 'Payment for services',
         order_id: order.id, // Razorpay order ID
         handler: async function (response) {
