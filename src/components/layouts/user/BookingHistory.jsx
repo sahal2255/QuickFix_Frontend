@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { fetchServiceHistory } from '../../../services/user/HistoryService';
 import CommonModal from '../../common/CommonModal';
+import BookingDetails from './BookingDetails';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 export default function BookingHistory() {
   const [bookings, setBookings] = useState([]);
   const [detailsShow, setDetailsShow] = useState(false);
-  const [selectedBooking, setSelectedBooking] = useState(null); // To hold selected booking details
+  const [selectedBookingId, setSelectedBookingId] = useState(null); // Store only the selected booking ID
 
   useEffect(() => {
     const fetchedServiceHistory = async () => {
@@ -21,14 +23,15 @@ export default function BookingHistory() {
     fetchedServiceHistory();
   }, []);
 
-  const handleViewDetails = (booking) => {
-    setSelectedBooking(booking); // Store the selected booking details
+  const handleViewDetails = (bookingId) => {
+    console.log('Booking ID:', bookingId); // Log the booking ID
+    setSelectedBookingId(bookingId); // Set the selected booking ID
     setDetailsShow(true); // Show the modal
   };
 
   const closeModal = () => {
     setDetailsShow(false); // Close the modal
-    setSelectedBooking(null); // Reset the selected booking
+    setSelectedBookingId(null); // Reset the selected booking ID
   };
 
   return (
@@ -58,7 +61,7 @@ export default function BookingHistory() {
               <div className="flex justify-end">
                 <button 
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => handleViewDetails(booking)} // Pass the entire booking object
+                  onClick={() => handleViewDetails(booking._id)} // Pass the booking ID
                 >
                   View Details
                 </button>
@@ -71,25 +74,9 @@ export default function BookingHistory() {
       )}
 
       {/* Modal to show selected booking details */}
-      {detailsShow && selectedBooking && (
+      {detailsShow && (
         <CommonModal open={detailsShow} onCancel={closeModal}>
-          <div className="p-6">
-            <h3 className="text-2xl font-bold mb-4">Booking Details</h3>
-            <p><strong>Service Type:</strong> {selectedBooking.serviceTypeName}</p>
-            <p><strong>Owner Name:</strong> {selectedBooking.ownerName}</p>
-            <p><strong>Mobile Number:</strong> {selectedBooking.mobileNumber}</p>
-            <p><strong>Vehicle Registration:</strong> {selectedBooking.regNo}</p>
-            <p><strong>Total Amount:</strong> ₹{selectedBooking.totalAmount}</p>
-            <p><strong>Paid Amount:</strong> ₹{selectedBooking.payedAmount}</p>
-            <p><strong>Balance Amount:</strong> ₹{selectedBooking.balanceAmount}</p>
-            <p><strong>Status:</strong> {selectedBooking.serviceStatus}</p>
-            <button
-              className="mt-4 bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
-              onClick={closeModal}
-            >
-              Close
-            </button>
-          </div>
+          <BookingDetails bookingId={selectedBookingId} onClose={closeModal} /> {/* Pass booking ID to BookingDetails */}
         </CommonModal>
       )}
     </div>
