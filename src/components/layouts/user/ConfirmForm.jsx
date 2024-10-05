@@ -3,15 +3,18 @@ import { useForm } from 'react-hook-form';
 import { ConfirmationOfBooking, AmountSend } from '../../../services/user/BookingService';
 import OtpInput from 'react-otp-input'; // Correct import for react-otp-input
 import {useRazorpay} from 'react-razorpay';
-
+import {clearSelectedServiceTypes} from '../../../Redux/Slices/userSlice'
+import { useDispatch } from 'react-redux';
 export default function ConfirmForm({
   centerId,
   totalPrice,
   paymentAmount,
   selectedServiceTypesDetails,
   paymentMethod,
+  closeConfirmForm
 }) {
   const [formData, setFormData] = useState();
+  const dispatch=useDispatch()
   const {error,isLoading,Razorpay}=useRazorpay()
   const {
     register,
@@ -61,6 +64,10 @@ export default function ConfirmForm({
             }
         });
           console.log('Booking confirmation response:', bookingResponse);
+          if (bookingResponse) {
+            closeConfirmForm(); 
+            dispatch(clearSelectedServiceTypes())
+          }
         },
         prefill: {
           name: data.ownerName,

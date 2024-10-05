@@ -61,7 +61,7 @@ export default function ConfirmBooking() {
         </div>
 
         <div className="w-full md:w-2/3 bg-white shadow-lg p-6 rounded-md">
-          <h2 className="text-3xl font-bold mb-4">Booking Details</h2>
+          <h2 className="text-3xl font-bold mb-4">Service Details</h2>
 
           {selectedServiceTypesDetails.length > 0 ? (
             <div className="overflow-x-auto">
@@ -136,6 +136,7 @@ export default function ConfirmBooking() {
         selectedServiceTypesDetails={selectedServiceTypesDetails}
         totalPrice={totalPrice}
         paymentMethod={paymentOption}
+        closeConfirmForm={closeConfirmForm}
         />
       </CommonModal>
     </div>

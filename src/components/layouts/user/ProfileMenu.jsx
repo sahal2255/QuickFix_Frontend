@@ -5,7 +5,6 @@ export default function ProfileMenu({ setSelectedSection, selectedSection }) {
   return (
     <div className="w-full bg-white shadow-md h-screen p-5 flex flex-col justify-between">
       <div>
-        {/* Header Section */}
         <h2 className="text-2xl font-bold text-gray-900 mb-8">Dashboard</h2>
         
         {/* Menu Items */}

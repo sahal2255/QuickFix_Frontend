@@ -26,8 +26,7 @@ export default function ProfilePage() {
         <Navbar />
       </header>
 
-      {/* Main Content Section */}
-      <div className="flex flex-grow mt-24 pt-6 px-6 justify-center"> 
+      <div className="flex flex-grow mt-24 pt-6 justify-center"> 
         <div className="flex w-full max-w-7xl space-x-6"> {/* Adjust container width and spacing */}
           
           {/* Sidebar (Left) */}
@@ -36,9 +35,9 @@ export default function ProfilePage() {
           </div>
 
           {/* Render Content (Right) */}
-          <div className="flex-1 bg-white shadow-md rounded-lg p-8 flex justify-center items-center">
+          <div className="flex-1 bg-white shadow-md rounded-lg p-8 flex justify-center ">
             {/* Center the content inside the right section */}
-            <div className="w-full">
+            <div className="w-full max-h-[75vh] overflow-y-auto">
               {renderContent()}
             </div>
           </div>
