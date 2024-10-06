@@ -80,7 +80,7 @@ export default function VendorSidebar() {
                         </ListItem>
                     </Link>
 
-                    <Link to="/vendor/booked-services">
+                    <Link to="/vendor/dashboard/booked-services">
                         <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
                             <ListItemPrefix>
                                 <UserGroupIcon className="h-7 w-7 text-blue-gray-300" />

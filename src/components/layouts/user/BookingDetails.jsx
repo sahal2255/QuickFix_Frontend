@@ -80,12 +80,14 @@ const BookingDetails = ({ bookingId, onClose }) => {
           </div>
 
           <div className="flex justify-between mt-6">
+            {booking.serviceStatus!=='Cancelled' &&
             <button
               className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
               onClick={()=>onCancelService(booking._id)} // Call cancel service function
             >
               Cancel Service
             </button>
+            }
             <button
               className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded"
               onClick={onClose} // Call the onClose function when the button is clicked
