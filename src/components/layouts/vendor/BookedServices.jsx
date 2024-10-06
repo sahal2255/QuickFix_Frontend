@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CommonTable from '../../common/CommonTable';
 import { fetchingBookings } from '../../../services/vendor/BookingServies';
 import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
     { id: 'ownerName', label: 'Owner Name' },
@@ -13,6 +14,7 @@ const columns = [
 
 const BookedServices = () => {
     const [bookings, setBookings] = useState([]);
+    const navigate=useNavigate()
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -29,7 +31,7 @@ const BookedServices = () => {
 
     const handleViewClick = (bookingId) => {
         console.log('View button clicked for booking ID:', bookingId);
-        // Handle view action (e.g., navigate to detailed booking page)
+        navigate(`/vendor/dashboard/single-booking/${bookingId}`)
     };
 
     const rows = bookings.map((service) => ({
