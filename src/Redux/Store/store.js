@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from '../Slices/userSlice';
+// import vendorReducer from '../Slices/vendorSlice'
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // localStorage for web
 import { combineReducers } from "redux";

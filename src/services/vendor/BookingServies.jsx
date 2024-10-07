@@ -20,11 +20,21 @@ export const fetchSingleBookingDetaiils=async(bookingId)=>{
         console.log('error in the service section ',error)
     }
 }
-export const updateCompletedServiceType=async(serviceTypeId)=>{
+export const updateCompletedServiceType=async(serviceTypeId,bookingId)=>{
     console.log('service type id in the service',serviceTypeId)
     try {
-        const response=await instance.put('/vendor/updaionofcompleted')
+        const response=await instance.put('/vendor/updatecompletion',{serviceTypeId,bookingId})
+        return response
     } catch (error) {
         console.log('completed service type updaiton error ',error)
+    }
+}
+
+export const updateServiceStatus=async(bookingId,newStatus)=>{
+    try{
+        const response=await instance.put('/vendor/updateservicestatus',{bookingId,newStatus})
+        return response.data
+    }catch(error){
+        console.log('error for updating service status',error)
     }
 }

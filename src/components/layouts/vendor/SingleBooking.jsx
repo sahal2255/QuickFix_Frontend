@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchSingleBookingDetaiils,updateCompletedServiceType } from "../../../services/vendor/BookingServies";
+import { fetchSingleBookingDetaiils,updateCompletedServiceType,updateServiceStatus } from "../../../services/vendor/BookingServies";
+import UpdateStatus from "./UpdateStatus";
 
 const SingleBooking = () => {
   const { bookingId } = useParams();
   const [bookingData, setBookingData] = useState(null);
-  const [serviceType, setServiceType] = useState([]); // Fixed typo in variable name
+  const [serviceType, setServiceType] = useState([]);
+  const [completedServiceTypes, setCompletedServiceTypes] = useState([]);  
+  const [status, setStatus] = useState('Pending');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,7 +18,8 @@ const SingleBooking = () => {
         console.log("Service Type Details", response.serviceTypeDetails);
         setBookingData(response.bookedService);
         setServiceType(response.serviceTypeDetails);
-        console.log('ss',serviceType)
+        setStatus(response.bookedService.serviceStatus);
+        setCompletedServiceTypes(response.bookedService.completedServiceTypes)
       } catch (error) {
         console.log("Error fetching single booking in the component:", error);
       }
@@ -33,11 +37,25 @@ const SingleBooking = () => {
   const handleCompleteService=async(serviceTypeId)=>{
     console.log('completed service type id',serviceTypeId)
     try{
-        const response=await updateCompletedServiceType(serviceTypeId)
+        const response=await updateCompletedServiceType(serviceTypeId,bookingId)
+        setCompletedServiceTypes((prevCompleted) => [...prevCompleted, serviceTypeId])
     }catch(error){
         console.log('error in update the completed service')
     }
   }
+
+  const handleStatusUpdate = async (newStatus) => {
+    console.log('Updating status to:', newStatus);
+    try {
+
+      console.log('booking id in the updation of status',bookingId)
+      console.log('new status in update status',newStatus)
+      const response=await updateServiceStatus(bookingId,newStatus)
+      setStatus(newStatus); 
+    } catch (error) {
+      console.log('Error updating booking status:', error);
+    }
+  };
   return (
     <div className="p-6 min-h-screen">
       <div className="top-4 left-4 mb-4">
@@ -74,17 +92,32 @@ const SingleBooking = () => {
                 <span className="font-bold mb-2">Booked Services:</span>
                 {serviceType.length > 0 ? (
                     <ul className="list-disc pl-6">
-                    {serviceType.map((item, index) => (
-                        <li key={index} className="flex justify-between items-center mb-2">
-                        <span>{item.serviceName}</span>
-                        <button
-                            className="ml-4 bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition"
-                            onClick={() => handleCompleteService(item._id)} 
-                        >
-                            Complete
-                        </button>
-                        </li>
-                    ))}
+                        {serviceType.map((item, index) => (
+                          <li key={index} className="flex justify-between items-center mb-2">
+                            <p>
+                              {item.serviceName}
+                              {/* Show Completed only if the booking is not cancelled */}
+                              {bookingData.serviceStatus !== 'Cancelled' && completedServiceTypes.includes(item._id) && (
+                                <span className="ml-2 text-green-500">(Completed)</span>
+                              )}
+                            </p>
+
+                            {/* Show Cancelled status if booking is cancelled */}
+                            {bookingData.serviceStatus === 'Cancelled' ? (
+                              <span className="ml-4 text-red-500">(Cancelled)</span>
+                            ) : (
+                              /* Show Complete button only if service is not completed */
+                              !completedServiceTypes.includes(item._id) && (
+                                <button
+                                  className="ml-4 bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition"
+                                  onClick={() => handleCompleteService(item._id)}
+                                >
+                                  Complete
+                                </button>
+                              )
+                            )}
+                          </li>
+                        ))}
                     </ul>
                 ) : (
                     <span>No services booked yet.</span>
@@ -124,17 +157,32 @@ const SingleBooking = () => {
               <div className="flex flex-col">
                 <span className="font-bold">Completed Service Types:</span>
                 <span>
-                  {bookingData.completedServiceTypes.length > 0
-                    ? bookingData.completedServiceTypes.join(", ")
+                  {completedServiceTypes.length > 0
+                    ? serviceType
+                        .filter(item => completedServiceTypes.includes(item._id))
+                        .map(item => item.serviceName)
+                        .join(", ")
                     : "No services completed yet."}
                 </span>
               </div>
             </div>
+            {bookingData.serviceStatus !=='Cancelled' ?(
+
+            <div className="flex flex-col mt-4">
+              <UpdateStatus currentStatus={status} onUpdateStatus={handleStatusUpdate} />
+            </div>
+            ):(
+              <div className=" flex flex-col mt-2">
+
+                <p className="text-red-400 items-center">Booking is already Cancelled</p>
+              </div>
+            )}
           </div>
         ) : (
           <p>Loading...</p>
         )}
       </div>
+
     </div>
   );
 };
