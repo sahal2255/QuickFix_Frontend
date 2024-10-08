@@ -11,7 +11,7 @@ const columns = [
   { id: 'category', label: 'Category' },
   { id: 'serviceName', label: 'Service Name' },
   { id: 'view', label: 'View' },
-  { id: 'action', label: 'Actions', align: 'center' },
+  // { id: 'status', label : 'Status'}  
 ];
 
 const FullService = () => {
@@ -65,13 +65,7 @@ const FullService = () => {
     setServices((prevServices) => [...prevServices, newService]);
   };
 
-  const handleStartStopClick = (service) => {
-    setServices((prevServices) =>
-      prevServices.map((s) =>
-        s._id === service._id ? { ...s, isActive: !s.isActive } : s
-      )
-    );
-  };
+ 
 
   const handleUpdateService = (updatedService) => {
     setServices((prevServices) =>
@@ -82,6 +76,15 @@ const FullService = () => {
     closeViewModal(); // Close the modal after updating the service
   };
 
+
+  // const handleStatusChange=async(serviceTypeId)=>{
+  //   console.log('service type id',serviceTypeId)
+  //   try{
+  //     const response=await updateServiceTypeStatus(serviceTypeId)
+  //   }catch(error){
+  //     console.log('error in the status enabled error',error)
+  //   }
+  // }
   // Format the service data for the table rows
   const rows = services 
     .filter(service => service && service._id) // Ensure each service is valid
@@ -94,15 +97,11 @@ const FullService = () => {
           View
         </Button>
       ),
-      action: (
-        <Button
-          variant="contained"
-          color={service.isActive ? 'error' : 'primary'}
-          onClick={() => handleStartStopClick(service)}
-        >
-          {service.isActive ? 'Stop' : 'Start'}
-        </Button>
-      ),
+      // status: (
+      //   <Button variant='outlined' color='primart' onClick={()=>{handleStatusChange(service._id)}}>
+      //     update
+      //   </Button>
+      // ),
     }));
 
   return (

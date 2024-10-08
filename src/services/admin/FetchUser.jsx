@@ -9,3 +9,13 @@ export const FetchUser=async()=>{
         
     }
 }
+
+export const UpdateUserStatus=async(userId)=>{
+    console.log(userId)
+    try{
+        const response=await instance.put('/admin/updateuserstatus',{userId,isEnabled})
+        return response
+    }catch(error){
+        console.log('error in update user status in service section',error)
+    }
+}

@@ -8,7 +8,7 @@ export default function VendorDashboard() {
         <div className='flex flex-col h-screen'>
             <TopBar />
             <div className='flex flex-1 '>
-                <div className='fixed top-[6rem] left-0 w-[25rem] lg:w-[20rem] z-40'>
+                <div className='fixed top-[6rem] left-0 w-[25rem] lg:w-[20rem] z-40 h-full overflow-y-auto'>
                     <VendorSidebar />
                 </div>
                 <div className="flex-1 flex justify-center items-center mt-24">

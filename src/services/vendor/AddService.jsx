@@ -41,3 +41,11 @@ export const handleAddService = async (data) => {
       console.log('error for updating service in the frontend servie',error)
     }
   }
+
+
+  // export const updateServiceTypeStatus=async(serviceTypeId)=>{
+  //   console.log()
+  //   try{
+  //     const response=await instance.put('/vendor/updateservicetypestatus')
+  //   }
+  // }

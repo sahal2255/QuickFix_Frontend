@@ -9,6 +9,7 @@ import FullService from '../../layouts/vendor/FullServices';
 import VendorProfile from '../../layouts/vendor/VendorProfile';
 import BookedServices from '../../layouts/vendor/BookedServices';
 import SingleBooking from '../../layouts/vendor/SingleBooking';
+import Coupon from '../../layouts/vendor/Coupon';
 
 const VendorRoutes = () => {
   return (
@@ -29,6 +30,7 @@ const VendorRoutes = () => {
           <Route path='services' element={<FullService />} />
           <Route path='profile' element={<VendorProfile />}/>
           <Route path='booked-services' element={<BookedServices />} />
+          <Route path='coupons' element={<Coupon />}/>
           <Route path='single-booking/:bookingId' element={<SingleBooking />}/>
         </Route>
       </Routes>

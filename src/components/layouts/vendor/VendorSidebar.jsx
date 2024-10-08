@@ -7,6 +7,7 @@ import {
     BriefcaseIcon, 
     Cog6ToothIcon, 
     UserGroupIcon, 
+    TagIcon,
     UserCircleIcon, 
     PowerIcon, 
     XMarkIcon, // Icon for closing the sidebar
@@ -88,6 +89,15 @@ export default function VendorSidebar() {
                             <Typography className="font-medium text-lg">Booked Services</Typography>
                         </ListItem>
                     </Link>
+                    <Link to="/vendor/dashboard/coupons">
+                        <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
+                            <ListItemPrefix>
+                            <TagIcon className="h-7 w-7 text-blue-gray-300" /> {/* Coupon icon */}
+                            </ListItemPrefix>
+                            <Typography className="font-medium text-lg">Coupons</Typography>
+                        </ListItem>
+                        </Link>
+
 
                     <Link to="/vendor/dashboard/profile">
                         <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
