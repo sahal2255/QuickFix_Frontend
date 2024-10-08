@@ -33,6 +33,17 @@ export default function BookingHistory() {
     setDetailsShow(false); // Close the modal
     setSelectedBookingId(null); // Reset the selected booking ID
   };
+  const statusColorMap = {
+    Pending: 'bg-yellow-200 text-yellow-700',
+    Confirmed: 'bg-blue-200 text-blue-700',
+    'In Progress': 'bg-indigo-200 text-indigo-700',
+    'Awaiting Parts': 'bg-orange-200 text-orange-700',
+    'Ready For Pickup': 'bg-teal-200 text-teal-700',
+    Cancelled: 'bg-red-200 text-red-700',
+    Completed: 'bg-green-200 text-green-700',
+    'Payment Pending': 'bg-purple-200 text-purple-700',
+    Closed: 'bg-gray-200 text-gray-700',
+  };
 
   return (
     <div className="bg-gray-100 p-8 rounded-lg shadow-lg">
@@ -46,9 +57,11 @@ export default function BookingHistory() {
                   <h3 className="text-xl font-semibold">{booking.serviceTypeName}</h3>
                   <p className="text-gray-600">{new Date(booking.createdAt).toLocaleDateString()}</p>
                 </div>
-                <span className={`text-lg font-semibold ${booking.serviceStatus === 'Completed' ? 'text-green-600' : 'text-red-600'}`}>
-                  {booking.serviceStatus}
-                </span>
+                <span
+                className={`ml-2 px-2 py-1 rounded ${statusColorMap[booking.serviceStatus.trim()] || 'bg-gray-200 text-gray-700'}`}
+              >
+                {booking.serviceStatus}
+              </span>
               </div>
               <div className="text-gray-700 mb-4">
                 <p><strong>Owner Name:</strong> {booking.ownerName}</p>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { showSuccessToast,showErrorToast } from "../../common/Toastify";
 import { fetchSingleBookingDetaiils,updateCompletedServiceType,updateServiceStatus } from "../../../services/vendor/BookingServies";
 import UpdateStatus from "./UpdateStatus";
 
@@ -52,6 +53,7 @@ const SingleBooking = () => {
       console.log('new status in update status',newStatus)
       const response=await updateServiceStatus(bookingId,newStatus)
       setStatus(newStatus); 
+      showSuccessToast(response.message)
     } catch (error) {
       console.log('Error updating booking status:', error);
     }
@@ -97,13 +99,13 @@ const SingleBooking = () => {
                             <p>
                               {item.serviceName}
                               {/* Show Completed only if the booking is not cancelled */}
-                              {bookingData.serviceStatus !== 'Cancelled' && completedServiceTypes.includes(item._id) && (
+                              {status !== 'Cancelled' && completedServiceTypes.includes(item._id) && (
                                 <span className="ml-2 text-green-500">(Completed)</span>
                               )}
                             </p>
 
                             {/* Show Cancelled status if booking is cancelled */}
-                            {bookingData.serviceStatus === 'Cancelled' ? (
+                            {status === 'Cancelled' ? (
                               <span className="ml-4 text-red-500">(Cancelled)</span>
                             ) : (
                               /* Show Complete button only if service is not completed */
@@ -151,7 +153,7 @@ const SingleBooking = () => {
 
               <div className="flex flex-col">
                 <span className="font-bold">Service Status:</span>
-                <span>{bookingData.serviceStatus}</span>
+                <span>{status}</span>
               </div>
 
               <div className="flex flex-col">
