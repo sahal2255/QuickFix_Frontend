@@ -25,7 +25,7 @@ const StyledTableRow = styled(TableRow)(({ theme, odd }) => ({
     },
 }));
 
-export default function CommonTable({ columns = [], rows = [], onAllowClick }) {
+export default function CommonTable({ columns = [], rows = [], onAllowClick , onEditClick,onDeleteClick }) {
     const [pg, setPg] = useState(0);
     const [rpg, setRpg] = useState(5);
 
@@ -56,18 +56,34 @@ export default function CommonTable({ columns = [], rows = [], onAllowClick }) {
                             <StyledTableRow key={index} style={{ backgroundColor: index % 2 === 0 ? 'inherit' : theme => theme.palette.action.hover }}>
                                 {columns.map((column) => (
                                     <TableCell key={column.id} align={column.align || "left"}>
-                                        {column.id === "action" ? (
-                                            <Button
-                                                variant="contained"
-                                                color={row.isEnabled ? "secondary" : "primary"}
-                                                onClick={() => onAllowClick(row)}
-                                            >
-                                                {row.isEnabled ? "Block" : "Allow"}
-                                            </Button>
-                                        ) : (
-                                            row[column.id] || 'N/A'
-                                        )}
-                                    </TableCell>
+                                    {column.id === "action" ? (
+                                        <Button
+                                            variant="contained"
+                                            color={row.isEnabled ? "secondary" : "primary"}
+                                            onClick={() => onAllowClick(row)}
+                                        >
+                                            {row.isEnabled ? "Block" : "Allow"}
+                                        </Button>
+                                    ) : column.id === "edit" ? (
+                                        <Button
+                                            variant="contained"
+                                            color="success"
+                                            onClick={() => onEditClick(row)}
+                                        >
+                                            Edit
+                                        </Button>
+                                    ) : column.id === "delete" ? (
+                                        <Button
+                                            variant="contained"
+                                            color="error"
+                                            onClick={() => onDeleteClick(row)}
+                                        >
+                                            Delete
+                                        </Button>
+                                    ) : (
+                                        row[column.id] || 'N/A'
+                                    )}
+                                </TableCell>
                                 ))}
                             </StyledTableRow>
                         ))}

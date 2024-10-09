@@ -77,14 +77,7 @@ const FullService = () => {
   };
 
 
-  // const handleStatusChange=async(serviceTypeId)=>{
-  //   console.log('service type id',serviceTypeId)
-  //   try{
-  //     const response=await updateServiceTypeStatus(serviceTypeId)
-  //   }catch(error){
-  //     console.log('error in the status enabled error',error)
-  //   }
-  // }
+
   // Format the service data for the table rows
   const rows = services 
     .filter(service => service && service._id) // Ensure each service is valid
@@ -97,11 +90,7 @@ const FullService = () => {
           View
         </Button>
       ),
-      // status: (
-      //   <Button variant='outlined' color='primart' onClick={()=>{handleStatusChange(service._id)}}>
-      //     update
-      //   </Button>
-      // ),
+      
     }));
 
   return (
