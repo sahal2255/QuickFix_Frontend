@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Select, Button, InputNumber } from 'antd';
+import { Form, Input, Select, Button, InputNumber ,DatePicker } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -58,6 +58,8 @@ export default function CommonForm({
                 accept="image/*"
                 onChange={handleFileChange}
               />
+            ) : field.type === 'date' ? (
+              <DatePicker className="w-full" placeholder={field.placeholder} />
             ) : null}
           </Form.Item>
         ))}

@@ -23,11 +23,7 @@ export default function UserList() {
                 userId: user._id, // Pass the user ID for the update
                 isEnabled:!user.isEnabled
             };
-
-            const response = await UpdateUserStatus(updatedUser);
-
-            // Update local state with the new user status
-           
+            const response = await UpdateUserStatus(updatedUser);           
                 setUsers(users.map((item) =>
                     item._id === user._id ? { ...item, isEnabled: updatedUser.isEnabled } : item
                 ));
