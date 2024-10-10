@@ -19,3 +19,18 @@ export const CouponGet=async()=>{
         console.log('error in the coupon gettign in service',error)
     }
 }
+
+export const EditCoupon=async(editCouponId,formData)=>{
+    console.log('edit coupon id',editCouponId)
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+    }
+    try{
+        const response = await instance.put(`/vendor/editcoupon/${editCouponId}`, formData, {
+            withCredentials:true
+        })    
+        return response.data
+    }catch(error){
+        console.log('error in the coupon updation ',error)
+    }
+}

@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import CommonModal from "../../common/CommonModal";
 import CommonForm from '../../common/CommonForm';
-import { AddCoupon, CouponGet } from "../../../services/vendor/CouponService";
+import { AddCoupon, CouponGet, EditCoupon } from "../../../services/vendor/CouponService";
 import { showSuccessToast, showErrorToast } from "../../common/Toastify";
 import CommonTable from "../../common/CommonTable";
+import dayjs from 'dayjs'
+import { Form } from 'antd';
+import EditCouponForm from './EditCouponForm'
 
 const Coupon = () => {
     const [showFormModal, setShowModal] = useState(false);
     const [coupon, setCoupon] = useState([]);
     const [formData, setFormData] = useState({});
+    const [editForm,setEditForm]=useState({})
     const [editMode, setEditMode] = useState(false);
     const [editCouponId, setEditCouponId] = useState(null);
+    const [form] = Form.useForm();
+
 
     const handleShowCouponAdd = () => {
         setEditMode(false);
@@ -22,61 +28,61 @@ const Coupon = () => {
         setShowModal(false);
         setEditMode(false);
     };
-
     const handleEdit = (rowData) => {
-        setEditCouponId(rowData._id);
-        setFormData({
+        const couponId = rowData._id;
+        console.log('coupon id in the component:', couponId);
+        
+        // Set state for editing mode and coupon ID
+        setEditMode(true);
+        setEditCouponId(couponId);
+
+        // Update the state with form data for the edit
+        const editFormData = {
             couponName: rowData.couponName,
             couponValue: rowData.couponValue,
-            startDate: rowData.startDate,
-            endDate: rowData.endDate,
-        });
-        console.log('coupon id', rowData._id);
-        setEditMode(true);
-        setShowModal(true);
+            startDate: dayjs(rowData.startDate),  // Convert start date to dayjs object
+            endDate: dayjs(rowData.endDate),      // Convert end date to dayjs object
+        };
+
+        setEditForm(editFormData);
+        console.log('Form data to set in the state:', editFormData);
+        // setShowModal(true); // Open modal for editing
     };
 
+    const handleEditSubmit = async (formValues) => {
+        try {
+            console.log('Attempting to retrieve form values before submission...');
+            const formData = new FormData();
+            formData.append('couponName', formValues.couponName);
+            formData.append('couponValue', formValues.couponValue);
+            formData.append('startDate', formValues.startDate ? formValues.startDate.format('YYYY-MM-DD') : '');
+            formData.append('endDate', formValues.endDate ? formValues.endDate.format('YYYY-MM-DD') : '');
+
+            // Log the new formData
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+
+            const response = await EditCoupon(editCouponId, formData);
+            console.log('Response from EditCoupon API:', response);
+            showSuccessToast(response.message); // Show success message
+            // setShowModal(false);
+            setEditMode(false) // Close the modal
+            fetchCoupon(); // Re-fetch the coupons to update the table
+            
+        } catch (error) {
+            console.log('Error in editing coupon:', error);
+            showErrorToast('Error updating coupon'); // Show error message
+        }
+    };
+
+    
     const handleDelete = async (rowData) => {
         console.log('delete coupon', rowData);
         // Implement deletion logic here, if needed
     };
 
-    const handleBlock = async (rowData) => {
-        console.log('handle allow/block', rowData);
-        // Implement block logic here, if needed
-    };
-
-    const formFields = [
-        {
-            name: 'couponName',
-            label: 'Coupon Name',
-            type: 'input',
-            placeholder: 'Enter Coupon Name',
-            rules: [{ required: true, message: 'Please enter a coupon name' }]
-        },
-        {
-            name: 'couponValue',
-            label: 'Coupon Value',
-            type: 'input',
-            placeholder: 'Enter Coupon value',
-            rules: [{ required: true, message: 'Please enter a coupon value in percentage' }]
-        },
-        {
-            name: 'startDate',
-            label: 'Start Date',
-            type: 'date',
-            placeholder: 'Enter Coupon Start Date',
-            rules: [{ required: true, message: 'Please enter a coupon Start Date' }]
-        },
-        {
-            name: 'endDate',
-            label: 'End Date',
-            type: 'date',
-            placeholder: 'Enter Coupon End Date',
-            rules: [{ required: true, message: 'Please enter a coupon End Date' }]
-        }
-    ];
-
+    
     const handleSubmit = async (formData) => {
         const data = new FormData();
         data.append('couponName', formData.couponName);
@@ -116,8 +122,37 @@ const Coupon = () => {
         { id: 'startDate', label: 'Coupon Start Date' },
         { id: 'endDate', label: 'Coupon End Date' },
         { id: 'edit', label: 'Edit', align: 'center' },
-        { id: 'action', label: 'Action', align: 'center' },
         { id: 'delete', label: 'Delete', align: 'center' }
+    ];
+    const formFields = [
+        {
+            name: 'couponName',
+            label: 'Coupon Name',
+            type: 'input',
+            placeholder: 'Enter Coupon Name',
+            rules: [{ required: true, message: 'Please enter a coupon name' }]
+        },
+        {
+            name: 'couponValue',
+            label: 'Coupon Value',
+            type: 'input',
+            placeholder: 'Enter Coupon value',
+            rules: [{ required: true, message: 'Please enter a coupon value in percentage' }]
+        },
+        {
+            name: 'startDate',
+            label: 'Start Date',
+            type: 'date',
+            placeholder: 'Enter Coupon Start Date',
+            rules: [{ required: true, message: 'Please enter a coupon Start Date' }]
+        },
+        {
+            name: 'endDate',
+            label: 'End Date',
+            type: 'date',
+            placeholder: 'Enter Coupon End Date',
+            rules: [{ required: true, message: 'Please enter a coupon End Date' }]
+        }
     ];
 
     return (
@@ -132,11 +167,11 @@ const Coupon = () => {
             </CommonModal>
 
             <div className="mt-6 bg-slate-800">
-                <CommonTable columns={couponColumns} rows={coupon} onAllowClick={handleBlock} onDeleteClick={handleDelete} onEditClick={handleEdit} />
+                <CommonTable columns={couponColumns} rows={coupon}  onDeleteClick={handleDelete} onEditClick={handleEdit} />
             </div>
 
             <CommonModal open={editMode} onCancel={handleCloseModal}>
-                <CommonForm formFields={formFields} onSubmit={handleSubmit} initialValues={formData} />
+                <EditCouponForm editForm={editForm} onSubmit={handleEditSubmit}/>
             </CommonModal>
         </div>
     );
