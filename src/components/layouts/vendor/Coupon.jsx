@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CommonModal from "../../common/CommonModal";
 import CommonForm from '../../common/CommonForm';
-import { AddCoupon, CouponGet, EditCoupon } from "../../../services/vendor/CouponService";
+import { AddCoupon, CouponGet, DeleteCoupon, EditCoupon } from "../../../services/vendor/CouponService";
 import { showSuccessToast, showErrorToast } from "../../common/Toastify";
 import CommonTable from "../../common/CommonTable";
 import dayjs from 'dayjs'
@@ -79,17 +79,28 @@ const Coupon = () => {
     
     const handleDelete = async (rowData) => {
         console.log('delete coupon', rowData);
-        // Implement deletion logic here, if needed
+        const couponId=rowData._id
+        console.log(couponId)
+        try{
+            const response=await DeleteCoupon(couponId)
+            showSuccessToast(response.message)
+            fetchCoupon()
+        }catch(error){
+            console.log('error in the delete section',error)
+        }
     };
 
     
-    const handleSubmit = async (formData) => {
+    const handleSubmit = async (formDetails) => {
         const data = new FormData();
-        data.append('couponName', formData.couponName);
-        data.append('couponValue', formData.couponValue);
-        data.append('startDate', formData.startDate);
-        data.append('endDate', formData.endDate);
-
+        data.append('couponName', formDetails.couponName);
+        data.append('couponValue', formDetails.couponValue);
+        data.append('startDate', formDetails.startDate);
+        data.append('endDate', formDetails.endDate);
+        
+        for (let [key, value] of data.entries()) {
+            console.log(`${key}: ${value}`);
+        }
         try {
             const response = await AddCoupon(data);
             console.log(response);
