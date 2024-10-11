@@ -6,7 +6,7 @@ import ServiceCategory from '../../layouts/admin/ServiceCategory';
 import ProtectedRoute from '../../common/admin/ProtectedRoute'; 
 import VendorList from '../../layouts/admin/VendorList';
 import UserList from '../../layouts/admin/UserList';
-
+import AdminDash from '../../layouts/admin/AdminDash';
 const AdminRoute = () => {
   return (
     <BrowserRouter>
@@ -20,6 +20,7 @@ const AdminRoute = () => {
             </ProtectedRoute>
           }
         >
+          <Route path='dashboard' element={<AdminDash />}/>
           <Route path="service-category" element={<ServiceCategory />} />
           <Route path='vendors' element={<VendorList />} />
           <Route path='users' element={<UserList />}/>

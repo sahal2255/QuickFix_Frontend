@@ -57,7 +57,7 @@ export default function AdminSidebar() {
           </Typography>
         </div>
         <List className="flex-col space-y-2 overflow-y-auto h-[calc(100vh-4rem)]">
-          <Link to="/admin/dashboard" className="block">
+          <Link to="/admin/dashboard/dashboard" className="block">
             <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
               <ListItemPrefix>
                 <PresentationChartBarIcon className="h-7 w-7 text-blue-gray-300" />

@@ -10,7 +10,7 @@ import VendorProfile from '../../layouts/vendor/VendorProfile';
 import BookedServices from '../../layouts/vendor/BookedServices';
 import SingleBooking from '../../layouts/vendor/SingleBooking';
 import Coupon from '../../layouts/vendor/Coupon';
-
+import MainDashbaord from '../../layouts/vendor/MainDashboard'
 const VendorRoutes = () => {
   return (
     <BrowserRouter>
@@ -26,6 +26,7 @@ const VendorRoutes = () => {
             </VenderProtect>
           }
         >
+          <Route path='dashboard' element={<MainDashbaord />} />
           <Route path='add-service' element={<ServiceForm />} />
           <Route path='services' element={<FullService />} />
           <Route path='profile' element={<VendorProfile />}/>
