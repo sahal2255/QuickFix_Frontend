@@ -1,104 +1,179 @@
 import React, { useEffect, useState } from 'react';
-import { Users, Calendar,IndianRupee, DollarSign, Menu, Search, Bell, User, Briefcase, BookOpen, Clock } from 'lucide-react';
+import { Users, IndianRupee, Briefcase, User ,CheckCircleIcon,ClockIcon,XCircleIcon} from 'lucide-react';
 import Card from '../../common/Card'; // Import the Card component
 import { FetchUser } from '../../../services/admin/FetchUser';
 import { FetchBooking } from '../../../services/admin/AdminBookingService';
 import { FetchVendors } from '../../../services/admin/FetchVendor';
-
-const services = [
-  { name: "Consulting", icon: Briefcase, value: 45, color: "bg-blue-500" },
-  { name: "Training", icon: BookOpen, value: 30, color: "bg-green-500" },
-  { name: "Support", icon: Clock, value: 25, color: "bg-yellow-500" }
-];
-
-const recentProjects = [
-  { name: "Project Alpha", client: "ABC Corp", status: "In Progress", completion: 75 },
-  { name: "Project Beta", client: "XYZ Inc", status: "Planning", completion: 20 },
-  { name: "Project Gamma", client: "123 Ltd", status: "Completed", completion: 100 }
-];
-
+import LineChart from '../../common/LineChart';  // Import LineChart
+import BarChart from '../../common/BarChart';  // Import BarChart
+import { FetchMonthlyDetails } from '../../../services/admin/DashbaordService';  // Fetch monthly details
+import PieChart from '../../common/PieChart';
 export default function AdminDash() {
-const [userCount,setUserCount]=useState(0)
-const [bookingCount,setBookingCount]=useState(0)
-const [revenue,setRevenue]=useState(0)
-const [vendors,setVendors]=useState(0)
-useEffect(()=>{
-    const dashboardDetails=async()=>{
-        try{
-            const user=await FetchUser()
-            setUserCount(user.length)
-            const booking=await FetchBooking()
-            setBookingCount(booking.bookingDetails.length)
-            setRevenue(booking.totalPrice)
-            const vendors=await FetchVendors()
-            setVendors(vendors.length)
+  const [userCount, setUserCount] = useState(0);
+  const [bookingCount, setBookingCount] = useState(0);
+  const [revenue, setRevenue] = useState(0);
+  const [vendors, setVendors] = useState(0);
+  const [monthlyBookings, setMonthlyBookings] = useState([]);
+  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+  const [months, setMonths] = useState([]);
+  const [completedCount,setCompletedCount]=useState(0)
+  const [pendingCount,setPendingCount]=useState(0)
+  const [cancelledCount,setCancelledCount]=useState(0)
 
-        }catch(error){
-            console.log('error in the dashbaord details',error)
-        }
-    }
-    dashboardDetails()
-},[])
-  return (
-    <div className="flex h-screen bg-gradient-to-r from-gray-100 to-gray-300">
-      <div className="flex-1 flex flex-col overflow-hidden">
+  useEffect(() => {
+    const dashboardDetails = async () => {
+      try {
+        const user = await FetchUser();
+        setUserCount(user.length);
+        const booking = await FetchBooking();
+        setBookingCount(booking.bookingDetails.length);
+        setRevenue(booking.totalPrice);
+        const vendors = await FetchVendors();
+        setVendors(vendors.length);
+
+        const details = await FetchMonthlyDetails();
+        console.log('fetched details',details)
+        const monthsData = details.map(item => item.month);  // Extract months
+        const revenueData = details.map(item => item.totalRevenue);  // Extract revenue
+        const bookingsData = details.map(item => item.totalBookings);  // Extract bookings
         
+        setMonths(monthsData);
+        setMonthlyRevenue(revenueData);
+        setMonthlyBookings(bookingsData);
+        console.log('bookingdetails',booking.bookingDetails)
+        const completed = booking.bookingDetails.filter(
+          detail => detail.serviceStatus === 'Completed'
+        ).length;
+        console.log('completed',completed)
+        const pending = booking.bookingDetails.filter(
+          detail => detail.serviceStatus === 'Pending'
+        ).length;
+        console.log('pending',pending)
+        const cancelled = booking.bookingDetails.filter(
+          detail => detail.serviceStatus === 'Cancelled'
+        ).length;
+        console.log('cancelled',cancelled)
+  
+        setCompletedCount(completed);
+        setPendingCount(pending);
+        setCancelledCount(cancelled);
 
+
+      } catch (error) {
+        console.log('error in the dashboard details', error);
+      }
+    };
+    dashboardDetails();
+  }, []);
+
+  // Data for LineChart (Monthly Revenue)
+  const lineChartData = {
+    labels: months,  // Dynamic months
+    datasets: [
+      {
+        label: 'Revenue',
+        data: monthlyRevenue,  // Dynamic revenue data
+        fill: false,
+        borderColor: '#4bc0c0',
+      },
+    ],
+  };
+
+  const lineChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+      },
+      title: {
+        display: true,
+        text: 'Monthly Revenue',
+      },
+    },
+  };
+
+  // Data for BarChart (Monthly Bookings)
+  const barChartData = {
+    labels: months,  // Dynamic months
+    datasets: [
+      {
+        label: 'Bookings',
+        data: monthlyBookings,  // Dynamic bookings data
+        backgroundColor: '#36a2eb',
+      },
+    ],
+  };
+
+  const barChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+      },
+      title: {
+        display: true,
+        text: 'Monthly Bookings',
+      },
+    },
+  };
+
+  const pieChartData = {
+    labels: ['Completed', 'Pending', 'Cancelled'],
+    datasets: [
+      {
+        data: [completedCount, pendingCount, cancelledCount],
+        backgroundColor: ['green', 'orange', 'red'],
+      },
+    ],
+  };
+  
+
+
+  return (
+    <div className="flex h-screen bg-gradient-to-r ">
+      <div className="flex-1 flex flex-col overflow-hidden">
         {/* Dashboard Content */}
         <main className="flex-1 overflow-x-hidden overflow-y-auto p-6">
-          <h1 className="text-4xl font-semibold text-gray-800 mb-6">Service Dashboard</h1>
-          
+          <h1 className="text-4xl font-semibold text-gray-100 mb-6">Service Dashboard</h1>
+
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            <Card title="Total Clients" icon={Users} value={userCount} />
-            <Card title="Total Bookings" icon={Briefcase} value={bookingCount} />
-            <Card title="Total Vendors" icon={User} value={vendors} />
-            <Card title="Total Revenue" icon={IndianRupee} value={revenue} />
-          </div>
-          
-          {/* Service Distribution */}
-          <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 mb-6">
-            <h2 className="text-xl font-medium text-gray-700 mb-4">Service Distribution</h2>
-            {services.map((service) => (
-              <div key={service.name} className="mb-4">
-                <div className="flex justify-between items-center mb-1">
-                  <span className="text-md font-semibold text-gray-600">{service.name}</span>
-                  <span className="text-md font-semibold text-gray-600">{service.value}%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div className={`h-full rounded-full ${service.color} transition-width duration-500`} style={{ width: `${service.value}%` }}></div>
-                </div>
-              </div>
-            ))}
+            <Card title="Total Clients" icon={Users} value={userCount} color="linear-gradient(to right, #cce7ff, #80bfff)" />
+            <Card title="Total Bookings" icon={Briefcase} value={bookingCount} color="linear-gradient(to right, #ffe4b3, #ffcc80)" />
+            <Card title="Total Vendors" icon={User} value={vendors} color="linear-gradient(to right, #d9f7be, #a3d377)" />
+            <Card title="Total Revenue" icon={IndianRupee} value={revenue} color="linear-gradient(to right, #ffd6e7, #ffa3bc)" />
           </div>
 
-          {/* Recent Projects */}
-          <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <h2 className="text-xl font-medium text-gray-700 mb-4">Recent Projects</h2>
-            {recentProjects.map((project) => (
-              <div key={project.name} className="bg-gray-50 p-4 rounded-lg mb-4 shadow-md hover:shadow-lg transition-shadow duration-300">
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="font-semibold text-gray-700">{project.name}</h3>
-                  <span className={`px-3 py-1 rounded text-xs font-bold ${
-                    project.status === "Completed" ? "bg-green-200 text-green-800" :
-                    project.status === "In Progress" ? "bg-blue-200 text-blue-800" :
-                    "bg-yellow-200 text-yellow-800"
-                  }`}>
-                    {project.status}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-500 mb-2">Client: {project.client}</p>
-                <div className="flex items-center">
-                  <div className="flex-1 mr-4">
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-blue-500 h-full rounded-full transition-width duration-500" style={{ width: `${project.completion}%` }}></div>
-                    </div>
-                  </div>
-                  <span className="text-sm font-semibold text-gray-600">{project.completion}%</span>
-                </div>
-              </div>
-            ))}
+          {/* Charts Section */}
+          <div className="mt-6 w-full gap-3 lg:flex lg:justify-between">
+            {/* Line Chart (Revenue) */}
+            <div className="lg:w-1/2 mb-6 lg:mb-0">
+              <LineChart chartData={lineChartData} chartOptions={lineChartOptions} />
+            </div>
+
+            {/* Bar Chart (Bookings) */}
+            <div className="lg:w-1/2">
+              <BarChart chartData={barChartData} chartOptions={barChartOptions} />
+            </div>
           </div>
+          <div className="flex flex-col mt-6 lg:flex-row lg:justify-between gap-6">
+  {/* Card Section */}
+  <div className="flex flex-col lg:w-2/3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 lg:mb-0">
+      <Card title="Completed Services" value={completedCount} icon={CheckCircleIcon} color="green" />
+      <Card title="Pending Services" value={pendingCount} icon={ClockIcon} color="yellow" />
+      <Card title="Cancelled Services" value={cancelledCount} icon={XCircleIcon} color="red" />
+    </div>
+  </div>
+
+  {/* Pie Chart Section */}
+  <div className="lg:w-1/3 flex justify-center lg:justify-start mt-6 lg:mt-0">
+    <PieChart chartData={pieChartData} />
+  </div>
+</div>
+
+
+
         </main>
       </div>
     </div>
