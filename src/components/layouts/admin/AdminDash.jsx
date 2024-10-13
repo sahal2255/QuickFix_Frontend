@@ -10,7 +10,9 @@ import { DateByFetching, FetchMonthlyDetails } from '../../../services/admin/Das
 import PieChart from '../../common/PieChart';
 import DateRangePicker from '../../common/DateRangePicker';
 import CommonTable from '../../common/CommonTable';
-import dayjs from 'dayjs';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable'; // Ensure you have this plugin installed
+
 export default function AdminDash() {
   const [userCount, setUserCount] = useState(0);
   const [bookingCount, setBookingCount] = useState(0);
@@ -70,14 +72,43 @@ export default function AdminDash() {
     console.log('Submit clicked with date range:', dates);
     try{
       const response=await DateByFetching(dates)
+      console.log('response in component ',response)
+      setTableRow(response.bookings)
     }catch(error){
       console.log('date by fetching error in',error)
     }
   };
 
-  const handleDateDownload = (dates) => {
-    console.log('Download clicked with date range:', dates);
+  
+  const handleDateDownload = async (dates) => {
+      console.log('Download clicked with date range:', dates);
+      try {
+          const response = await DateByFetching(dates);
+          
+          if (response.bookings) {
+              const doc = new jsPDF();
+  
+              // Prepare table data (columns: Date, Customer, Amount)
+              const salesData = response.bookings.map(booking => [
+                  booking.createdAt,       // Date of booking
+                  booking.ownerName,       // Customer name
+                  booking.totalAmount      // Amount
+              ]);
+  
+              // Add autoTable with the salesData
+              doc.autoTable({
+                  head: [['Date', 'Customer', 'Amount']], // Table headers
+                  body: salesData                          // Table body (sales data)
+              });
+  
+              // Save the generated PDF
+              doc.save(`bookings_report_${dates[0].format('YYYY-MM-DD')}_to_${dates[1].format('YYYY-MM-DD')}.pdf`);
+          }
+      } catch (error) {
+          console.log('Error downloading booking report:', error);
+      }
   };
+  
 
   const lineChartData = {
     labels: months,  

@@ -24,6 +24,7 @@ export const DateByFetching = async (dates) => {
             }
         });
         console.log('response for the date by fetching', response);
+        return response.data
     } catch (error) {
         console.log('error in the fetching date by booking', error);
     }

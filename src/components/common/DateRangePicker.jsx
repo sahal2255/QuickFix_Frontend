@@ -31,8 +31,8 @@ const DateRangePicker = ({ onDateRangeChange, onSubmit, onDownload }) => {
         onChange={handleRangeChange}
         format="YYYY-MM-DD"
       />
-      <Button type="primary" onClick={handleClear}>Clear</Button>
       <Button type="primary" onClick={() => onSubmit(dates)}>Submit</Button>
+      <Button type="primary" onClick={handleClear}>Clear</Button>
       <Button type="default" onClick={() => onDownload(dates)}>Download</Button>
     </div>
   );
