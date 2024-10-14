@@ -21,7 +21,7 @@ const BookedServices = () => {
             try {
                 const response = await fetchingBookings();
                 console.log('response in the component', response);
-                setBookings(response);
+                setBookings(response.bookings);
             } catch (error) {
                 console.log('fetching booking error in the component', error);
             }

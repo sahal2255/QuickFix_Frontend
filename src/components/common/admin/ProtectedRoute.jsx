@@ -7,9 +7,7 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = () => {
-      
       const token = document.cookie.split('; ').find(row => row.startsWith('token='));
-      console.log('Token found:', token); 
       if (token) {
         setAuthenticated(true);
       } else {
@@ -20,12 +18,11 @@ const ProtectedRoute = ({ children }) => {
   }, []);
 
   if (authenticated === null) {
-    return <div><Spinner /></div>; // Or a spinner/loading indicator
+    return <Spinner />; // Loading indicator
   }
 
   if (!authenticated) {
-    console.log('Navigating to login'); // Debugging line
-    return <Navigate to="/admin/login" />;
+    return <Navigate to="/admin/login" replace />; // Redirect to login
   }
 
   return children;

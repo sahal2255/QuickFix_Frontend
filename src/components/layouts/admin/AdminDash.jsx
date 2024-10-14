@@ -12,6 +12,7 @@ import DateRangePicker from '../../common/DateRangePicker';
 import CommonTable from '../../common/CommonTable';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Ensure you have this plugin installed
+import { showErrorToast } from '../../common/Toastify';
 
 export default function AdminDash() {
   const [userCount, setUserCount] = useState(0);
@@ -70,7 +71,12 @@ export default function AdminDash() {
 
   const handleDateSubmit = async(dates) => {
     console.log('Submit clicked with date range:', dates);
+    if (!dates || !dates[0] || !dates[1]) {
+      showErrorToast('Please select a valid date range'); // Show error toast
+      return;
+    }
     try{
+      
       const response=await DateByFetching(dates)
       console.log('response in component ',response)
       setTableRow(response.bookings)
@@ -82,6 +88,10 @@ export default function AdminDash() {
   
   const handleDateDownload = async (dates) => {
       console.log('Download clicked with date range:', dates);
+      if (!dates || !dates[0] || !dates[1]) {
+        showErrorToast('Please select a valid date range'); // Show error toast
+        return;
+      }
       try {
           const response = await DateByFetching(dates);
           
@@ -90,19 +100,20 @@ export default function AdminDash() {
   
               // Prepare table data (columns: Date, Customer, Amount)
               const salesData = response.bookings.map(booking => [
-                  booking.createdAt,       // Date of booking
-                  booking.ownerName,       // Customer name
-                  booking.totalAmount      // Amount
+                  booking.createdAt,       
+                  booking.ownerName,     
+                  booking.regNo,
+                  booking.serviceStatus,
+                  booking.totalAmount      
               ]);
   
               // Add autoTable with the salesData
               doc.autoTable({
-                  head: [['Date', 'Customer', 'Amount']], // Table headers
-                  body: salesData                          // Table body (sales data)
+                  head: [['Date', 'Customer', 'RegNo','Service Status','Amount' ,]], // Table headers
+                  body: salesData                          
               });
   
-              // Save the generated PDF
-              doc.save(`bookings_report_${dates[0].format('YYYY-MM-DD')}_to_${dates[1].format('YYYY-MM-DD')}.pdf`);
+              doc.save(`bookingsReport_${dates[0].format('YYYY-MM-DD')}_to_${dates[1].format('YYYY-MM-DD')}.pdf`);
           }
       } catch (error) {
           console.log('Error downloading booking report:', error);
