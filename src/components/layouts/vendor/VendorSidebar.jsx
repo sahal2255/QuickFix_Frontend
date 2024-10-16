@@ -54,7 +54,7 @@ export default function VendorSidebar() {
                     </Typography>
                 </div>
                 <List className="flex-col space-y-2 overflow-y-auto h-[calc(100vh-4rem)]"> {/* Adjust height as needed */}
-                    <Link to="/vendor/dashboard/dashboard">
+                    <Link to="/vendor/dashboard">
                         <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
                             <ListItemPrefix>
                                 <PresentationChartBarIcon className="h-7 w-7 text-blue-gray-300" />
@@ -63,16 +63,8 @@ export default function VendorSidebar() {
                         </ListItem>
                     </Link>
 
-                    {/* <Link to="/vendor/dashboard/add-service">
-                        <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
-                            <ListItemPrefix>
-                                <Cog6ToothIcon className="h-7 w-7 text-blue-gray-300" />
-                            </ListItemPrefix>
-                            <Typography className="font-medium text-lg">Add Service</Typography>
-                        </ListItem>
-                    </Link> */}
 
-                    <Link to="/vendor/dashboard/services">
+                    <Link to="/vendor/services">
                         <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
                             <ListItemPrefix>
                                 <BriefcaseIcon className="h-7 w-7 text-blue-gray-300" />
@@ -81,7 +73,7 @@ export default function VendorSidebar() {
                         </ListItem>
                     </Link>
 
-                    <Link to="/vendor/dashboard/booked-services">
+                    <Link to="/vendor/booked-services">
                         <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
                             <ListItemPrefix>
                                 <UserGroupIcon className="h-7 w-7 text-blue-gray-300" />
@@ -89,7 +81,7 @@ export default function VendorSidebar() {
                             <Typography className="font-medium text-lg">Booked Services</Typography>
                         </ListItem>
                     </Link>
-                    <Link to="/vendor/dashboard/coupons">
+                    <Link to="/vendor/coupons">
                         <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
                             <ListItemPrefix>
                             <TagIcon className="h-7 w-7 text-blue-gray-300" /> {/* Coupon icon */}
@@ -99,7 +91,7 @@ export default function VendorSidebar() {
                         </Link>
 
 
-                    <Link to="/vendor/dashboard/profile">
+                    <Link to="/vendor/profile">
                         <ListItem className="p-4 rounded-lg hover:bg-gray-800 transition-colors duration-300 flex items-center space-x-4 cursor-pointer border-l-4 border-transparent hover:border-blue-gray-400">
                             <ListItemPrefix>
                                 <UserCircleIcon className="h-7 w-7 text-blue-gray-300" />

@@ -10,6 +10,7 @@ import AdminDash from '../../layouts/admin/AdminDash';
 
 const AdminRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const navigate=useNavigate()
   useEffect(() => {
     // Check if the admin is already logged in (based on token or session)
     const token = document.cookie.split('; ').find(row => row.startsWith('token='));
