@@ -32,21 +32,17 @@ const UserProtec = ({ isAuthPage = false, children }) => {
   }, [dispatch, navigate]);
 
   if (authenticated === null) {
-    // Display loading state while checking authentication
     return <div>Loading...</div>;
   }
 
-  // If user is authenticated and tries to access login/signup, redirect to the service page or another protected page
   if (authenticated && isAuthPage) {
     return <Navigate to="/" />;
   }
 
-  // If user is not authenticated and tries to access a protected page, redirect to login
   if (!authenticated && !isAuthPage) {
     return <Navigate to="/login" />;
   }
 
-  // Render the children if it is an auth page (login/signup) or protected content
   return isAuthPage ? children : <Outlet />;
 };
 

@@ -3,13 +3,33 @@ import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';  
-import {  UserLogingIn } from '../../services/user/UserSignService';
+import { LoginWithGoogleFunction, UserLogingIn } from '../../services/user/UserSignService';
 import { showErrorToast, showSuccessToast } from '../../components/common/Toastify';
-
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';  // Import Google OAuth
 
 export default function UserLogin() {
-    const navigate=useNavigate()
+    const navigate = useNavigate();
 
+    // Function for handling Google Login Success
+    const handleGoogleSuccess = async (tokenResponse) => {
+        console.log('Google Login Successful', tokenResponse);
+        try {
+            // Make an API call to your backend to handle login with Google token
+            const { credential: responseToken } = tokenResponse;
+            const response=await LoginWithGoogleFunction(responseToken)
+            // showSuccessToast("Login successful with Google!");
+            navigate('/');
+        } catch (error) {
+            console.error("Error logging in with Google:", error);
+            showErrorToast("Google login failed. Please try again later.");
+        }
+    };
+
+    // Function for handling Google Login Failure
+    const handleGoogleFailure = (error) => {
+        console.error('Google Login Failed', error);
+        showErrorToast('Google login failed. Please try again.');
+    };
 
     const onFinish = async (values) => {
         console.log('Success:', values);
@@ -17,7 +37,6 @@ export default function UserLogin() {
             const response = await UserLogingIn(values);  // Ensure values contain {email, password}
             showSuccessToast(response.message);
             navigate('/');
-            // console.log(response);
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
                 console.log('Error details:', error.response.data);
@@ -28,10 +47,11 @@ export default function UserLogin() {
             }
         }
     };
-    ;
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
     return (
         <div className="min-h-screen flex justify-center items-center bg-black md:bg-white lg:bg-white">
             <div className="w-full max-w-lg p-8 bg-black rounded-xl shadow-xl">
@@ -100,14 +120,22 @@ export default function UserLogin() {
                         </Button> 
                     </Form.Item>
 
-                    {/* Add Sign Up Link */}
-                </Form>
-                    <div className="text-center mt-4 text-gray-400">
-                        <span>Don't have an account? </span>
-                        <Link to="/signup" className="text-red-500 hover:underline">
-                            Sign up
-                        </Link>
+                    {/* Google Login Button */}
+                    <div className="flex justify-center">
+                        <GoogleLogin
+                            onSuccess={handleGoogleSuccess}
+                            onFailure={handleGoogleFailure}
+                            cookiePolicy={'single_host_origin'}
+                        />
                     </div>
+                </Form>
+
+                <div className="text-center mt-4 text-gray-400">
+                    <span>Don't have an account? </span>
+                    <Link to="/signup" className="text-red-500 hover:underline">
+                        Sign up
+                    </Link>
+                </div>
             </div>
         </div>
     );

@@ -28,81 +28,78 @@ function ServiceSidebar() {
   const handleChange = (checkedValues) => {
     const lastSelected = checkedValues.find((val) => !selectedCategories.includes(val)); // New selection
     const lastDeselected = selectedCategories.find((val) => !checkedValues.includes(val)); // Deselection
-  
-    console.log('Before dispatch:', selectedCategories);
-  
+
     if (lastSelected) {
       dispatch(addCategory(lastSelected));
     }
-  
+
     if (lastDeselected) {
       dispatch(removeCategory(lastDeselected));
     }
   };
-  
 
   return (
     <Sider
-      width={260}
-      className="shadow-lg"
+      width="100%"
+      className="custom-sidebar shadow-xl rounded-lg"
       style={{
         padding: '20px',
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#f0f5ff',
         height: 'auto',
-        position: 'fixed',
-        borderRadius: '12px',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-        border: '1px solid #ddd',
+        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
+        border: '1px solid #ccc',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
       }}
     >
       <h3
         style={{
-          fontSize: '1.5rem',
-          fontWeight: 'bold',
-          color: '#333',
+          fontSize: '1.6rem',
+          fontWeight: '700',
+          color: '#1d4ed8',
           textAlign: 'center',
-          marginBottom: '20px',
+          marginBottom: '24px',
         }}
       >
         Service Categories
       </h3>
 
-      <Divider style={{ margin: '12px 0' }} />
+      <Divider style={{ margin: '16px 0', borderColor: '#1d4ed8' }} />
 
-      {/* Checkbox Group with Animated Hover and Custom Styles */}
       <Checkbox.Group
-        value={selectedCategories} // Use Redux state for selected categories
+        value={selectedCategories}
         onChange={handleChange}
-        style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}
       >
         {serviceCategories.length > 0 ? (
           serviceCategories.map((category) => (
             <Checkbox
-              key={category._id} // Assuming category._id exists
-              value={category.categoryName} // Assuming categoryName is the correct field
+              key={category._id}
+              value={category.categoryName}
+              className={`custom-checkbox ${selectedCategories.includes(category.categoryName) ? 'selected' : ''}`}
               style={{
                 fontSize: '1rem',
                 fontWeight: '500',
-                color: '#555',
-                padding: '8px 10px',
-                borderRadius: '6px',
-                transition: 'all 0.2s ease',
+                color: selectedCategories.includes(category.categoryName) ? '#1d4ed8' : '#4B5563',
+                padding: '10px 12px',
+                borderRadius: '8px',
+                transition: 'all 0.3s ease',
                 cursor: 'pointer',
-                backgroundColor: selectedCategories.includes(category.categoryName) ? '#f0f0f0' : 'transparent',
+                backgroundColor: selectedCategories.includes(category.categoryName) ? '#ebf4ff' : '#fff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}
-              className="hover:bg-blue-50 hover:shadow-md hover:text-blue-500"
             >
               {category.categoryName}
               {selectedCategories.includes(category.categoryName) && (
-                <CheckOutlined style={{ color: '#1890ff' }} />
+                <CheckOutlined style={{ color: '#1d4ed8' }} />
               )}
             </Checkbox>
           ))
         ) : (
-          <p>No categories available</p> // Fallback if no categories are fetched
+          <p style={{ color: '#555', textAlign: 'center' }}>No categories available</p>
         )}
       </Checkbox.Group>
     </Sider>

@@ -36,7 +36,6 @@ export default function ProfilePage() {
 
           {/* Render Content (Right) */}
           <div className="flex-1 bg-white shadow-md rounded-lg p-8 flex justify-center ">
-            {/* Center the content inside the right section */}
             <div className="w-full max-h-[75vh] overflow-y-auto">
               {renderContent()}
             </div>

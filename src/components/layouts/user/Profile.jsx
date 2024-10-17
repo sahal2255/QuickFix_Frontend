@@ -58,19 +58,19 @@ export default function ProfileDetails() {
   }
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto">
+    <div className="bg-white p-8 rounded-lg shadow-2xl max-w-xl mx-auto mt-16">
       <div className="text-center mb-8">
-        <div className="inline-block bg-blue-500 text-white rounded-full w-20 h-20 flex items-center justify-center text-4xl font-bold">
+        <div className="inline-block bg-black text-white rounded-full w-20 h-20 flex items-center justify-center text-4xl font-bold shadow-lg">
           {user.userName ? user.userName.charAt(0).toUpperCase() : 'U'}
         </div>
-        <h2 className="text-3xl font-bold text-gray-800 mt-4">{user.userName || 'N/A'}</h2>
+        <h2 className="text-3xl font-extrabold text-gray-800 mt-4">{user.userName || 'N/A'}</h2>
         <p className="text-gray-500">{user.email || 'N/A'}</p>
       </div>
 
       {/* Profile Details */}
       <div className="space-y-6">
         {/* Username */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 p-4 rounded-xl bg-white shadow-md hover:bg-gray-50 transition-all duration-300">
           <FaUser className="text-blue-500 text-xl" />
           <div className="flex-1">
             <p className="text-gray-500">Username:</p>
@@ -79,7 +79,7 @@ export default function ProfileDetails() {
         </div>
 
         {/* Email */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 p-4 rounded-xl bg-white shadow-md hover:bg-gray-50 transition-all duration-300">
           <FaEnvelope className="text-blue-500 text-xl" />
           <div className="flex-1">
             <p className="text-gray-500">Email:</p>
@@ -88,7 +88,7 @@ export default function ProfileDetails() {
         </div>
 
         {/* Phone Number */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 p-4 rounded-xl bg-white shadow-md hover:bg-gray-50 transition-all duration-300">
           <FaPhone className="text-blue-500 text-xl" />
           <div className="flex-1">
             <p className="text-gray-500">Phone Number:</p>

@@ -3,46 +3,39 @@ import { FaUser, FaHistory } from 'react-icons/fa'; // Importing icons
 
 export default function ProfileMenu({ setSelectedSection, selectedSection }) {
   return (
-    <div className="w-full bg-white shadow-md h-screen p-5 flex flex-col justify-between">
+    <div className="w-full bg-white min-h-64 shadow-2xl h-full p-6 flex flex-col justify-between rounded-lg mt-8 mx-auto max-w-md">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-8">Dashboard</h2>
+        <h2 className="text-3xl text-center font-extrabold text-gray-900 mb-10 tracking-wide">Profile Menu</h2>
         
-        {/* Menu Items */}
-        <ul className="space-y-6">
+        <ul className="space-y-8">
           {/* Profile Section */}
           <li
-            className={`flex items-center space-x-4 cursor-pointer p-3 rounded-lg transition duration-300 ${
+            className={`flex items-center space-x-4 cursor-pointer p-4 rounded-xl transition-all duration-300 ${
               selectedSection === 'profile'
-                ? 'bg-blue-600 text-white shadow-lg transform scale-105'
-                : 'text-gray-700 hover:bg-gray-100 hover:shadow-md'
+                ? 'bg-gradient-to-r from-blue-700 to-indigo-500 text-white shadow-lg transform scale-105'
+                : 'text-gray-800 hover:bg-gray-100 hover:shadow-md'
             }`}
             onClick={() => setSelectedSection('profile')}
           >
-            <FaUser className="text-lg" />
-            <span className="font-semibold text-md">Profile Details</span>
+            <FaUser className="text-xl transition-transform duration-300" />
+            <span className="font-bold text-lg">Profile Details</span>
           </li>
 
           {/* Booking History Section */}
           <li
-            className={`flex items-center space-x-4 cursor-pointer p-3 rounded-lg transition duration-300 ${
+            className={`flex items-center space-x-4 cursor-pointer p-4 rounded-xl transition-all duration-300 ${
               selectedSection === 'bookings'
-                ? 'bg-blue-600 text-white shadow-lg transform scale-105'
-                : 'text-gray-700 hover:bg-gray-100 hover:shadow-md'
+                ? 'bg-gradient-to-r from-blue-700 to-indigo-500 text-white shadow-lg transform scale-105'
+                : 'text-gray-800 hover:bg-gray-100 hover:shadow-md'
             }`}
             onClick={() => setSelectedSection('bookings')}
           >
-            <FaHistory className="text-lg" />
-            <span className="font-semibold text-md">Booking History</span>
+            <FaHistory className="text-xl transition-transform duration-300" />
+            <span className="font-bold text-lg">Booking History</span>
           </li>
 
-          {/* Add more sections as needed */}
+          {/* Additional sections can go here */}
         </ul>
-      </div>
-
-      {/* Footer or Additional Links */}
-      <div className="mt-auto">
-        <hr className="my-6" />
-        <p className="text-sm text-gray-500">© 2024 Dashboard</p>
       </div>
     </div>
   );

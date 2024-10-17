@@ -1,3 +1,4 @@
+import instance from "../../utils/Axios";
 import Instance from "../../utils/Axios"
 
 export const UserSignup = async (value)=>{
@@ -68,3 +69,12 @@ export const EditProfile = async (formData) => {
     }
   };
   
+
+  export const LoginWithGoogleFunction=async(responseToken)=>{
+    console.log('service for the login ',responseToken)
+    try{
+        const response=await instance.post('/loginwithgoogle',{responseToken})
+    }catch(error){
+        console.log('error in the user login with google',error)
+    }
+  }

@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google'; // Import Google OAuth Provider
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import UserLogin from '../../../pages/user/UserLogin';
 import UserSignUP from '../../../pages/user/UserSignUp';
 import HomePage from '../../../pages/user/HomePage';
@@ -10,8 +11,10 @@ import ServiceDetails from '../../layouts/user/ServiceDetails';
 import ConfirmBooking from '../../layouts/user/ConfirmBooking';
 
 export default function UserRoute() {
+  const clientId = '432726428842-ui6ju0qt05sorkjc30qtgmt4r1jd2d61.apps.googleusercontent.com'; 
+
   return (
-    <div>
+    <GoogleOAuthProvider clientId={clientId}>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<HomePage />} />
@@ -28,6 +31,6 @@ export default function UserRoute() {
           </Route> 
         </Routes>
       </BrowserRouter>
-    </div>
+    </GoogleOAuthProvider>
   );
 }
