@@ -17,7 +17,6 @@ export default function UserLogin() {
             // Make an API call to your backend to handle login with Google token
             const { credential: responseToken } = tokenResponse;
             const response=await LoginWithGoogleFunction(responseToken)
-            // showSuccessToast("Login successful with Google!");
             navigate('/');
         } catch (error) {
             console.error("Error logging in with Google:", error);

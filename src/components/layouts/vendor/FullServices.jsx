@@ -79,19 +79,20 @@ const FullService = () => {
 
 
   // Format the service data for the table rows
-  const rows = services 
-    .filter(service => service && service._id) // Ensure each service is valid
-    .map((service) => ({
-      id: service._id,
-      category: service.categoryType,
-      serviceName: service.serviceName,
-      view: (
-        <Button variant="outlined" color="primary" onClick={() => handleViewClick(service)}>
-          View
-        </Button>
-      ),
-      
-    }));
+const rows = Array.isArray(services) 
+? services.filter(service => service && service._id) // Ensure each service is valid
+          .map((service) => ({
+            id: service._id,
+            category: service.categoryType,
+            serviceName: service.serviceName,
+            view: (
+              <Button variant="outlined" color="primary" onClick={() => handleViewClick(service)}>
+                View
+              </Button>
+            ),
+          }))
+: [];
+
 
   return (
     <div className="container mx-auto py-8">
@@ -102,14 +103,14 @@ const FullService = () => {
         </Button>
       </div>
 
-      {services.length === 0 ? ( // Check if there are no services
-        <div className="text-center text-lg text-gray-600">
-          No services available.
-        </div>
-      ) : (
-        // Render the CommonTable with the formatted columns and rows
-        <CommonTable columns={columns} rows={rows} />
-      )}
+      {Array.isArray(services) && services.length === 0 ? ( // Check if there are no services
+  <div className="text-center text-lg text-gray-600">
+    No services available.
+  </div>
+) : (
+  // Render the CommonTable with the formatted columns and rows
+  <CommonTable columns={columns} rows={rows} />
+)}
 
       <CommonModal open={showForm} onCancel={closeFormModal}>
         <ServiceForm onCancel={closeFormModal} onAddService={addService} />

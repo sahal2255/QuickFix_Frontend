@@ -25,7 +25,7 @@ export default function CategoryForm({setCategories,closeModal}) {
         showSuccessToast(response.message)
         form.resetFields();
         closeModal()
-        navigate('/admin/dashboard/service-category')
+        navigate('/admin/service-category')
       } else {
         console.warn('Failed to add category: response was undefined');
       }

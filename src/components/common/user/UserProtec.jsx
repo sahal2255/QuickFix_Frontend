@@ -3,6 +3,7 @@ import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import instance from '../../../utils/Axios';  // Axios instance
 import { clearUser } from '../../../Redux/Slices/userSlice';
 import { useDispatch } from 'react-redux';
+import PreLoader from '../PreLoader'
 
 const UserProtec = ({ isAuthPage = false, children }) => {
   const [authenticated, setAuthenticated] = useState(null);
@@ -32,7 +33,7 @@ const UserProtec = ({ isAuthPage = false, children }) => {
   }, [dispatch, navigate]);
 
   if (authenticated === null) {
-    return <div>Loading...</div>;
+    return <div>Loading....</div>;
   }
 
   if (authenticated && isAuthPage) {
