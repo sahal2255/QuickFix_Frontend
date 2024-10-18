@@ -27,13 +27,13 @@ export default function Navbar() {
           <Link to="/" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Home
           </Link>
-          <Link to="#about" className="text-black hover:text-indigo-200 transition-colors duration-300">
+          <Link to="/about" className="text-black hover:text-indigo-200 transition-colors duration-300">
             About
           </Link>
           <Link to="/service" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Services
           </Link>
-          <Link to="#contact" className="text-black hover:text-indigo-200 transition-colors duration-300">
+          <Link to="/contact" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Contact
           </Link>
           <Link to="/profile" className="text-black hover:text-indigo-200 transition-colors duration-300">
@@ -63,13 +63,13 @@ export default function Navbar() {
           <Link to="/" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Home
           </Link>
-          <Link to="#about" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
+          <Link to="/about" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             About
           </Link>
           <Link to="/service" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Services
           </Link>
-          <Link to="#contact" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
+          <Link to="/contact" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>
             Contact
           </Link>
           <Link to="/profile" className="block py-2 px-4 text-gray-800 font-medium hover:bg-gray-100 rounded-md transition-colors duration-300" onClick={toggleMenu}>

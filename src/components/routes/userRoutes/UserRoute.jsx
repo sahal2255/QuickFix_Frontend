@@ -9,6 +9,8 @@ import Service from '../../../pages/user/Service'; // Protected page
 import ProfilePage from '../../../pages/user/ProfilePage';
 import ServiceDetails from '../../layouts/user/ServiceDetails';
 import ConfirmBooking from '../../layouts/user/ConfirmBooking';
+import AboutUs from '../../../pages/user/AboutUs';
+import ContactUs from '../../../pages/user/ContactUs';
 
 export default function UserRoute() {
   const clientId = '432726428842-ui6ju0qt05sorkjc30qtgmt4r1jd2d61.apps.googleusercontent.com'; 
@@ -18,9 +20,13 @@ export default function UserRoute() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<HomePage />} />
+          <Route path='/about' element={<AboutUs />} />
+          <Route path='/contact' element={<ContactUs />} />
+
           {/* Public routes */}
           <Route path='/login' element={<UserProtec isAuthPage={true}><UserLogin /></UserProtec>} />
           <Route path='/signup' element={<UserProtec isAuthPage={true}><UserSignUP /></UserProtec>} />
+          
 
           {/* Protected routes */}
           <Route element={<UserProtec />}>
