@@ -8,13 +8,17 @@ import { ConfirmationOfBooking } from '../../../services/user/BookingService';
 import PaymentOption from './PaymentOption';
 import CommonModal from '../../common/CommonModal';
 import ConfirmForm from './ConfirmForm'; // Import the ConfirmForm
-
+import Footer from './Footer';
+import Coupon from './Coupon'
 export default function ConfirmBooking() {
   const { serviceId } = useParams();
   const [serviceList, setServiceList] = useState([]);
   const [centerId, setCenterId] = useState();
   const [paymentOption, setPaymentOption] = useState('full');
   const [openModalForm, setOpenModalForm] = useState(false);
+  const [validCoupons,setValidCoupons]=useState([])
+  const [selectedCoupon, setSelectedCoupon] = useState(null);
+
   const dispatch = useDispatch();
 
   // Use useSelector to get selected service types from Redux
@@ -26,6 +30,8 @@ export default function ConfirmBooking() {
         const service = await ServiceGetById(serviceId);
         setServiceList(service.ServiceTypes);
         setCenterId(service.Details._id);
+        console.log('service type coupon',service.validCoupons)
+        setValidCoupons(service.validCoupons)
       } catch (error) {
         console.log('Error fetching service types', error);
       }
@@ -112,6 +118,24 @@ export default function ConfirmBooking() {
                     : `Full Payment: ₹${paymentAmount}`}
                 </h3>
               </div>
+              <div className="mt-6 flex flex-wrap gap-2"> {/* Use flex and wrap */}
+                {validCoupons.length > 0 ? (
+                  validCoupons.map((coupon) => (
+                    <Coupon
+                      key={coupon._id}
+                      couponCode={coupon.couponName}
+                      discount={coupon.couponValue}
+                      expiryDate={new Date(coupon.endDate).toLocaleDateString()}
+                      selected={selectedCoupon && selectedCoupon._id === coupon._id} // Check if the coupon is selected
+                      onSelect={() => setSelectedCoupon(coupon)} // Set the selected coupon on click
+                    />
+                  ))
+                ) : (
+                  <p className="text-gray-600">No valid coupons available.</p>
+                )}
+              </div>
+
+
 
               <div className="mt-6 flex justify-center">
                 <button
@@ -139,6 +163,9 @@ export default function ConfirmBooking() {
         closeConfirmForm={closeConfirmForm}
         />
       </CommonModal>
+      <div className='w-full mt-6'>  
+        <Footer />
+      </div>
     </div>
   );
 }

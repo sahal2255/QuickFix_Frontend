@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import { ServiceGetById } from '../../../services/user/ServiceSection';
 import ServiceSidebar from './ServiceSideBar'; // Import the new sidebar component
-
+import Footer from '../../layouts/user/Footer'
 export default function ServiceDetails() {
   const { serviceId } = useParams();
   const [service, setService] = useState(null);
@@ -57,12 +57,12 @@ export default function ServiceDetails() {
               services={serviceType || []} 
               onSelectService={handleSelectService} 
               selectedService={selectedService}
-              className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-300"
+              className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow"
             />
           </div>
 
           {/* Service Details */}
-          <div className="w-full md:w-2/3 p-6 bg-white shadow-lg rounded-lg transition-transform duration-300 hover:scale-105">
+          <div className="w-full md:w-2/3 p-6 bg-white shadow-lg rounded-lg transition-transform ">
             {selectedService ? (
               <>
                 {/* Service Image */}
@@ -104,6 +104,9 @@ export default function ServiceDetails() {
           </button>
         </div>
       </div>
+      <div className="w-full">
+          <Footer />
+        </div>
     </div>
   );
 }

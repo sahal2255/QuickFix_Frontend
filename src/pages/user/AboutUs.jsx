@@ -3,7 +3,7 @@ import Navbar from '../../components/layouts/user/Navbar'
 import Banner1 from '../../assets/Banner1.png'
 import AsideImage from '../../assets/EngineSer.png'
 import Info from '../../components/layouts/user/Info'
-
+import Footer from '../../components/layouts/user/Footer'
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gray-100">
@@ -54,6 +54,9 @@ const AboutUs = () => {
 
        
       </main>
+      <div className="w-full">
+          <Footer />
+        </div>
     </div>
   )
 }

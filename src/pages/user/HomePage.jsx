@@ -3,6 +3,7 @@ import Navbar from '../../components/layouts/user/Navbar';
 import Banner from '../../components/layouts/user/Banner';
 import Info from '../../components/layouts/user/Info';
 import OurService from '../../components/layouts/user/OurService';
+import Footer from '../../components/layouts/user/Footer'
 import { useSelector } from 'react-redux';
 export default function HomePage() {
   const user = useSelector((state) => state.user);
@@ -24,6 +25,9 @@ export default function HomePage() {
           <OurService />
         </div>
       </main>
+      <div className="w-full">
+          <Footer />
+        </div>
     </div>
   );
 }

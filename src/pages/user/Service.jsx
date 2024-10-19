@@ -7,7 +7,7 @@ import { Drawer, Pagination } from 'antd';
 import { ServiceGet } from '../../services/user/ServiceSection';
 import SearchBar from '../../components/common/SearchBar'; 
 import { useDispatch, useSelector } from 'react-redux'; // Import useSelector
-
+import Footer from '../../components/layouts/user/Footer'
 export default function Service() {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [services, setServices] = useState([]);
@@ -50,7 +50,7 @@ export default function Service() {
         <Navbar />
       </header>
 
-      <div className="flex-grow flex mt-24">
+      <div className="flex-grow flex mt-24 mb-7">
         <aside className="hidden md:flex w-1/4">
           <ServiceSidebar />
         </aside>
@@ -102,6 +102,9 @@ export default function Service() {
           </div>
         </main>
       </div>
+      <div className="w-full">
+          <Footer />
+        </div>
     </div>
   );
 }
