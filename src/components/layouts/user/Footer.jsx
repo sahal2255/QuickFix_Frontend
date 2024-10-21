@@ -5,7 +5,6 @@ import { TiSocialFacebookCircular } from "react-icons/ti";
 import {Link} from 'react-router-dom'
 
 const Footer = () => {
-  console.log('footer component');
   return (
     <footer className="bg-black text-white py-8">
       <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between px-6">

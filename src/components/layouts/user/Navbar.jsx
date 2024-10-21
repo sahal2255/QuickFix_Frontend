@@ -53,7 +53,7 @@ export default function Navbar() {
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:hidden rounded-r-lg`}
+        } md:hidden z-50`}  
       >
         <div className="p-4 flex justify-between items-center border-b border-gray-200">
           <h2 className="text-xl font-bold text-gray-800">Menu</h2>
@@ -78,9 +78,10 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Overlay for mobile menu */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40" // Removed the comment from here
           onClick={toggleMenu}
         ></div>
       )}

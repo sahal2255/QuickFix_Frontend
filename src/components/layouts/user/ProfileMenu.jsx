@@ -1,7 +1,12 @@
 import React from 'react';
 import { FaUser, FaHistory } from 'react-icons/fa'; // Importing icons
 
-export default function ProfileMenu({ setSelectedSection, selectedSection }) {
+export default function ProfileMenu({ setSelectedSection, selectedSection, setIsSidebarOpen }) {
+  const handleMenuClick = (section) => {
+    setSelectedSection(section);
+    setIsSidebarOpen(false); // Close sidebar when a section is selected (on small screens)
+  };
+
   return (
     <div className="w-full bg-white min-h-64 shadow-2xl h-full p-6 flex flex-col justify-between rounded-lg mt-8 mx-auto max-w-md">
       <div>
@@ -15,7 +20,7 @@ export default function ProfileMenu({ setSelectedSection, selectedSection }) {
                 ? 'bg-gradient-to-r from-blue-700 to-indigo-500 text-white shadow-lg transform scale-105'
                 : 'text-gray-800 hover:bg-gray-100 hover:shadow-md'
             }`}
-            onClick={() => setSelectedSection('profile')}
+            onClick={() => handleMenuClick('profile')}
           >
             <FaUser className="text-xl transition-transform duration-300" />
             <span className="font-bold text-lg">Profile Details</span>
@@ -28,7 +33,7 @@ export default function ProfileMenu({ setSelectedSection, selectedSection }) {
                 ? 'bg-gradient-to-r from-blue-700 to-indigo-500 text-white shadow-lg transform scale-105'
                 : 'text-gray-800 hover:bg-gray-100 hover:shadow-md'
             }`}
-            onClick={() => setSelectedSection('bookings')}
+            onClick={() => handleMenuClick('bookings')}
           >
             <FaHistory className="text-xl transition-transform duration-300" />
             <span className="font-bold text-lg">Booking History</span>
