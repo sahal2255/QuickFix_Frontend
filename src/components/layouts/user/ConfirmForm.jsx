@@ -11,8 +11,10 @@ export default function ConfirmForm({
   paymentAmount,
   selectedServiceTypesDetails,
   paymentMethod,
-  closeConfirmForm
+  closeConfirmForm,
+  selectedCoupon
 }) {
+  console.log('selected coupon in to the confirmation form ',selectedCoupon)
   const [formData, setFormData] = useState();
   const dispatch=useDispatch()
   const {error,isLoading,Razorpay}=useRazorpay()
@@ -30,7 +32,7 @@ export default function ConfirmForm({
       console.log('Submitting booking confirmation');
 
       // Send the payment amount to the backend to create a Razorpay order
-      const sendPayment = await AmountSend({ paymentAmount });
+      const sendPayment = await AmountSend({ paymentAmount});
       console.log('send payment', sendPayment);
       console.log('payment method in form',paymentMethod)
 
@@ -61,8 +63,14 @@ export default function ConfirmForm({
                 paymentId: response.razorpay_payment_id, // Include payment ID in formData
                 orderId: response.razorpay_order_id, // Include order ID if needed
                 paymentSignature: response.razorpay_signature // Include signature if needed
-            }
+            },
+            couponId:selectedCoupon ? selectedCoupon._id : null
         });
+
+        if(selectedCoupon){
+          bookingData.couponId=selectedCoupon._id;
+        }
+
           console.log('Booking confirmation response:', bookingResponse);
           if (bookingResponse) {
             closeConfirmForm(); 

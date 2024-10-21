@@ -5,17 +5,19 @@ export const ConfirmationOfBooking = async ({
     selectedServiceTypesDetails,
     totalPrice,
     paymentAmount,
+    couponId,
     paymentOption,
     paymentMethod,
     OrderAmount,
     formData
 }) => {
-    console.log('payment method in service section',OrderAmount)
+    console.log('couponid  in service section',couponId)
     try {
         const response = await instance.post('/confirm-booking', {
             centerId,
             selectedServiceTypesDetails,
             totalPrice,
+            couponId,
             paymentAmount,
             paymentMethod,
             paymentOption,
@@ -34,7 +36,7 @@ export const ConfirmationOfBooking = async ({
 export const AmountSend=async({paymentAmount})=>{
     try{
         const response=await instance.post('/razorpaypayment',{
-            paymentAmount
+            paymentAmount,
         })
         console.log('response.data',response.data)
         return response.data
