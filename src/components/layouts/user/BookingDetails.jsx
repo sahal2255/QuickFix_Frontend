@@ -107,7 +107,7 @@ const BookingDetails = ({ bookingId, onClose }) => {
           </div>
 
           <div className="flex justify-between mt-6">
-            {booking.serviceStatus !== 'Cancelled' && (
+            {(booking.serviceStatus === 'Pending' || booking.serviceStatus === 'Confirmed') &&   (
               <button
                 className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
                 onClick={() => onCancelService(booking._id)}

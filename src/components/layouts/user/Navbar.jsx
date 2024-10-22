@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FaBars, FaUser, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import Logo from '../../../assets/QuickFixlog.png';
+import { useSelector } from 'react-redux';
+import { setUser } from '../../../Redux/Slices/userSlice';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  
 
   return (
     <nav className="bg-white shadow-lg fixed w-full z-50">
@@ -36,12 +38,12 @@ export default function Navbar() {
           <Link to="/contact" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Contact
           </Link>
+          
           <Link to="/profile" className="text-black hover:text-indigo-200 transition-colors duration-300">
             Profile
           </Link>
         </div>
 
-        {/* Profile Icon for Desktop */}
         <div className="text-2xl text-black md:hidden">
           <Link to="/profile">
             <FaUser className="hover:text-indigo-200 cursor-pointer transition-colors duration-300" />
@@ -49,7 +51,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'

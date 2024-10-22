@@ -32,7 +32,7 @@ const SingleBooking = () => {
   }, [bookingId]);
 
   const backToBooking = () => {
-    navigate("/vendor/dashboard/booked-services");
+    navigate("/vendor/booked-services");
   };
 
   const handleCompleteService=async(serviceTypeId)=>{
