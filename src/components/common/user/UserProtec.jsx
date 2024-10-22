@@ -33,7 +33,7 @@ const UserProtec = ({ isAuthPage = false, children }) => {
   }, [dispatch, navigate]);
 
   if (authenticated === null) {
-    return <div>Loading....</div>;
+    return <div><PreLoader /></div>;
   }
 
   if (authenticated && isAuthPage) {

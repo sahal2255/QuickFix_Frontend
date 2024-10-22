@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { showSuccessToast,showErrorToast } from "../../common/Toastify";
 import { fetchSingleBookingDetaiils,updateCompletedServiceType,updateServiceStatus } from "../../../services/vendor/BookingServies";
 import UpdateStatus from "./UpdateStatus";
-
+import PreLoader from '../../common/PreLoader'
 const SingleBooking = () => {
   const { bookingId } = useParams();
   const [bookingData, setBookingData] = useState(null);
@@ -181,7 +181,7 @@ const SingleBooking = () => {
             )}
           </div>
         ) : (
-          <p>Loading...</p>
+          <PreLoader />
         )}
       </div>
 

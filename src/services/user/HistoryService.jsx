@@ -27,3 +27,24 @@ export const CancelService=async(bookingId)=>{
         console.log('service cancel error',error)
     }
 }
+
+
+export const BalanceCheck=async({bookingId,balancePrice})=>{
+    console.log('booking id in to the service section',bookingId)
+    console.log('balance amount in the service section',balancePrice)
+    try{
+        const response=await instance.post('/balanceconfirm',{bookingId,balancePrice})
+        console.log('response.data',response.data)
+        return response.data
+    }catch(error){
+        console.log('error in the service section for the balance checking',error)
+    }
+}
+
+export const BalancePayConfirm=async({bookingId,balancePrice})=>{
+    try{
+        const response=await instance.post('/payedbalanceamount',{bookingId,balancePrice})
+    }catch(error){
+        console.log('error in the service section for the ',error)
+    }
+}
