@@ -19,7 +19,6 @@ const BookingDetails = ({ bookingId, onClose }) => {
         setBooking(bookingDetails.booking);
         setServiceDetails(bookingDetails.serviceTypes);
         console.log('balance amount in the history',bookingDetails.booking.balanceAmount)
-        setBalancePrice(bookingDetails.booking.balanceAmount)
       } catch (error) {
         console.log('Error fetching booking details:', error);
       }
@@ -78,6 +77,9 @@ const BookingDetails = ({ bookingId, onClose }) => {
   
             // Handle success response (e.g., show success message or update UI)
             console.log('Balance payment confirmed:', balancePayment);
+            if(balancePayment){
+              onClose()
+            }
           } catch (confirmError) {
             console.log('Error confirming balance payment:', confirmError);
           }

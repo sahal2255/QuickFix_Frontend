@@ -44,6 +44,8 @@ export const BalanceCheck=async({bookingId,balancePrice})=>{
 export const BalancePayConfirm=async({bookingId,balancePrice})=>{
     try{
         const response=await instance.post('/payedbalanceamount',{bookingId,balancePrice})
+        console.log('response in service',response)
+        return response.data
     }catch(error){
         console.log('error in the service section for the ',error)
     }
