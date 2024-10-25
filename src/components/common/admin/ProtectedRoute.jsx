@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import Spinner from '../../spinner/Spinner';
+import PreLoader from '../../common/PreLoader'
 
 const ProtectedRoute = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(null);
@@ -18,7 +19,7 @@ const ProtectedRoute = ({ children }) => {
   }, []);
 
   if (authenticated === null) {
-    return <Spinner />; // Loading indicator
+    return <PreLoader />; // Loading indicator
   }
 
   if (!authenticated) {

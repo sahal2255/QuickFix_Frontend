@@ -57,7 +57,7 @@ function ServiceSidebar() {
         style={{
           fontSize: '1.6rem',
           fontWeight: '700',
-          color: '#1d4ed8',
+          color: '#0c0b0b',
           textAlign: 'center',
           marginBottom: '24px',
         }}

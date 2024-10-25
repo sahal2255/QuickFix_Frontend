@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import Spinner from '../../spinner/Spinner';
+import PreLoader from '../../common/PreLoader'
 
 const VenderProtect = ({children}) => {
   const [authenticated, setAuthenticated] = useState(null);
@@ -19,7 +20,7 @@ const VenderProtect = ({children}) => {
   }, []);
 
   if (authenticated === null) {
-    return <div><Spinner /></div>; 
+    return <PreLoader />; 
   }
 
   if (!authenticated) {
