@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
-import { AddCategory } from '../../../services/admin/adminService';
+import { AddCategory } from '../../../services/admin/AdminService';
 import { useNavigate } from 'react-router-dom';
 import { showSuccessToast } from '../../common/Toastify';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Modal } from 'antd';
-import { UpdateCategory } from '../../../services/admin/adminService';
+import { UpdateCategory } from '../../../services/admin/AdminService';
 import { showSuccessToast } from '../../common/Toastify';
 
 const CategoryEditForm = ({ open, onClose, category, setCategories }) => {
