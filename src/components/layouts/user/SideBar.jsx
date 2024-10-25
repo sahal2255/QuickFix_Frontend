@@ -65,7 +65,7 @@ function ServiceSidebar() {
         Service Categories
       </h3>
 
-      <Divider style={{ margin: '16px 0', borderColor: '#1d4ed8' }} />
+      <Divider style={{ margin: '16px 0', borderColor: '#333333' }} />
 
       <Checkbox.Group
         value={selectedCategories}

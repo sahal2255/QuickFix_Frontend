@@ -28,7 +28,7 @@ const Footer = () => {
         </div>
 
         {/* Middle Section */}
-        <div className="w-full md:w-1/3 mb-6 md:mb-0">
+        <div className="w-full md:w-1/3 mb-6 md:mb-0 place-items-center">
           <h2 className="text-lg font-semibold mb-4">Contact Us</h2>
           <p className="mb-4">123 Street, City, Country</p>
           <p>Email: info@example.com</p>
@@ -46,9 +46,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="mt-8 text-center text-sm text-gray-400">
-        &copy; {new Date().getFullYear()} Your Company. All rights reserved.
-      </div>
+    
     </footer>
   );
 };

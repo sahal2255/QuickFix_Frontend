@@ -137,10 +137,10 @@ const rows = Array.isArray(services)
                     <strong>Category:</strong> {viewService.categoryType}
                   </p>
                   <p className="text-lg">
-                    <strong>Price:</strong> ${viewService.price}
+                    <strong>Price:</strong> ₹{viewService.price}
                   </p>
                   <p className="text-lg">
-                    <strong>Duration:</strong> {viewService.duration} minutes
+                    <strong>Duration:</strong> {viewService.duration} Day
                   </p>
                   <p className="text-lg">
                     <strong>Description:</strong> {viewService.description || 'No description available'}

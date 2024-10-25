@@ -4,10 +4,10 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import Banner1 from '../../../assets/Banner1.png';
-import Banner2 from '../../../assets/Banner2.png';
-import Banner3 from '../../../assets/Banner3.png';
-import Banner4 from '../../../assets/Banner4.png';
+import Banner5 from '../../../assets/car2.webp';
+import Banner6 from '../../../assets/car3.jpg';
+import Banner7 from '../../../assets/bike1.jpg';
+import Banner8 from '../../../assets/bike2.jpg';
 
 export default function Banner() {
   return (
@@ -21,23 +21,23 @@ export default function Banner() {
         loop={true}
       >
         <SwiperSlide>
-          <div className="w-full h-96"> {/* Fixed width and height */}
-            <img src={Banner1} alt="Slide 1" className="w-full h-full object-cover" />
+          <div className="w-full h-[600px]"> {/* Increased height */}
+            <img src={Banner5} alt="Slide 1" className="w-full h-full object-cover" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="w-full h-96">
-            <img src={Banner2} alt="Slide 2" className="w-full h-full object-cover" />
+          <div className="w-full h-[600px]"> {/* Increased height */}
+            <img src={Banner6} alt="Slide 2" className="w-full h-full object-cover" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="w-full h-96">
-            <img src={Banner3} alt="Slide 3" className="w-full h-full object-cover" />
+          <div className="w-full h-[600px]"> {/* Increased height */}
+            <img src={Banner7} alt="Slide 3" className="w-full h-full object-cover" />
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="w-full h-96">
-            <img src={Banner4} alt="Slide 4" className="w-full h-full object-cover" />
+          <div className="w-full h-[600px]"> {/* Increased height */}
+            <img src={Banner8} alt="Slide 4" className="w-full h-full object-cover" />
           </div>
         </SwiperSlide>
       </Swiper>

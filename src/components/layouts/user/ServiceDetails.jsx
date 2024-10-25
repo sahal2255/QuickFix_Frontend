@@ -82,7 +82,7 @@ export default function ServiceDetails() {
                   <strong className="font-semibold">Price:</strong> <span className="text-green-600">₹{selectedService.price}</span>
                 </p>
                 <p className="text-lg mb-4 text-gray-700">
-                  <strong className="font-semibold">Duration:</strong> {selectedService.duration} hr
+                  <strong className="font-semibold">Duration:</strong> {selectedService.duration} Day
                 </p>
                 <p className="text-lg mb-6 text-gray-700">
                   <strong className="font-semibold">Description:</strong> {selectedService.description || 'No description available'}
