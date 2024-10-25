@@ -12,7 +12,6 @@ function ServiceSidebar() {
   const selectedCategories = useSelector((state) => state.user.selectedCategories || []); // Read selected categories from Redux
   const [serviceCategories, setServiceCategories] = useState([]);
 
-  // Fetch service categories on component mount
   useEffect(() => {
     const fetchCategory = async () => {
       try {
