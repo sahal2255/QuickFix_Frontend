@@ -78,6 +78,14 @@ export default function UserLogin() {
                                 required: true,
                                 message: 'Please enter your email!',
                             },
+                            {
+                                type: 'email',
+                                message: 'Please enter a valid email',
+                            }, 
+                            {
+                                pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                message: 'Email must be a valid format like name@example.com',
+                            }
                         ]}
                     >
                         <Input 
