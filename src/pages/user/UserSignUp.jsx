@@ -76,6 +76,10 @@ export default function UserSignUp() {
                         name="phonenumber"
                         rules={[
                             { required: true, message: 'Please enter your phone Number' },
+                            {
+                                pattern: /^[0-9]{10}$/,
+                                message: 'Phone number must be exactly 10 digits'
+                            }
                         ]}
                         className='px-10'
                     >
@@ -83,6 +87,7 @@ export default function UserSignUp() {
                             prefix={<FaPhoneAlt className="text-gray-500 mr-2" />} 
                             placeholder="Phone Number" 
                             className="p-3 rounded-lg"
+                            maxLength={10}
                         />
                     </Form.Item>
                     
