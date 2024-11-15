@@ -45,7 +45,7 @@ export default function ServiceDetails() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className=" bg-gray-50">
       <header className="fixed top-0 left-0 right-0 z-10 bg-white shadow-lg">
         <Navbar />
       </header>
@@ -104,7 +104,7 @@ export default function ServiceDetails() {
           </button>
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full ">
           <Footer />
         </div>
     </div>
