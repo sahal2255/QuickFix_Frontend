@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';  // For handling cookies in the frontend
 
-const url = 'https://quickfix-gz1l.onrender.com' || 'http://localhost:3002';
+const url = 'https://quickfix-gz1l.onrender.com' ;
 
 const instance = axios.create({
   baseURL: url,
