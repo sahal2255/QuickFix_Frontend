@@ -9,6 +9,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const checkAuth = () => {
       const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+      console.log('Token:', token)
       if (token) {
         setAuthenticated(true);
       } else {
