@@ -13,10 +13,13 @@ export default function AdminLogin() {
       console.log('Success:', values);
       const response = await AdminService(values);
       console.log('Login successful:', response);
-      if (response && response.token) {
-        showSuccessToast(response.message)
-        navigate('/admin/dashboard');
-      }
+      // In AdminLogin component
+if (response && response.token) {
+  document.cookie = `token=${response.token}; path=/;`; // Set token cookie
+  showSuccessToast(response.message);
+  navigate('/admin/dashboard'); // Navigate to dashboard
+}
+
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;  // Extract error message
       showErrorToast(errorMessage);  // Show error message from backend
